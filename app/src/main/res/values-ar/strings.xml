@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Build Your Event</string>
+
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="title_home"> Products </string>
+    <string name="title_dashboard"> Dashboard </string>
+    <string name="title_notifications"> Favories </string>
+    <string name="title_profile"> Profile </string>
+    <string name="title_Settings"> Setting </string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="card_holder">Card Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="valid_thru">Valid Thru</string>
+    <string name="mm">MM</string>
+    <string name="YY">YY</string>
+    <string name="date_hint">MM/YY</string>
+    <string name="cvv">CVV</string>
+    <string name="cvv_hint">000</string>
+    <string name="space">" "</string>
+    <string name="default_card_no">#### #### #### ####</string>
+    <string name="autgorized_signature">Authorized signature</string>
+    <string name="pay">Pay</string>
+
+
+    // app settings values
+    <string name="hint_email">البريد الالكتروني</string>
+    <string name="hint_password">الرقم السري</string>
+    <string name="hint_name">اسم المستخدم</string>
+    <string name="hint_new_email">enter new email</string>
+    <string name="btn_change">change</string>
+    <string name="new_pass">new password</string>
+    <string name="btn_send">send email</string>
+    <string name="btn_remove">remove account</string>
+    <string name="change_email">change email</string>
+    <string name="change_password">change password</string>
+    <string name="send_password_reset_email">send password reset email</string>
+    <string name="remove_user">remove account</string>
+    <string name="btn_sign_out">sign out</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_message">Messages</string>
+    <string name="build_your_event">Build your event</string>
+
+
+
+    // Auth string values
+    <string name="sign_up"> انشاء حساب </string>
+    <string name="sign_in"> تسجيل الدخول </string>
+    <string name="remember_me">تذكرني </string>
+    <string name="forget_password">نسيت كلمة السر؟</string>
+    <string name="login"> تسجيل الدخول </string>
+    <string name="login_with_facebook"> دخول باستخدام الفيسبوك </string>
+    <string name="don_t_have_an_account">ليس لديك حساب</string>
+    <string name="create_one">انشاء واحدا</string>
+    <string name="skip">تخطي</string>
+    <string name="password_hint">كلمة المرور</string>
+    <string name="email_hint">البريد الالكتروني</string>
+
+    <string name="user_name">اسم المستخدم</string>
+    <string name="country_hint"> الدولة </string>
+
+    <string name="forgot_your_password">هل نسيت كلمة السر ؟</string>
+    <string name="send_verification_code">ارسال كود التحقق</string>
+    <string name="enter_verification_code">ادخل الكود</string>
+    <string name="please_enter_the_verification_code_you_are_received_from">من فضلك ادخل الكود المستلم عبر بريدك الالكتروني</string>
+    <string name="verification_code">الكود</string>
+    <string name="confirm">تاكيد</string>
+    <string name="resend"> اعادة ارسال؟ </string>
+    <string name="cancel">الغاء</string>
+    <string name="submit">تكيد</string>
+    <string name="view_supported_banks_and_cards">View Supported Banks and Cards</string>
+    <string name="full_services_event">Full Services Event</string>
+    <string name="log_out">خروج</string>
+    <string name="add_to_basket">اضافة الي السلة</string>
+
+    <string name="product_name"> اسم المنتج </string>
+    <string name="available_amount"> الكمية المتاحة</string>
+    <string name="product_price">سعر المنتج</string>
+    <string name="quantity">الكمية</string>
+    <string name="days">الايام</string>
+    <string name="start_date">بداية التاريخ</string>
+    <string name="startdate_productstate">متاح</string>
+    <string name="end_date">نهاية التاريخ</string>
+    <string name="enddate_productstate"> غير متاح</string>
+    <string name="event_location">مكان طلب المنتج</string>
+
+    <string name="language"> اللغة </string>
+    <string name="choose_language">اختار اللغة</string>
+    <string name="arabic">عربي </string>
+    <string name="english">انجليزي</string>
+
+    <string name="manage_account">اعدادا الحساب</string>
+    <string name="app_settings">اعدادات التطبيق</string>
+
+    <string name="single_sofa"> SINGLE SOFA </string>
+    <string name="city_hint"> المدينة </string>
+    <string name="mobile_hint"> الموبايل </string>
+    <string name="order_now"> اطلب الان </string>
+
+    <string name="city">المدينة</string>
+    <string name="country">الدولة</string>
+    <string name="full_name">اسم المستخدم</string>
+    <string name="user_information">المعلومات الشخصية</string>
+    <string name="name">الاسم</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="mobile"> الموبايل </string>
+
+
+    <string name="old_password_hint"> الرقم السري القديم </string>
+    <string name="new_password_hint"> الرقم السري الجديد </string>
+    <string name="confirm_password_hint">الرقم السري مرة اخري</string>
+    <string name="your_are_not_login"> انت لست مستخدم </string>
+    <string name="login_now"> سجل دخولك الان </string>
+
+    <string name="enter_password"> استرجاع الرقم السري</string>
+    <string name="reset_password">استرجاع كلمة المرور</string>
+    <string name="your_cart_is_empty">السلة فارغة</string>
+    <string name="start_shopping">تسوق الان</string>
+    <string name="remove_item">مسح العنصر</string>
+    <string name="product_countryevent">Event Country Location</string>
+    <string name="product_cityevent">Event City Location</string>
+
+
+    <string name="forgot_password">
+        هل نسيت كلمة السر ؟ انت تحتاج ان تكتب البريد الالكتروني الخاص بك ، ثم نرسل اليك رمزا للاستعادته
+    </string>
+
+
+    <string name="note_one">
+        before you receive items you should double check if it is ok becouse you should handover same as you receive
+    </string>
+
+    <string name="note_two">
+        whenever you will receive you should have to give money cash orcheck as warranty and when you handover we will return youyour money or check
+    </string>
+
+    <string name="note_three">
+        the price not included the transportation and fixing it is willadd to your bill efore you pay
+    </string>
+
+</resources>

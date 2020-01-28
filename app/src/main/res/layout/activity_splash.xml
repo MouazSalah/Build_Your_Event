@@ -1,0 +1,62 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_ground"
+    tools:context=".ui.auth.SplashActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/splash_layout"
+            android:background="@drawable/back_ground"
+            >
+                <ImageView
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/app_logo" />
+
+                <TextView
+                    android:id="@+id/arabic_language_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/auth_buttons"
+                    android:text="عربي"
+                    android:textSize="16sp"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:padding="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="6dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/english_language_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/auth_buttons"
+                    android:text="ُEnglish"
+                    android:textSize="16sp"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:textStyle="bold" />
+        </LinearLayout>
+
+</RelativeLayout>

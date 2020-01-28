@@ -1,0 +1,151 @@
+<resources>
+    <string name="app_name">Build Your Event</string>
+
+
+    <string name="forgot_password"> Forgot You Password? You need to enter you registered email address, we will send the recovery code to your email</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="title_home"> Products </string>
+    <string name="title_dashboard"> Dashboard </string>
+    <string name="title_notifications"> Favories </string>
+    <string name="title_profile"> Profile </string>
+    <string name="title_Settings"> Setting </string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="card_holder">Card Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="valid_thru">Valid Thru</string>
+    <string name="mm">MM</string>
+    <string name="YY">YY</string>
+    <string name="date_hint">MM/YY</string>
+    <string name="cvv">CVV</string>
+    <string name="cvv_hint">000</string>
+    <string name="space">" "</string>
+    <string name="default_card_no">#### #### #### ####</string>
+    <string name="autgorized_signature">Authorized signature</string>
+    <string name="pay">Pay</string>
+
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="hint_new_email">enter new email</string>
+    <string name="btn_change">change</string>
+    <string name="new_pass">new password</string>
+    <string name="btn_send">send email</string>
+    <string name="btn_remove">remove account</string>
+    <string name="change_email">change email</string>
+    <string name="change_password">change password</string>
+    <string name="send_password_reset_email">send password reset email</string>
+    <string name="remove_user">remove account</string>
+    <string name="btn_sign_out">sign out</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="password_hint">Password</string>
+    <string name="email_hint">Email</string>
+    <string name="title_message">Messages</string>
+    <string name="build_your_event">Build your event</string>
+
+
+    // auth string values
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="login">Login</string>
+    <string name="login_with_facebook">Login with facebook</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="create_one">Create one</string>
+    <string name="skip">Skip</string>
+    <string name="user_name">Username</string>
+    <string name="country_hint">Country</string>
+
+
+    <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="send_verification_code">Send verification code</string>
+    <string name="enter_verification_code">Enter verification code</string>
+    <string name="please_enter_the_verification_code_you_are_received_from">Please enter the verification code you are received from</string>
+    <string name="verification_code">verification code</string>
+    <string name="confirm">Confirm</string>
+    <string name="resend">Resend?</string>
+
+
+    <string name="note_one">
+        1- before you receive items you should double check if it is ok becouse you should handover same as you receive
+    </string>
+
+    <string name="note_two">
+        2- whenever you will receive you should have to give money cash orcheck as warranty and when you handover we will return youyour money or check
+    </string>
+
+    <string name="note_three">
+        3- the price not included the transportation and fixing it is willadd to your bill efore you pay
+    </string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="view_supported_banks_and_cards">View Supported Banks and Cards</string>
+    <string name="full_services_event">Full Services Event</string>
+    <string name="log_out">Log Out</string>
+    <string name="add_to_basket">Add To Basket</string>
+    <string name="product_name">Product Name</string>
+    <string name="available_amount">Available Amount</string>
+    <string name="product_price">50 AED perDay</string>
+    <string name="quantity">Qty</string>
+    <string name="days">Days</string>
+    <string name="start_date">start Date</string>
+    <string name="startdate_productstate">availale</string>
+    <string name="end_date">end Date</string>
+    <string name="enddate_productstate">not availale</string>
+    <string name="event_location">Event City Location</string>
+    <string name="language">Language</string>
+    <string name="choose_language">Pick a language</string>
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
+    <string name="manage_account">Manage Account</string>
+    <string name="app_settings">App Settings</string>
+    <string name="single_sofa">SINGLE SOFA</string>
+    <string name="city_hint">City</string>
+    <string name="mobile_hint">Mobile</string>
+    <string name="order_now">Order Now</string>
+    <string name="city">City:</string>
+    <string name="country">Country:</string>
+    <string name="full_name">Full Name</string>
+    <string name="user_information">User Information</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="old_password_hint">Old Password</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="your_are_not_login">Your are not login</string>
+    <string name="login_now">Login Now</string>
+    <string name="enter_password">enter new password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="your_cart_is_empty">Your Cart is Empty</string>
+    <string name="start_shopping">Start Shopping</string>
+    <string name="remove_item">Remove Item</string>
+
+    <string name="product_countryevent">Event Country </string>
+    <string name="product_cityevent">Event City </string>
+
+    <integer-array name="collections_images">
+        {R.drawable.watch0,R.drawable.summer1,R.drawable.summer2,R.drawable.winter,R.drawable.summer1,,R.drawable.winter,}
+        R.drawable.watch0,R.drawable.summer1,R.drawable.summer2,R.drawable.winter,R.drawable.summer1,
+        R.drawable.summer1};
+    </integer-array>
+
+    <string-array name="collections_titles">
+        {"Furnitures","Technologies","Tents and Sunshades","Captures and Recorder","Sunglasses",
+        "Human Resources"
+        "Plants" , "Tools" , "Hospitality" , "Online Services" , "Decoration and Parts" , "Stages",
+        "Fun Zone" , "Fireworks and Shows"
+        , "Traditional", "Booths and Food Trucks", "Advertising" }
+    </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_location">Map</string>
+    <string name="select_location_from_map">Select Location From Map</string>
+
+
+</resources>

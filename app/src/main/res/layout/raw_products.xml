@@ -1,0 +1,65 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="150dp"
+    android:layout_height="170dp"
+    android:layout_marginBottom="20dp"
+    android:id="@+id/rawproduct_layout"
+    android:layout_margin="10dp"
+    android:background="@drawable/item_product_background"
+    >
+
+    <ImageView
+        android:id="@+id/itemproduct_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:background="#10403D"
+        android:layout_marginRight="1dp"
+        android:layout_marginLeft="1dp"
+        >
+
+        <TextView
+            android:id="@+id/itemproduct_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="T shirt"
+            android:textColor="#FFF"
+            android:layout_marginStart="5dp"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/itemproduct_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="60$"
+            android:textColor="#34B4AB"
+            android:layout_marginStart="10dp"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        />
+
+
+</RelativeLayout>

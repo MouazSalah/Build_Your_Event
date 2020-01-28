@@ -1,0 +1,28 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="one_unit">4dp</dimen>
+    <dimen name="two_unit">8dp</dimen>
+    <dimen name="three_unit">12dp</dimen>
+    <dimen name="four_unit">16dp</dimen>
+    <dimen name="five_unit">20dp</dimen>
+    <dimen name="six_unit">24dp</dimen>
+    <dimen name="seven_unit">28dp</dimen>
+    <dimen name="eight_unit">32dp</dimen>
+    <dimen name="card_width">320dp</dimen>
+
+    <dimen name="item_normal_size_width">110dp</dimen>
+    <dimen name="item_normal_size_height">140dp</dimen>
+
+
+    <dimen name="item_small_size_width">90dp</dimen>
+    <dimen name="item_small_size_height">120dp</dimen>
+
+
+    <dimen name="normal_parent_size_height">320dp</dimen>
+    <dimen name="small_parent_size_height">180dp</dimen>
+
+
+</resources>

@@ -1,0 +1,60 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="70dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:id="@+id/norification_title"
+        android:text="you get w new notification for your app"
+        android:textColor="@color/DarkSlateGrey"
+        android:padding="5dp"
+        android:paddingEnd="30dp"
+        android:lines="2"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:srcCompat="@drawable/alarm_icon"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/notificationtime_textview"
+            android:text="15 minute ago"
+            android:textSize="12sp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBottom="@+id/norification_title"
+            android:textColor="@color/LightGrey"
+            />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/DarkGray"
+        android:layout_marginTop="8dp"
+        />
+
+</LinearLayout>

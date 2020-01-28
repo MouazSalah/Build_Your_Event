@@ -1,0 +1,42 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/navigation_side_menu"
+        android:icon="@drawable/sort_icon_white"
+        android:iconTint="@color/white"
+        android:title="" />
+
+    <item
+        android:id="@+id/navigation_messages"
+        android:icon="@drawable/alarm_icon"
+        android:iconTint="@color/white"
+        android:title=""
+        />
+
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home_icon"
+        android:tint="@color/white"
+        android:title=""
+        />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/user_icon"
+        android:tint="@color/white"
+        android:title=""/>
+
+
+    <item
+        android:id="@+id/navigation_Setting"
+        android:icon="@drawable/settingss_icon"
+        android:title="" />
+
+</menu>
