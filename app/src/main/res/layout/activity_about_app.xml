@@ -1,0 +1,60 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/back_ground"
+    tools:context=".ui.home.AboutAppActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Build Your Event"
+            android:textSize="25sp"
+            android:textColor="#fff"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="عن الشركة"
+        android:id="@+id/title"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:layout_gravity="right"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/aboutapp_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about_app_text"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:textStyle="bold" />
+    </LinearLayout>
+
+</ScrollView>

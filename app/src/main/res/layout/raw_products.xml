@@ -2,21 +2,22 @@
     version="1.0"
     encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="150dp"
     android:layout_height="170dp"
     android:layout_marginBottom="20dp"
     android:id="@+id/rawproduct_layout"
     android:layout_margin="10dp"
-    android:background="@drawable/item_product_background"
-    >
+    android:background="@drawable/item_product_background">
 
     <ImageView
         android:id="@+id/itemproduct_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:srcCompat="@drawable/user_icon"
         />
 
     <LinearLayout

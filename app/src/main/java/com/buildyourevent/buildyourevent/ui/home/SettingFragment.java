@@ -27,7 +27,7 @@ import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutRequest;
 import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
-import com.buildyourevent.buildyourevent.viewmodel.AuthViewModel;
+import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
 import java.util.Locale;
 
@@ -43,28 +43,30 @@ public class SettingFragment extends Fragment
    /* final String[] Options = {getString(R.string.arabic), getString(R.string.english)};
     AlertDialog.Builder langDialog;*/
 
-   AuthViewModel viewModel;
-
+   UserViewModel viewModel;
 
    @BindView(R.id.settings_layout) LinearLayout settingLayout;
    @BindView(R.id.notlogin_layout) LinearLayout notLoginLayout;
    @BindView(R.id.changepassword_layout) LinearLayout changePasswordLayout;
+   @BindView(R.id.oldpassword_edittext) EditText oldPasswordEditText;
+    @BindView(R.id.newpassword_edittext) EditText newPasswordEditText;
+    @BindView(R.id.confirmchangepassword_edittext) EditText confirmPasswordEditText;
+    @BindView(R.id.cancel_change_password_button) TextView cancelChangePasswordBtn;
+    @BindView(R.id.confirm_change_password_button) TextView confirmChangePasswordBtn;
+
 
     @BindView(R.id.change_password_textview) TextView showChangePassDialog;
-
+/*
     EditText oldPasswordEditText ;
     EditText newPasswordEditText ;
     EditText confirmPasswordEditText;
     TextView cancelChangePasswordBtn ;
-    TextView confirmChangePasswordBtn ;
+    TextView confirmChangePasswordBtn ;*/
 
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
     SharedPrefMethods prefMethods;
     UserData userData;
 
     final String[] Options = {"Arabic", "English"};
-    AlertDialog.Builder langDialog;
 
     String languageToLoad ;
     String preferedLanguage;
@@ -75,7 +77,7 @@ public class SettingFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_setting, container, false);
         ButterKnife.bind(this, root);
 
-        viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         prefMethods = new SharedPrefMethods(getActivity());
         preferedLanguage = prefMethods.getUserLanguage();
@@ -127,21 +129,19 @@ public class SettingFragment extends Fragment
     void showChangePasswordDialog(View v)
     {
         changePasswordLayout.setVisibility(View.VISIBLE);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.change_password_layout, null);
 
-        oldPasswordEditText = (EditText) dialogView.findViewById(R.id.oldpassword_edittext);
+       /* oldPasswordEditText = (EditText) dialogView.findViewById(R.id.oldpassword_edittext);
         newPasswordEditText = (EditText) dialogView.findViewById(R.id.newpassword_edittext);
         confirmPasswordEditText = (EditText) dialogView.findViewById(R.id.confirmpassword_edittext);
         cancelChangePasswordBtn = (TextView) dialogView.findViewById(R.id.cancel_change_password_button);
         confirmChangePasswordBtn = (TextView) dialogView.findViewById(R.id.confirm_change_password_button);
-
+*/
         cancelChangePasswordBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                alertDialog.hide();
+                changePasswordLayout.setVisibility(View.GONE);
             }
         });
         confirmChangePasswordBtn.setOnClickListener(new View.OnClickListener()
@@ -154,14 +154,7 @@ public class SettingFragment extends Fragment
         });
 
 
-        dialogBuilder = new AlertDialog.Builder(getActivity());
-
-        dialogBuilder.setView(dialogView);
-
-        alertDialog = dialogBuilder.create();
-        alertDialog.show();
-
-         oldPasswordEditText = (EditText) dialogView.findViewById(R.id.oldpassword_edittext);
+         /*oldPasswordEditText = (EditText) dialogView.findViewById(R.id.oldpassword_edittext);
          newPasswordEditText = (EditText) dialogView.findViewById(R.id.newpassword_edittext);
          confirmPasswordEditText = (EditText) dialogView.findViewById(R.id.confirmpassword_edittext);
          cancelChangePasswordBtn = (TextView) dialogView.findViewById(R.id.cancel_change_password_button);
@@ -182,7 +175,7 @@ public class SettingFragment extends Fragment
             {
                 confirmChangePasswordTask();
             }
-        });
+        });*/
     }
 
 
@@ -216,8 +209,8 @@ public class SettingFragment extends Fragment
 
     private void changePasswordTask()
     {
-        String email = "mouazsalah627@gmail.com";
-        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(email, oldPasswordEditText.getText().toString(),
+
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(userData.getEmail(), oldPasswordEditText.getText().toString(),
                     newPasswordEditText.getText().toString());
 
         viewModel.changePassword(changePasswordRequest).observe(this, new Observer<ChangePasswordResponse>()
@@ -227,7 +220,7 @@ public class SettingFragment extends Fragment
             {
                 if (changePasswordResponse.getStatus() == 200)
                 {
-                    alertDialog.dismiss();
+                   changePasswordLayout.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "Changed Successfully", Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -262,6 +255,16 @@ public class SettingFragment extends Fragment
         customType(getActivity(),"left-to-right");
         getActivity().finish();
     }
+
+    @OnClick(R.id.aboutapp_textview)
+    void openAboutAppActivity(View v)
+    {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        customType(getActivity(),"left-to-right");
+        getActivity().finish();
+    }
+
 
     @OnClick(R.id.loginnow_button)
     void LoginNow(View v)

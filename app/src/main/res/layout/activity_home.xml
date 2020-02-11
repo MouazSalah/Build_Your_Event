@@ -55,6 +55,8 @@
         android:id="@+id/side_nav_view"
         android:layout_width="300dp"
         android:layout_height="match_parent"
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/white"
         android:layout_gravity="start"
         android:background="#165854"
         app:headerLayout="@layout/nav_header"

@@ -1,9 +1,7 @@
 package com.buildyourevent.buildyourevent.ui.products;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,31 +11,31 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.product.ProductData;
+import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
-import com.hzn.lib.EasyTransition;
-import com.hzn.lib.EasyTransitionOptions;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyViewHolder>
 {
     public Context mContext;
     public List<ProductData> productsList;
+    SharedPrefMethods prefMethods;
 
 
     public ProductsAdapter(Context mContext, List<ProductData> productsList)
     {
         this.mContext = mContext;
         this.productsList = productsList;
+        prefMethods = new SharedPrefMethods(mContext);
     }
 
     @Override
@@ -63,14 +61,23 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(mContext.getApplicationContext(), ProductDetailsActivity.class);
-                intent.putExtra(Codes.PRODUCT_ID, product.getProductId());
+               /* Intent intent = new Intent(mContext.getApplicationContext(), ProductDetailsActivity.class);
+                prefMethods.saveProductId(product.getProductId());
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 // ready for transition options
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
+
+                prefMethods.saveProductId(product.getProductId());
+                Fragment currentFragment = new ProductDetailsFragment();
+                FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_host_fragment, currentFragment);
+                ft.commit();
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {

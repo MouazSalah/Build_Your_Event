@@ -150,6 +150,7 @@ public class UserRepository
                     {
                         subCategoriesList = (ArrayList<SubCategoryData>) subCategoryResponse.getData();
                         subCategoryMutableLiveData.setValue(subCategoriesList);
+                        Log.e(TAG, "" + response.body().getData().toString());
                     }
                 }
             }
@@ -164,7 +165,7 @@ public class UserRepository
     }
 
 
-    public MutableLiveData<List<ProductData>> getProductsMutableLiveData(int subCategoryId)
+    public MutableLiveData<List<ProductData>> getProductsMutableLiveData(String subCategoryId)
     {
         Call<ProductResponse> responseCall = interfaceApi.getAllProducts(subCategoryId);
         responseCall.enqueue(new Callback<ProductResponse>()
@@ -176,14 +177,16 @@ public class UserRepository
                 {
                     Log.d(Codes.APP_TAGS, "product not success" + response.message());
                 }
-                else
-                {
+                else {
                     ProductResponse productResponse = response.body();
 
                     if (productResponse != null && productResponse.getData() != null)
                     {
-                        productsList = (ArrayList<ProductData>) productResponse.getData();
-                        productsMutableLiveData.setValue(productsList);
+                        if (productResponse.getStatus() == Codes.RESPONSE_SUCCESS) { //you must do this in every response
+                            productsList = (ArrayList<ProductData>) productResponse.getData();
+                            productsMutableLiveData.setValue(productsList);
+                            Log.e("rr", "onResponse: "+productsList.toString());
+                        }
                     }
                 }
             }
@@ -273,6 +276,7 @@ public class UserRepository
                 }
                 else
                 {
+                    Log.d(Codes.APP_TAGS, "add to carts success " + response.body().toString());
                     AddToCartResponse addToCartResponse = response.body();
                     addToCartsMutableLiveData.setValue(addToCartResponse);
                 }

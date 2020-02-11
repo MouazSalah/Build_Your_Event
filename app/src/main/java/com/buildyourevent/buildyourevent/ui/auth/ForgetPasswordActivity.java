@@ -5,15 +5,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.code.SendCodeResponse;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.viewmodel.AuthViewModel;
+import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
+import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,16 +30,25 @@ public class ForgetPasswordActivity extends AppCompatActivity
 {
     @BindView(R.id.forgetpassword_email)
     EditText etEmail;
-    AuthViewModel viewModel;
+    UserViewModel viewModel;
+    @BindView(R.id.sendcode_progressBar)
+    ProgressBar verifyCodeProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        SharedPrefMethods prefMethods = new SharedPrefMethods(this);
+        Locale locale = new Locale(prefMethods.getUserLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         ButterKnife.bind(this);
 
-        viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
 
@@ -62,6 +76,7 @@ public class ForgetPasswordActivity extends AppCompatActivity
 
     private void sendCodeTask()
     {
+        verifyCodeProgressBar.setVisibility(View.VISIBLE);
         viewModel.sendCode(etEmail.getText().toString()).observe(this, new Observer<SendCodeResponse>()
         {
             @Override
@@ -74,10 +89,11 @@ public class ForgetPasswordActivity extends AppCompatActivity
                     intent.putExtra(Codes.VERIFY_CODE_INTENT, "reset_password");
                     startActivity(intent);
                     customType(ForgetPasswordActivity.this,"left-to-right");
-                    finish();
+                    verifyCodeProgressBar.setVisibility(View.GONE);
                 }
                 else
                 {
+                    verifyCodeProgressBar.setVisibility(View.GONE);
                     Toast.makeText(ForgetPasswordActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                 }
             }

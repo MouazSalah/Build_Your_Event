@@ -48,6 +48,22 @@
         android:textColor="#FFF"
         android:textSize="18sp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="#ACACAC"/>
+
+        <TextView
+            android:id="@+id/aboutapp_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:text="@string/about_app"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
 
     <View
         android:layout_width="match_parent"
@@ -111,7 +127,7 @@
 
     </LinearLayout>
 
-
+    <!-- change password layout-->
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
@@ -163,7 +179,7 @@
             android:layout_marginEnd="30dp" />
 
         <EditText
-            android:id="@+id/confirmpassword_edittext"
+            android:id="@+id/confirmchangepassword_edittext"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:hint="@string/confirm_password_hint"

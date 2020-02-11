@@ -1,3 +1,4 @@
+/*
 package com.buildyourevent.buildyourevent.utils;
 
 import android.content.Context;
@@ -5,9 +6,11 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+*/
 /**
  * Created by one on 20/2/16.
- */
+ *//*
+
 public class ExpandableHeightGridView extends GridView {
 
     boolean expanded = true;
@@ -57,4 +60,4 @@ public class ExpandableHeightGridView extends GridView {
     public void setExpanded(boolean expanded)
     {
         this.expanded = expanded;
-    } }
+    } }*/

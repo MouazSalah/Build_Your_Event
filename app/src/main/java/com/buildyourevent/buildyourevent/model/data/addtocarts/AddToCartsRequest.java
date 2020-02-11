@@ -37,8 +37,7 @@ public class AddToCartsRequest
     public AddToCartsRequest() {
     }
 
-    public AddToCartsRequest(double lat, double lan, int userId, int productId, int quantity, int daysNum,
-                             String startDay, String endDay, String apiToken, String address) {
+    public AddToCartsRequest(double lat, double lan, int userId, int productId, int quantity, int daysNum, String startDay, String endDay, String apiToken, String address) {
         this.lat = lat;
         this.lan = lan;
         this.userId = userId;

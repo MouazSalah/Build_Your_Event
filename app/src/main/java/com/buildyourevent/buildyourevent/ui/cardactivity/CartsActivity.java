@@ -2,6 +2,9 @@ package com.buildyourevent.buildyourevent.ui.cardactivity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,11 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,12 +32,13 @@ import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartReq
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
 import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
-import com.buildyourevent.buildyourevent.ui.products.SubCategoryAdapter;
+import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,14 +62,19 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        prefMethods = new SharedPrefMethods(this);
+        Locale locale = new Locale(prefMethods.getUserLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards);
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        prefMethods = new SharedPrefMethods(this);
-
-        prefMethods = new SharedPrefMethods(this);
         userData = prefMethods.getUserData();
 
         if (userData == null)
@@ -151,6 +159,9 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
                 {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(CartsActivity.this, "Try Again...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -176,29 +187,35 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
     @Override
     public void onItemCartClick(int position)
     {
-        new AlertDialog.Builder(this)
-                .setTitle("Deleting...")
-                .setMessage("Are you sure you want to delete this item?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        removeCartItem(position);
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-                    }
-                })
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
+        String [] items = {"Delete" , "Edit"};
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick a language");
+        builder.setItems(items, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    removeCartItem(position);
+                }
+                if (which == 1)
+                {
+                    prefMethods.saveProductId(cartsList.get(position).getProductId());
+
+                    Fragment currentFragment = new ProductsFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.nav_host_fragment, currentFragment);
+                    ft.commit();
+
+                    /*startActivity(new Intent(getApplicationContext(), ProductDetailsActivity.class));
+                    finish();*/
+                }
+            }
+        });
+        builder.show();
+    }
 
     private void removeCartItem(int position)
     {
@@ -211,9 +228,13 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
                 {
                     progressBar.setVisibility(View.GONE);
                     cartAdapter.notifyDataSetChanged();
-                    Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
+                    Fragment currentFragment = new ProductsFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.nav_host_fragment, currentFragment);
+                    ft.commit();
+                   /* Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
                     startActivity(intent);
-                    finish();
+                    finish();*/
                 }
                 else
                 {
@@ -228,8 +249,14 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
     public void onBackPressed()
     {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+
+        Fragment currentFragment = new ProductsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.nav_host_fragment, currentFragment);
+        ft.commit();
+
+      /*  Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
-        finish();
+        finish();*/
     }
 }

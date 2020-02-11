@@ -15,15 +15,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.MapsActivity" />
 
-   <!-- <Button
+    <Button
         android:id="@+id/select_location_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="8dp"
         android:background="@color/colorPrimary"
-        android:text="Select a location"
-        android:textColor="@android:color/white"/>-->
+        android:text="@string/select_a_location"
+        android:textColor="@android:color/white"/>
 
 </FrameLayout>
 

@@ -2,7 +2,7 @@ package com.buildyourevent.buildyourevent.model.data.product;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProductData {
+public class ProductData{
 
 	@SerializedName("available_quantity")
 	private int availableQuantity;
@@ -13,6 +13,9 @@ public class ProductData {
 	@SerializedName("updated_at")
 	private Object updatedAt;
 
+	@SerializedName("sub_cat_name")
+	private String subCatName;
+
 	@SerializedName("price")
 	private String price;
 
@@ -22,17 +25,20 @@ public class ProductData {
 	@SerializedName("product_id")
 	private int productId;
 
+	@SerializedName("sub_cat_id")
+	private int subCatId;
+
 	@SerializedName("name")
 	private String name;
-
-	@SerializedName("cat_id")
-	private int catId;
 
 	@SerializedName("created_at")
 	private Object createdAt;
 
 	@SerializedName("status")
 	private String status;
+
+	@SerializedName("sub_cat_image")
+	private String subCatImage;
 
 	public void setAvailableQuantity(int availableQuantity){
 		this.availableQuantity = availableQuantity;
@@ -56,6 +62,14 @@ public class ProductData {
 
 	public Object getUpdatedAt(){
 		return updatedAt;
+	}
+
+	public void setSubCatName(String subCatName){
+		this.subCatName = subCatName;
+	}
+
+	public String getSubCatName(){
+		return subCatName;
 	}
 
 	public void setPrice(String price){
@@ -82,20 +96,20 @@ public class ProductData {
 		return productId;
 	}
 
+	public void setSubCatId(int subCatId){
+		this.subCatId = subCatId;
+	}
+
+	public int getSubCatId(){
+		return subCatId;
+	}
+
 	public void setName(String name){
 		this.name = name;
 	}
 
 	public String getName(){
 		return name;
-	}
-
-	public void setCatId(int catId){
-		this.catId = catId;
-	}
-
-	public int getCatId(){
-		return catId;
 	}
 
 	public void setCreatedAt(Object createdAt){
@@ -114,20 +128,30 @@ public class ProductData {
 		return status;
 	}
 
+	public void setSubCatImage(String subCatImage){
+		this.subCatImage = subCatImage;
+	}
+
+	public String getSubCatImage(){
+		return subCatImage;
+	}
+
 	@Override
  	public String toString(){
 		return 
-			"ProductData{" +
+			"DataItem{" + 
 			"available_quantity = '" + availableQuantity + '\'' + 
 			",image = '" + image + '\'' + 
 			",updated_at = '" + updatedAt + '\'' + 
+			",sub_cat_name = '" + subCatName + '\'' + 
 			",price = '" + price + '\'' + 
 			",owner_id = '" + ownerId + '\'' + 
 			",product_id = '" + productId + '\'' + 
+			",sub_cat_id = '" + subCatId + '\'' + 
 			",name = '" + name + '\'' + 
-			",cat_id = '" + catId + '\'' + 
 			",created_at = '" + createdAt + '\'' + 
 			",status = '" + status + '\'' + 
+			",sub_cat_image = '" + subCatImage + '\'' + 
 			"}";
 		}
 }

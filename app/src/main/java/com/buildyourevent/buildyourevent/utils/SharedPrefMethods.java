@@ -2,11 +2,17 @@ package com.buildyourevent.buildyourevent.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SharedPrefMethods
 {
@@ -25,6 +31,7 @@ public class SharedPrefMethods
     {
         editor.putString(Codes.SHARED_PREF_LANGUAGE, lang);
         editor.commit();
+        Log.d(Codes.APP_TAGS, "shared language: " + lang);
     }
 
     public String getUserLanguage()
@@ -35,7 +42,7 @@ public class SharedPrefMethods
     public void deleteUserLanguage()
     {
         editor.remove(Codes.SHARED_PREF_LANGUAGE);
-        editor.apply();
+        editor.commit();
     }
 
     public void SaveUserData(UserData userData)
@@ -43,7 +50,7 @@ public class SharedPrefMethods
         Gson gson = new Gson();
         String json = gson.toJson(userData); // myObject - instance of MyObject
         editor.putString(Codes.SHARED_PREF_USER_DATA, json);
-        editor.apply();
+        editor.commit();
     }
 
     public UserData getUserData()
@@ -60,7 +67,7 @@ public class SharedPrefMethods
     public void deleteUserData()
     {
         editor.remove(Codes.SHARED_PREF_USER_DATA);
-        editor.apply();
+        editor.commit();
     }
 
     public void saveSubCategoryData(SubCategoryData subCategoryData)
@@ -68,7 +75,7 @@ public class SharedPrefMethods
         Gson gson = new Gson();
         String json = gson.toJson(subCategoryData); // myObject - instance of MyObject
         editor.putString(Codes.SHARED_PREF_SUBCATEGORY_DATA, json);
-        editor.apply();
+        editor.commit();
     }
 
     public SubCategoryData getSubCategoryData()
@@ -81,6 +88,32 @@ public class SharedPrefMethods
 
         return subCategoryData;
     }
+
+    public void saveCategoryId(int id)
+    {
+        editor.putInt(Codes.CATEGORY_ID, id);
+        editor.commit();
+    }
+
+    public int getCategoryId()
+    {
+        return pref.getInt(Codes.CATEGORY_ID, 1);
+    }
+
+
+
+
+    public void saveProductId(int id)
+    {
+        editor.putInt(Codes.PRODUCT_ID, id);
+        editor.commit();
+    }
+
+    public int getProductId()
+    {
+        return pref.getInt(Codes.PRODUCT_ID, 1);
+    }
+
 
 
     public void setSmall(boolean isSmall)
@@ -104,5 +137,28 @@ public class SharedPrefMethods
     public boolean isSelected()
     {
         return pref.getBoolean("s", false);
+    }
+
+
+    public  void saveUserCandidates(List<Double> list)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        editor.putString(Codes.SHARED_PREF_USER_LATLNG, json);
+        editor.commit();
+    }
+
+    public List<Double> getUserCandidates()
+    {
+        Gson gson = new Gson();
+        List<Double> productFromShared = new ArrayList<>();
+        String jsonPreferences = pref.getString(Codes.SHARED_PREF_USER_LATLNG, "");
+
+        Type type = new TypeToken<List<Double>>() {}.getType();
+
+        productFromShared = gson.fromJson(jsonPreferences, type);
+
+        return productFromShared;
     }
 }

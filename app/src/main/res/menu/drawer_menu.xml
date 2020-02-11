@@ -12,12 +12,15 @@
         <item
             android:id="@+id/nav_profileoption"
             android:icon="@drawable/user_icon"
-            android:title="Profile" />
+            android:iconTint="@color/white"
+            android:title="Profile"
+            />
 
 
         <item
             android:id="@+id/nav_cartsoption"
             android:icon="@drawable/home_icon"
+            android:iconTint="@color/white"
             android:title="Carts" />
 
     </group>
@@ -26,11 +29,17 @@
         <menu>
             <item
                 android:id="@+id/nav_settinoption"
-                android:title="Setting" />
+                android:title="Setting"
+                />
 
             <item
                 android:id="@+id/nav_logoutoption"
                 android:title="Logout" />
+
+            <item
+                android:id="@+id/nav_aboutusoption"
+                android:title="About Us" />
+
         </menu>
     </item>
 

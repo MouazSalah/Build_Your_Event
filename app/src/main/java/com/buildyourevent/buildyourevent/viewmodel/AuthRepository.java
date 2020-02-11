@@ -20,12 +20,13 @@ import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.auth.login.LoginResponse;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutRequest;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
-import com.buildyourevent.buildyourevent.model.auth.register.RegisterRequest;
 import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,9 +91,11 @@ public class AuthRepository
         return loginResponseMutableLiveData;
     }
 
-    public MutableLiveData<RegisterResponse> registerNewUser(RegisterRequest registerRequest)
+    public MutableLiveData<RegisterResponse> registerNewUser(MultipartBody.Part pic, RequestBody toString, RequestBody toString1, RequestBody toString2,
+                                                             RequestBody toString3, RequestBody countryId, RequestBody cityId)
     {
-        Call<RegisterResponse> responseCall = interfaceApi.createNewUser(registerRequest);
+        Call<RegisterResponse> responseCall = interfaceApi.createNewUser(pic, toString,  toString1,  toString2,
+                                                                       toString3,  countryId,  cityId);
         responseCall.enqueue(new Callback<RegisterResponse>()
         {
             @Override

@@ -12,7 +12,7 @@ public class SubCategoryData {
 	@SerializedName("updated_at")
 	private Object updatedAt;
 
-	@SerializedName("sub_cat_id")
+	@SerializedName("id")
 	private int subCatId;
 
 	@SerializedName("subcategory_name")

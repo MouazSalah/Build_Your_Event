@@ -3,8 +3,8 @@ package com.buildyourevent.buildyourevent.ui.auth;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +12,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,20 +25,25 @@ import com.buildyourevent.buildyourevent.model.auth.register.RegisterRequest;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.viewmodel.AuthViewModel;
+import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
+import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -50,11 +57,14 @@ public class RegisterActivity extends AppCompatActivity
     EditText etPassword;
     @BindView(R.id.register_mobile) EditText etMobile;
 
-    @BindView(R.id.country_spinner)
-    Spinner countrySpinner;
-    @BindView(R.id.city_spinner)
-    Spinner citySpinner;
+    @BindView(R.id.country_spinner) Spinner countrySpinner;
+    @BindView(R.id.city_spinner) Spinner citySpinner;
+
     @BindView(R.id.register_userimage) CircleImageView userImage;
+    @BindView(R.id.register_progressbar)
+    ProgressBar registerProgressBar;
+    @BindView(R.id.conditions_checkbox)
+    CheckBox conditionCheckBox;
 
     int countryId, cityId;
 
@@ -64,16 +74,27 @@ public class RegisterActivity extends AppCompatActivity
     List<CountryData> countriesList = new ArrayList<>();
     List<CityData> citiesList = new ArrayList<>();
 
-    AuthViewModel viewModel;
+    File imageFile;
+    UserViewModel viewModel;
+
+    MultipartBody.Part pic = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        SharedPrefMethods prefMethods = new SharedPrefMethods(this);
+        Locale locale = new Locale(prefMethods.getUserLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
-        viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         viewModel.getAllCountries().observe(this, new Observer<List<CountryData>>() {
             @Override
@@ -84,19 +105,25 @@ public class RegisterActivity extends AppCompatActivity
         });
     }
 
-
     @OnClick(R.id.register_signup_button)
     void onSignupButton(View v)
     {
-        Toast.makeText(this, "onclick register", Toast.LENGTH_SHORT).show();
+        registerProgressBar.setVisibility(View.VISIBLE);
         if (checkMandatoryFields())
         {
             RegisterRequest userRequest = new RegisterRequest(etUserName.getText().toString(),etEmail.getText().toString() ,
                     etPassword.getText().toString(), etMobile.getText().toString(), countryId, cityId, bitmapPhoto);
 
+            RequestBody user_name = RequestBody.create(MediaType.parse("text/plain"), etUserName.getText().toString());
+            RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), etEmail.getText().toString());
+            RequestBody user_password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
+            RequestBody user_mobile = RequestBody.create(MediaType.parse("text/plain"), etMobile.getText().toString());
+            RequestBody user_countryId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryId));
+            RequestBody user_cityId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(cityId));
+
             Log.d(Codes.APP_TAGS, "request format: // " + userRequest);
 
-            viewModel.registerUser(userRequest).observe(this, new Observer<RegisterResponse>()
+            viewModel.registerUser(pic, user_name, user_email, user_password, user_mobile, user_countryId, user_cityId).observe(this, new Observer<RegisterResponse>()
             {
                 @Override
                 public void onChanged(RegisterResponse registerResponse)
@@ -105,12 +132,19 @@ public class RegisterActivity extends AppCompatActivity
                     {
                         Log.d(Codes.APP_TAGS, "register activity");
                         Log.d(Codes.APP_TAGS, "register activity" + registerResponse.getMessage());
-                        sendCodeForRegister();
+                        sendCode("register");
+                        registerProgressBar.setVisibility(View.GONE);
+                    }
+                    else if (registerResponse.getMessage().equals("The email has already been taken."))
+                    {
+                        Toast.makeText(RegisterActivity.this, getString(R.string.email_is_take), Toast.LENGTH_SHORT).show();
+                        sendCode("reset_password");
+                        registerProgressBar.setVisibility(View.GONE);
                     }
                     else
                     {
-                        Log.d(Codes.APP_TAGS, "regisactivity: failed = " +registerResponse.getMessage());
-                        Toast.makeText(RegisterActivity.this, "Try Again...", Toast.LENGTH_SHORT).show();
+                        registerProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(RegisterActivity.this, "" + registerResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -123,31 +157,36 @@ public class RegisterActivity extends AppCompatActivity
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if (etUserName.getText().toString().isEmpty()) {
-            etUserName.setError("enter name");
+            etUserName.setError(getString(R.string.enter_name));
             return false;
         } else if (etEmail.getText().toString().isEmpty()) {
-            etEmail.setError("enter email");
+            etEmail.setError(getString(R.string.enter_email));
             return false;
         } else if (etPassword.getText().toString().isEmpty()) {
-            etPassword.setError("enter password");
+            etPassword.setError(getString(R.string.enter_password));
             return false;
         } else if (!etEmail.getText().toString().matches(emailPattern)) {
-            etEmail.setError("invalid email");
+            etEmail.setError(getString(R.string.invalid_email));
             return false;
         } else if (etPassword.getText().toString().trim().length() < 6) {
-            etPassword.setError("short password");
+            etPassword.setError(getString(R.string.short_password));
             return false;
         }
         else if (etMobile.getText().toString().isEmpty())
         {
-            etMobile.setError("enter mobile");
+            etMobile.setError(getString(R.string.enter_mobile));
+            return false;
+        }
+        else if (!conditionCheckBox.isChecked())
+        {
+            Toast.makeText(this, getString(R.string.condition_toast), Toast.LENGTH_SHORT).show();
             return false;
         }
         else if (countrySpinner == null || countrySpinner.getSelectedItem() == null) {
-            Toast.makeText(this, "Choose Your Country", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.choose_country), Toast.LENGTH_SHORT).show();
             return false;
         } else if (citiesList == null || citySpinner.getSelectedItem() == null) {
-            Toast.makeText(this, "Choose Your City", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.choose_city), Toast.LENGTH_SHORT).show();
             return false;
         }
         else
@@ -156,7 +195,7 @@ public class RegisterActivity extends AppCompatActivity
         }
     }
 
-    private void sendCodeForRegister()
+    private void sendCode(String intentValue)
     {
         viewModel.sendCode(etEmail.getText().toString()).observe(this, new Observer<SendCodeResponse>() {
             @Override
@@ -164,15 +203,13 @@ public class RegisterActivity extends AppCompatActivity
                 if (sendCodeResponse.getStatus() == 200)
                 {
                     Intent intent = new Intent(getApplicationContext(), VerifyCodeActivity.class);
-                    intent.putExtra(Codes.VERIFY_CODE_INTENT, "register");
+                    intent.putExtra(Codes.VERIFY_CODE_INTENT, intentValue);
                     intent.putExtra(Codes.RECOVERY_EMAIL, etEmail.getText().toString());
                     startActivity(intent);
-                    finish();
                 }
             }
         });
     }
-
 
     private void buildCountriesSpinner()
     {
@@ -263,36 +300,51 @@ public class RegisterActivity extends AppCompatActivity
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
-            Uri uri = data.getData();
-            File fil = new File(uri.getLastPathSegment());
+            Uri mImageUri = data.getData();
+            imageFile = new File(mImageUri.getLastPathSegment());
+            try {
+                bitmapPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            userImage.setImageBitmap(bitmapPhoto);
+            InputStream is = null;
             try
             {
-                bitmapPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                userImage.setImageBitmap(bitmapPhoto);
-            } catch (IOException e)
+                is = getContentResolver().openInputStream(data.getData());
+                uploadImage(getBytes(is));
+            } catch (FileNotFoundException e)
             {
                 e.printStackTrace();
             }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
 
-    private void persistImage() throws IOException
+    public byte[] getBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
+
+        int buffSize = 1024;
+        byte[] buff = new byte[buffSize];
+
+        int len = 0;
+        while ((len = is.read(buff)) != -1) {
+            byteBuff.write(buff, 0, len);
+        }
+
+        return byteBuff.toByteArray();
+    }
+
+
+    private void uploadImage(byte[] imageBytes)
     {
-        //create a file to write bitmap data
-        File f = new File(getCacheDir(), "userImageFile" + ".jpg");
-        f.createNewFile();
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
 
-        //Convert bitmap to byte array
-        Bitmap bitmap = bitmapPhoto;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-        byte[] bitmapdata = bos.toByteArray();
+        pic = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
 
-        //write the bytes in file
-        FileOutputStream fos = new FileOutputStream(f);
-        fos.write(bitmapdata);
-        fos.flush();
-        fos.close();
     }
 }

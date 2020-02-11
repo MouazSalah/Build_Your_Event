@@ -2,7 +2,7 @@
     version="1.0"
     encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,69 +13,76 @@
     android:background="@drawable/back_ground"
     tools:context=".ui.auth.VerifyCodeActivity">
 
-    <ImageView
-        android:layout_width="1200dp"
-        android:layout_height="120dp"
-        app:srcCompat="@drawable/app_logo"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enter_verification_code"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:layout_marginTop="15dp"
-        />
+        <ImageView
+            android:layout_width="1200dp"
+            android:layout_height="120dp"
+            app:srcCompat="@drawable/app_logo"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/verifycode_text"
-        android:text="@string/please_enter_the_verification_code_you_are_received_from"
-        android:textColor="#FFF"
-        android:paddingStart="35dp"
-        android:paddingEnd="35dp"
-        android:lines="3"
-        android:gravity="center"
-        android:layout_marginTop="15dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_verification_code"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_marginTop="15dp"
+            />
 
-
-    <EditText
-        android:id="@+id/verifycode_code"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/verification_code"
-        android:textColorHint="@color/greenbeautiful"
-        android:paddingStart="25dp"
-        android:paddingEnd="25dp"
-        android:paddingTop="15dp"
-        android:textSize="14sp"
-        android:paddingBottom="15dp"
-        android:layout_marginTop="25dp"
-        android:inputType="text"
-        android:background="@drawable/edittext_background"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/verifycode_text"
+            android:text="@string/please_enter_the_verification_code_you_are_received_from"
+            android:textColor="#FFF"
+            android:paddingStart="35dp"
+            android:paddingEnd="35dp"
+            android:lines="3"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            />
 
 
-    <TextView
-        android:id="@+id/verifycode_confirm"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/continue_btn"
-        android:text="@string/confirm"
-        android:textSize="16sp"
-        android:textColor="#fff"
-        android:gravity="center"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:padding="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="6dp"
-        />
+        <EditText
+            android:id="@+id/verifycode_code"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/verification_code"
+            android:textColorHint="@color/greenbeautiful"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:paddingTop="15dp"
+            android:textSize="14sp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="25dp"
+            android:inputType="text"
+            android:background="@drawable/edittext_background"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"/>
+
+
+        <TextView
+            android:id="@+id/verifycode_confirm"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/continue_btn"
+            android:text="@string/confirm"
+            android:textSize="16sp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:padding="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="6dp"
+            />
 
 
         <TextView
@@ -86,4 +93,16 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-</LinearLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/verifycode_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

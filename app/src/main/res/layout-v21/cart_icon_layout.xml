@@ -13,6 +13,7 @@
             android:id="@+id/icon_badge"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:tint="@color/yellow"
             app:srcCompat="@drawable/ic_shopping_cart_black" />
 
 

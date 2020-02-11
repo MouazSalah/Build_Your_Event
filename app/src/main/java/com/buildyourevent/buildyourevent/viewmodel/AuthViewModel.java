@@ -1,3 +1,4 @@
+/*
 package com.buildyourevent.buildyourevent.viewmodel;
 
 
@@ -16,11 +17,13 @@ import com.buildyourevent.buildyourevent.model.auth.login.LoginRequest;
 import com.buildyourevent.buildyourevent.model.auth.login.LoginResponse;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutRequest;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
-import com.buildyourevent.buildyourevent.model.auth.register.RegisterRequest;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
 import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordResponse;
 
 import java.util.List;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class AuthViewModel extends ViewModel implements Observer<Object>
 {
@@ -38,9 +41,11 @@ public class AuthViewModel extends ViewModel implements Observer<Object>
         return authRepository.loginUser(loginRequest);
     }
 
-    public LiveData<RegisterResponse> registerUser(RegisterRequest registerRequest)
+    public LiveData<RegisterResponse> registerUser(MultipartBody.Part pic, RequestBody toString, RequestBody toString1, RequestBody toString2,
+                                                   RequestBody toString3, RequestBody countryId, RequestBody cityId)
     {
-        return authRepository.registerNewUser(registerRequest);
+        return authRepository.registerNewUser(pic, toString,  toString1,  toString2,
+                             toString3,  countryId,  cityId);
     }
 
     public LiveData<List<CountryData>> getAllCountries()
@@ -83,5 +88,8 @@ public class AuthViewModel extends ViewModel implements Observer<Object>
     {
         viewModelLiveData.setValue(o);
     }
+
+
 }
 
+*/

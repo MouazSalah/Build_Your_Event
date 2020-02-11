@@ -38,8 +38,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     private SharedPrefMethods prefMethods;
     public MutableLiveData<Object> mutableLiveData = new MutableLiveData<>();
 
-    public SubCategoryAdapter(Context mContext, List<SubCategoryData> subCategoryList, onSubCategoryListener onSubCategoryListener)
-    {
+    public SubCategoryAdapter(Context mContext, List<SubCategoryData> subCategoryList, onSubCategoryListener onSubCategoryListener) {
         this.mContext = mContext;
         prefMethods = new SharedPrefMethods(mContext);
         this.subCategoryList = subCategoryList;
@@ -48,38 +47,42 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     @NotNull
     @Override
-    public SubCategoryAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public SubCategoryAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.raw_item_filter, parent, false);
 
         return new SubCategoryAdapter.MyViewHolder(itemView, onSubCategoryListener);
     }
 
     @Override
-    public void onBindViewHolder(final SubCategoryAdapter.MyViewHolder holder, final int position)
-    {
+    public void onBindViewHolder(final SubCategoryAdapter.MyViewHolder holder, final int position) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        if (prefMethods.isSmall())
+
+      if (prefMethods.isSmall())
         {
-            Log.e(TAG, "is small" );
+            Log.e(TAG, "is small");
             params.height = (int) mContext.getResources().getDimension(R.dimen.item_small_size_height);
             params.width = (int) mContext.getResources().getDimension(R.dimen.item_small_size_width);
-//            params.setMarginStart(20);
-//            params.setMarginEnd(20);
-//            params.topMargin = 20;
+            params.setMarginStart(20);
+            params.setMarginEnd(20);
+            params.topMargin = 20;
 
-        }else{
-            Log.e(TAG, "la" );
+        }
+      else
+        {
+            Log.e(TAG, "la");
             params.height = (int) mContext.getResources().getDimension(R.dimen.item_normal_size_height);
             params.width = (int) mContext.getResources().getDimension(R.dimen.item_normal_size_width);
-//            params.setMarginStart(20);
-//            params.setMarginEnd(20);
-//            params.topMargin = 20;
+            params.setMarginStart(20);
+            params.setMarginEnd(20);
+            params.topMargin = 20;
         }
-        holder.itemView.setLayoutParams(params);
 
+        // params.setMarginStart(20);
+        // params.setMarginEnd(20);
+        //  params.topMargin = 20;
+        // holder.itemView.setLayoutParams(params);
         holder.setAnimation();
         holder.setData(getCurrentItem(position));
     }
@@ -90,11 +93,9 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvName;
-        public ImageView itemImage;
-        MaterialCheckBox checkBox;
+        public ImageView itemImage, selectImage;
         onSubCategoryListener subCategoryListener;
 
         public MyViewHolder(View view, onSubCategoryListener listener)
@@ -102,36 +103,63 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             super(view);
             tvName = (TextView) view.findViewById(R.id.itemfilter_textview);
             itemImage = (ImageView) view.findViewById(R.id.itemfilter_imageview);
-            checkBox =  view.findViewById(R.id.itemfilter_selected_imageview);
+            selectImage = view.findViewById(R.id.itemfilter_selected_imageview);
 
             subCategoryListener = listener;
-            itemView.setOnClickListener(v->{
-                if (getCurrentItem(getAdapterPosition()).isSelect()){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    Log.d(Codes.APP_TAGS, "item view clickedd // " + getAdapterPosition());
+                    if (getCurrentItem(getAdapterPosition()).isSelect())
+                    {
+                        getCurrentItem(getAdapterPosition()).setSelect(false);
+                        itemView.setSelected(false);
+                        subCategoryListener.onUnSelected(getCurrentItem(getAdapterPosition()).getSubCatId());
+                        mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
+                        selectImage.setImageResource(R.drawable.filter_background);
+                    }
+                    else
+                    {
+                        itemView.setSelected(true);
+                        getCurrentItem(getAdapterPosition()).setSelect(true);
+                        subCategoryListener.onSelected(getCurrentItem(getAdapterPosition()).getSubCatId());   //!!!!!!
+                        selectImage.setImageResource(R.drawable.icon_selected_foreground);
+                        mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
+                    }
+                }
+            });
+           /* itemView.setOnClickListener(v ->
+            {
+                if (getCurrentItem(getAdapterPosition()).isSelect())
+                {
                     getCurrentItem(getAdapterPosition()).setSelect(false);
                     itemView.setSelected(false);
-                    checkBox.setChecked(false);
-//                    subCategoryListener.onUnSelected(item.getSubCatId());
+                    //checkBox.setChecked(false);
+                    subCategoryListener.onUnSelected(getCurrentItem(getAdapterPosition()).getSubCatId());
                     mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
-                }else{
+                    selectImage.setImageResource(R.drawable.filter_background);
+                }
+                else
+                {
                     itemView.setSelected(true);
                     getCurrentItem(getAdapterPosition()).setSelect(true);
-                    checkBox.setChecked(true);
-//                    subCategoryListener.onSelected(item.getSubCatId());
+                    // checkBox.setChecked(true);
+
+                    subCategoryListener.onSelected(getCurrentItem(getAdapterPosition()).getSubCatId());
+                    selectImage.setImageResource(R.drawable.icon_selected_foreground);
                     mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
                 }
-
-            });
+            });*/
         }
 
-        public void setAnimation()
-        {
+        public void setAnimation() {
             Animation anim = AnimationUtils.loadAnimation(mContext.getApplicationContext(), R.anim.zoom_in);
             itemView.startAnimation(anim);
         }
 
         @Override
-        public void onClick(View view)
-        {
+        public void onClick(View view) {
             subCategoryListener.onSubCategoryClick(getAdapterPosition(), getCurrentItem(getAdapterPosition()));
         }
 
@@ -139,23 +167,22 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
             tvName.setText(item.getSubcategoryName());
             // loading album cover using Glide library
-            Glide.with(mContext).load(item.getSubcategoryImage()).into(itemImage);
+            Glide.with(mContext).load(item.getSubcategoryImage()).error(R.drawable.app_logo)
+                    .placeholder(R.drawable.app_logo).into(itemImage);
         }
     }
 
-
-    private SubCategoryData getCurrentItem(int pos){
+    private SubCategoryData getCurrentItem(int pos) {
         return subCategoryList.get(pos);
     }
 
-    public interface onSubCategoryListener
-   {
+    public interface onSubCategoryListener {
         void onSubCategoryClick(int position, SubCategoryData subCategoryData);
+
         void onSelected(int itemId);
-       void onUnSelected(int itemId);
 
-   }
+        void onUnSelected(int itemId);
 
-
-
+    }
 }
+

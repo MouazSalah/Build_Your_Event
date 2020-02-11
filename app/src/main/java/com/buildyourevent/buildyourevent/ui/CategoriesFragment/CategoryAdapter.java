@@ -1,7 +1,6 @@
 package com.buildyourevent.buildyourevent.ui.CategoriesFragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.ui.products.ProductsActivity;
 import com.buildyourevent.buildyourevent.R;
+import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
 import java.util.List;
 
@@ -72,19 +76,26 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         Log.d(Codes.APP_TAGS, "category name : " + categoryItem.getCategoryName());
         holder.name.setText(categoryItem.getCategoryName());
 
-        Glide.with(mContext).load(categoryItem.getCategoryImage()).into(holder.image);
+        Glide.with(mContext).load(categoryItem.getCategoryImage()).error(R.drawable.app_logo)
+                .placeholder(R.drawable.app_logo).into(holder.image);
         holder.layout.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(mContext, ProductsActivity.class);
+                /*Intent intent = new Intent(mContext, ProductsActivity.class);
                 intent.putExtra(Codes.CATEGORY_ID, categoryItem.getId());
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
+
+                SharedPrefMethods prefMethods = new SharedPrefMethods(mContext);
+                prefMethods.saveCategoryId(categoryItem.getId());
+
+                Fragment currentFragment = new ProductsFragment();
+                FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.nav_host_fragment, currentFragment);
+                ft.commit();
             }
         });
-
-
     }
 
     @Override

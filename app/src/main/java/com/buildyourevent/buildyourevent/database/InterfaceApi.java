@@ -19,27 +19,41 @@ import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
 import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
-import com.buildyourevent.buildyourevent.model.auth.register.RegisterRequest;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface InterfaceApi
 {
     @POST("login")
     Call<LoginResponse> loginToAccount(@Body LoginRequest loginRequest);
 
+
+    @Multipart
     @POST("registeration")
-    Call<RegisterResponse> createNewUser(@Body RegisterRequest registerRequest);
+    Call<RegisterResponse> createNewUser(@Part MultipartBody.Part image,
+                                         @Part("name") RequestBody name,
+                                         @Part("email") RequestBody email,
+                                         @Part("password") RequestBody password,
+                                         @Part("country_id") RequestBody country_id,
+                                         @Part("city_id") RequestBody city_id,
+                                         @Part("mobile") RequestBody mobil);
+
+
+
 
     @GET("countries")
     Call<CountryResponse> getAllCountries();
@@ -63,7 +77,7 @@ public interface InterfaceApi
 
     @FormUrlEncoded
     @POST("products")
-    Call<ProductResponse> getAllProducts(@Field("Cat_id") int subCategoryId);
+    Call<ProductResponse> getAllProducts(@Field("sub_cat_id") String subCategoryId);
 
     @FormUrlEncoded
     @POST("product_details")

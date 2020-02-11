@@ -2,8 +2,11 @@ package com.buildyourevent.buildyourevent.model.auth.code;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VerifyCodeData
-{
+public class VerifyCodeData{
+
+	@SerializedName("image")
+	private String image;
+
 	@SerializedName("city_name")
 	private String cityName;
 
@@ -30,6 +33,14 @@ public class VerifyCodeData
 
 	@SerializedName("city_id")
 	private int cityId;
+
+	public void setImage(String image){
+		this.image = image;
+	}
+
+	public String getImage(){
+		return image;
+	}
 
 	public void setCityName(String cityName){
 		this.cityName = cityName;
@@ -107,7 +118,8 @@ public class VerifyCodeData
  	public String toString(){
 		return 
 			"Data{" + 
-			"city_name = '" + cityName + '\'' + 
+			"image = '" + image + '\'' + 
+			",city_name = '" + cityName + '\'' + 
 			",name = '" + name + '\'' + 
 			",mobile = '" + mobile + '\'' + 
 			",country_name = '" + countryName + '\'' + 

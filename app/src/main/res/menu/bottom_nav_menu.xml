@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/home_icon"
+        android:icon="@drawable/ic_home_black_24dp"
         android:tint="@color/white"
         android:title=""
         />
@@ -37,6 +37,7 @@
     <item
         android:id="@+id/navigation_Setting"
         android:icon="@drawable/settingss_icon"
+        android:iconTint="@color/white"
         android:title="" />
 
 </menu>

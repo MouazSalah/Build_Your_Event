@@ -32,8 +32,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class HomeFragment extends Fragment
 {
     private UserViewModel viewModel;
@@ -123,5 +121,4 @@ public class HomeFragment extends Fragment
         categoryRecyclerView.setVisibility(View.VISIBLE);
 
     }
-
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -28,6 +29,7 @@ import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
 import com.buildyourevent.buildyourevent.paymenthelper.FlipAnimator;
 import com.buildyourevent.buildyourevent.paymenthelper.Utils;
+import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
 import java.text.SimpleDateFormat;
@@ -72,6 +74,13 @@ public class PaymentActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
+        SharedPrefMethods prefMethods = new SharedPrefMethods(this);
+        Locale locale = new Locale(prefMethods.getUserLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         ButterKnife.bind(this);
@@ -179,13 +188,13 @@ public class PaymentActivity extends AppCompatActivity
 
     }
 
-    @OnClick(R.id.cardcancel_button)
+   /* @OnClick(R.id.cardcancel_button)
     void cancelOrder(View v)
     {
         Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
         startActivity(intent);
         finish();
-    }
+    }*/
 
     View.OnClickListener popUpCalender = new View.OnClickListener()
     {

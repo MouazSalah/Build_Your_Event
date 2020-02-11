@@ -146,6 +146,35 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_location">Map</string>
     <string name="select_location_from_map">Select Location From Map</string>
+    <string name="about_app">About App</string>
+    <string name="agree_to_app_conditions">Agree to App Conditions</string>
+    <string name="condition_toast">You need to agree the app Condition</string>
+    <string name="enter_mobile">enter mobile</string>
+    <string name="short_password">short password</string>
+    <string name="invalid_email">invalid email</string>
+    <string name="enter_name">enter name</string>
+    <string name="enter_email">enter email</string>
+    <string name="choose_country">Choose Your Country</string>
+    <string name="choose_city">Choose Your City</string>
+    <string name="email_is_take">The email has already been taken. you need to complete registeration</string>
+    <string name="item_in_carts">this item is already in carts</string>
+    <string name="select_a_location">Select a location</string>
 
+    <string name="about_app_text">
+مرحباً نحن شركة VRE Tech للخدمات الالكترونية الخاصة بالفعاليات والحفلات.
+Visual reality event technology
+تكتولوجيا فعاليات العالم الإفتراضي
+اسست الشركة عام 2020 في مدينة دبي بدولة الامارات العربية المتحدة وهي متخصصة بمجال التطبيقات الخاصة بالفعاليات والحفلات.
+وتطبيق build your event هو احد التطبيقات الخاصة بالشركة وهو الاول من نوعه حيث يوفر للعميل كل ما يحتاجه مع اجل عمل فعالية او حفل، حيث ان العميل لن يحتاج اي شخص او اي شركة لإدارة فعاليه،  فعلى سبيل المثال اذا كان لديك مؤتمر او اي حفل فيمكن استخدام التطبيق كي تستاجر الكراسي والطاولات والمسرح والشاشة والورود وخدمة الضيافة والاعلانات واختيار الرعاه الذي يمكن ان يرعو هذا الحفل او المؤتمر وكل ما يلزمك لعمل الفعالية التي تريدها، كما يمكنك البحث عن مدير لإدارة فعاليتك، كما يمكنك حجز الصالة المناسبة لإقامة العفالية.
+مع تطبيق build your event ستدير فعاليتك بنفس وستوفر الوقت والمال.
+عن المالك
+شركة VRE Tech  مملوكة للمصمم يوسف عبدالله بكر، ولد في مدينة حلب السورية عام 1985
+حاصل على شهادة التصميم الغرافيك من جامعة تشرين السورية، عمل في مجال التصميم الاعلاني والديكور والتصميم ثلاثي الابعاد اكثر من 13 سنة ولديه العديد من الجوائز والدروع التزكارية من عدة جهات من حكومة الامارات العربية المتحدة
+اهدافنا
+توفير الجهد والمال وجعل كل شخص يستطيع إدارة فعاليته بنفسه.
+رؤيتنا
+جعل عالم الفعاليات اكثر سهولة وفي متناول الجميع.
+
+    </string>
 
 </resources>

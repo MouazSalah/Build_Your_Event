@@ -4,11 +4,11 @@
 
     <string name="title_activity_home">HomeActivity</string>
 
-    <string name="title_home"> Products </string>
+    <string name="title_home"> المنتجات </string>
     <string name="title_dashboard"> Dashboard </string>
-    <string name="title_notifications"> Favories </string>
-    <string name="title_profile"> Profile </string>
-    <string name="title_Settings"> Setting </string>
+    <string name="title_notifications"> المفضلات </string>
+    <string name="title_profile"> الصفحة الشخصية </string>
+    <string name="title_Settings"> الاعدادات </string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -17,33 +17,28 @@
     <string name="card_holder">Card Name</string>
     <string name="card_number">Card Number</string>
     <string name="valid_thru">Valid Thru</string>
-    <string name="mm">MM</string>
-    <string name="YY">YY</string>
-    <string name="date_hint">MM/YY</string>
-    <string name="cvv">CVV</string>
+    <string name="mm">شهر</string>
+    <string name="YY">سنة</string>
+    <string name="date_hint">شهر/سنة</string>
+    <string name="cvv">الكود</string>
     <string name="cvv_hint">000</string>
     <string name="space">" "</string>
     <string name="default_card_no">#### #### #### ####</string>
     <string name="autgorized_signature">Authorized signature</string>
-    <string name="pay">Pay</string>
+    <string name="pay">دفع</string>
 
 
     // app settings values
     <string name="hint_email">البريد الالكتروني</string>
     <string name="hint_password">الرقم السري</string>
     <string name="hint_name">اسم المستخدم</string>
-    <string name="hint_new_email">enter new email</string>
-    <string name="btn_change">change</string>
-    <string name="new_pass">new password</string>
-    <string name="btn_send">send email</string>
-    <string name="btn_remove">remove account</string>
-    <string name="change_email">change email</string>
-    <string name="change_password">change password</string>
+    <string name="hint_new_email">البريد الالكتروني الجديد</string>
+    <string name="btn_change">تغيير</string>
+    <string name="new_pass">الرقم السري الجديد</string>
+    <string name="btn_send">ارسال ايميل</string>
+    <string name="change_password"> تغيير كلمة السر </string>
     <string name="send_password_reset_email">send password reset email</string>
-    <string name="remove_user">remove account</string>
-    <string name="btn_sign_out">sign out</string>
-    <string name="title_favorites">Favorites</string>
-    <string name="title_message">Messages</string>
+    <string name="title_message">الاشعارات</string>
     <string name="build_your_event">Build your event</string>
 
 
@@ -122,9 +117,14 @@
     <string name="your_cart_is_empty">السلة فارغة</string>
     <string name="start_shopping">تسوق الان</string>
     <string name="remove_item">مسح العنصر</string>
-    <string name="product_countryevent">Event Country Location</string>
-    <string name="product_cityevent">Event City Location</string>
+    <string name="product_countryevent">الدولة </string>
+    <string name="product_cityevent">المدينة</string>
 
+    <string name="title_activity_maps">الخريطة</string>
+    <string name="title_activity_location">الخريطة</string>
+    <string name="select_location_from_map">تحديد المكان من الخريطة</string>
+
+    <string name="about_app"> عن التطبيق</string>
 
     <string name="forgot_password">
         هل نسيت كلمة السر ؟ انت تحتاج ان تكتب البريد الالكتروني الخاص بك ، ثم نرسل اليك رمزا للاستعادته
@@ -141,6 +141,36 @@
 
     <string name="note_three">
         the price not included the transportation and fixing it is willadd to your bill efore you pay
+    </string>
+
+
+    <string name="agree_to_app_conditions">أوافق علي الشروط والاحكام</string>
+    <string name="condition_toast"> يجد ان توافق علي الشروط والاحكام</string>
+    <string name="enter_mobile">ادخل الموبايل</string>
+    <string name="short_password"> كلمة المرور ضعيفة</string>
+    <string name="invalid_email">البريد الالكتروني غير صحيح</string>
+    <string name="enter_name">ادخل الاسم</string>
+    <string name="enter_email"> ادخل البريد الالكتروني</string>
+    <string name="choose_country"> اختر الدولة</string>
+    <string name="choose_city"> ااختر المدينة </string>
+    <string name="email_is_take"> هذا البريد الالكتروني موجود بالفعل ، عليك استكمال عملية التسجيل</string>
+    <string name="item_in_carts"> هذا المنتج موجود بالفعل في السلة</string>
+    <string name="select_a_location"> تحديد المكان</string>
+
+    <string name="about_app_text">
+    مرحباً نحن شركة VRE Tech للخدمات الالكترونية الخاصة بالفعاليات والحفلات.
+    Visual reality event technology
+    تكتولوجيا فعاليات العالم الإفتراضي
+    اسست الشركة عام 2020 في مدينة دبي بدولة الامارات العربية المتحدة وهي متخصصة بمجال التطبيقات الخاصة بالفعاليات والحفلات.
+    وتطبيق build your event هو احد التطبيقات الخاصة بالشركة وهو الاول من نوعه حيث يوفر للعميل كل ما يحتاجه مع اجل عمل فعالية او حفل، حيث ان العميل لن يحتاج اي شخص او اي شركة لإدارة فعاليه،  فعلى سبيل المثال اذا كان لديك مؤتمر او اي حفل فيمكن استخدام التطبيق كي تستاجر الكراسي والطاولات والمسرح والشاشة والورود وخدمة الضيافة والاعلانات واختيار الرعاه الذي يمكن ان يرعو هذا الحفل او المؤتمر وكل ما يلزمك لعمل الفعالية التي تريدها، كما يمكنك البحث عن مدير لإدارة فعاليتك، كما يمكنك حجز الصالة المناسبة لإقامة العفالية.
+    مع تطبيق build your event ستدير فعاليتك بنفس وستوفر الوقت والمال.
+    عن المالك
+    شركة VRE Tech  مملوكة للمصمم يوسف عبدالله بكر، ولد في مدينة حلب السورية عام 1985
+    حاصل على شهادة التصميم الغرافيك من جامعة تشرين السورية، عمل في مجال التصميم الاعلاني والديكور والتصميم ثلاثي الابعاد اكثر من 13 سنة ولديه العديد من الجوائز والدروع التزكارية من عدة جهات من حكومة الامارات العربية المتحدة
+    اهدافنا
+    توفير الجهد والمال وجعل كل شخص يستطيع إدارة فعاليته بنفسه.
+    رؤيتنا
+    جعل عالم الفعاليات اكثر سهولة وفي متناول الجميع.
     </string>
 
 </resources>

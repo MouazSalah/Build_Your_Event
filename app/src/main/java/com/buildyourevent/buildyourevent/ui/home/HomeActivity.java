@@ -1,14 +1,14 @@
 package com.buildyourevent.buildyourevent.ui.home;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
@@ -17,6 +17,7 @@ import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
 import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
 import com.buildyourevent.buildyourevent.ui.CategoriesFragment.HomeFragment;
 import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
+import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,31 +35,42 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.drawer_layout) DrawerLayout drawer;
-    @BindView(R.id.cartscount_textview) TextView cartsCounTextView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.cartscount_textview)
+    TextView cartsCounTextView;
     @BindView(R.id.side_nav_view)
     NavigationView mNavigationView;
-   /* @BindView(R.id.nav_userimage) ImageView imageView;
-    @BindView(R.id.nav_username) TextView nameText;;
-    @BindView(R.id.nav_useremail) TextView emailText;
-*/
+    /* @BindView(R.id.nav_userimage) ImageView imageView;
+     @BindView(R.id.nav_username) TextView nameText;;
+     @BindView(R.id.nav_useremail) TextView emailText;
+ */
     SharedPrefMethods prefMethods;
     UserViewModel userViewModel;
 
-    Fragment currentFragment = null;
-    FragmentTransaction ft;
+//    Fragment currentFragment = null;
+//    FragmentTransaction ft;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        prefMethods = new SharedPrefMethods(this);
+        Locale locale = new Locale(prefMethods.getUserLanguage());
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
@@ -66,9 +78,38 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         prefMethods = new SharedPrefMethods(this);
+
+        mNavigationView.setNavigationItemSelectedListener(this);
+        View header = mNavigationView.getHeaderView(0);
+        TextView mEmailTextView = (TextView) header.findViewById(R.id.nav_useremail);
+        TextView mNameTextView = (TextView) header.findViewById(R.id.nav_username);
+        ImageView mUserImageView = (ImageView) header.findViewById(R.id.nav_userimage);
+        ImageView hideNacImageView = (ImageView) header.findViewById(R.id.hide_navbarimage);
+        hideNacImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
         UserData userData = prefMethods.getUserData();
-        if (userData != null)
-        {
+        if (userData != null) {
+            mNameTextView.setText(userData.getName());
+            mEmailTextView.setText(userData.getEmail());
+            mUserImageView.setImageResource(R.drawable.white);
+
+            userViewModel.getAllCarts(userData.getId(), userData.getToken()).observe(this, new Observer<CartResponse>() {
+                @Override
+                public void onChanged(CartResponse cartResponse) {
+                    if (cartResponse.getStatus() == 200) {
+                        int size = cartResponse.getData().size();
+                        cartsCounTextView.setText("" + size);
+                    } else {
+                        cartsCounTextView.setText("0");
+                    }
+                }
+            });
+
             /*imageView.setImageResource(R.drawable.user_icon);
             emailText.setText(userData.getEmail());
             nameText.setText(userData.getName());*/
@@ -83,9 +124,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
             });*/
-        }
-        else
-        {
+        } else {
             cartsCounTextView.setText("0");
         }
 
@@ -94,69 +133,64 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // show navigation drawer on start activity
         NavigationUI.setupWithNavController(navView, navController);
 
-        navView.setOnNavigationItemSelectedListener(menuItem ->
-        {
-            switch (menuItem.getItemId())
-            {
+//        ft = getSupportFragmentManager().beginTransaction();
+
+        navView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
                 case R.id.navigation_side_menu:
-                    if (drawer.isDrawerOpen(GravityCompat.START))
-                    {
+                    if (drawer.isDrawerOpen(GravityCompat.START)) {
                         drawer.closeDrawer(GravityCompat.START);
-                    }
-                    else
-                    {
+                    } else {
                         drawer.openDrawer(GravityCompat.START);
                     }
                     break;
 
-                case R.id.navigation_profile:
-                    currentFragment = new ProfileFragment();
-                    ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.nav_host_fragment, currentFragment);
-                    ft.commit();
+                case R.id.navigation_profile:  //this is wrong   why profile is in side menu and bottom bar !!
+                    //make this to just one of them not both
+//                    currentFragment = new ProfileFragment();
+//                    // ft = getSupportFragmentManager().beginTransaction();
+//                    ft.replace(R.id.nav_host_fragment, currentFragment);
+//                    ft.commit();
+                    MovementManager.replaceFragment(this, new ProfileFragment(), R.id.nav_host_fragment,"ProfileFragment");
                     return true;
-
                 case R.id.navigation_home:
-                    currentFragment = new HomeFragment();
-                    ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.nav_host_fragment, currentFragment);
-                    ft.commit();
+//                    currentFragment = new HomeFragment();
+//                    //  ft = getSupportFragmentManager().beginTransaction();
+//                    ft.replace(R.id.nav_host_fragment, currentFragment);
+//                    ft.commit();
+
+                    MovementManager.replaceFragment(this, new HomeFragment(), R.id.nav_host_fragment,"");
+
                     return true;
 
                 case R.id.navigation_Setting:
-                    currentFragment = new SettingFragment();
-                    ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.nav_host_fragment, currentFragment);
-                    ft.commit();
+//                    currentFragment = new SettingFragment();
+//                    //  ft = getSupportFragmentManager().beginTransaction();
+//                    ft.replace(R.id.nav_host_fragment, currentFragment);
+//                    ft.commit();
+                    MovementManager.replaceFragment(this, new SettingFragment(), R.id.nav_host_fragment,"SettingFragment");
+
                     return true;
 
                 case R.id.navigation_messages:
-                    currentFragment = new NotificationFragment();
-                    ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.nav_host_fragment, currentFragment);
-                    ft.commit();
+//                    currentFragment = new NotificationFragment();
+//                    ft.replace(R.id.nav_host_fragment, currentFragment);
+//                    ft.commit();
+                    MovementManager.replaceFragment(this, new NotificationFragment(), R.id.nav_host_fragment,"NotificationFragment");
+
                     return true;
             }
             return false;
         });
-        mNavigationView.setNavigationItemSelectedListener(this);
-        View header = mNavigationView.getHeaderView(0);
-        TextView mEmailTextView = (TextView) header.findViewById(R.id.nav_useremail);
-        TextView mNameTextView = (TextView) header.findViewById(R.id.nav_username);
-        ImageView mUserImageView = (ImageView) header.findViewById(R.id.nav_userimage);
-        mNameTextView.setText(userData.getName());
-        mEmailTextView.setText(userData.getEmail());
-        mUserImageView.setImageResource(R.drawable.user_icon);
+
     }
 
 
     @OnClick(R.id.toolbar_menu_icon)
-    void openCardItems(View v)
-    {
+    void openCardItems(View v) {
         Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
         startActivity(intent);
-        customType(getApplicationContext(),"top-to-bottom");
-        finish();
+        customType(HomeActivity.this, "top-to-bottom");
     }
 
     @Override
@@ -175,38 +209,47 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+
+//        int count = getSupportFragmentManager().getBackStackEntryCount();
+//
+//        if (count == 0) {
+//            super.onBackPressed();
+//            //additional code
+//        } else {
+//            getSupportFragmentManager().popBackStack();
+//        }
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
-    {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
-        if (id == R.id.nav_profileoption)
-        {
-            currentFragment = new ProfileFragment();
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.nav_host_fragment, currentFragment);
-            ft.commit();
+        if (id == R.id.nav_profileoption) {
+//            currentFragment = new ProfileFragment();
+//            ft = getSupportFragmentManager().beginTransaction();
+//            ft.replace(R.id.nav_host_fragment, currentFragment);
+//            ft.commit();
+            MovementManager.replaceFragment(this, new ProfileFragment(), R.id.nav_host_fragment,"ProfileFragment");
         }
-        if (id == R.id.nav_settinoption)
-        {
-            currentFragment = new SettingFragment();
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.nav_host_fragment, currentFragment);
-            ft.commit();
+        if (id == R.id.nav_settinoption) {
+//            currentFragment = new SettingFragment();
+//            ft = getSupportFragmentManager().beginTransaction();
+//            ft.replace(R.id.nav_host_fragment, currentFragment);
+//            ft.commit();
+            MovementManager.replaceFragment(this, new SettingFragment(), R.id.nav_host_fragment,"SettingFragment");
+
         }
-        if (id == R.id.nav_cartsoption)
-        {
-            Intent intent = new Intent(getApplicationContext(),CartsActivity.class);
+        if (id == R.id.nav_cartsoption) {
+            Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
             startActivity(intent);
-            finish();
         }
-        if (id == R.id.nav_logoutoption)
-        {
+        if (id == R.id.nav_logoutoption) {
             prefMethods.deleteUserData();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
-            finish();
+        }
+        if (id == R.id.nav_aboutusoption) {
+            Intent intent = new Intent(getApplicationContext(), AboutAppActivity.class);
+            startActivity(intent);
         }
 
         drawer.closeDrawer(GravityCompat.START);

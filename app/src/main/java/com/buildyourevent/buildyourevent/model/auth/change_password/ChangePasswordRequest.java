@@ -7,10 +7,10 @@ public class ChangePasswordRequest
     @SerializedName("email")
     String email;
 
-    @SerializedName("oldPassowrd")
+    @SerializedName("oldPassword")
     String oldPassword;
 
-    @SerializedName("newPassowrd")
+    @SerializedName("newPassword")
     String newPassowrd;
 
     public ChangePasswordRequest() {

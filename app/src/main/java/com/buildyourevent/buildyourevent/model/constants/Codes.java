@@ -28,4 +28,5 @@ public abstract class Codes
     public static final String SHARED_PREF_SUBCATEGORY_DATA = "subcategory_data";
     public static final String SHARED_PREF_IS_SELECTED = "is_selected";
     public static final String PREF_SMALL = "PREF_SMALL";
+    public static final String SHARED_PREF_USER_LATLNG = "user_candidates";
 }

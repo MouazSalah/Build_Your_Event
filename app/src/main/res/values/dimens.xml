@@ -18,7 +18,7 @@
 
 
     <dimen name="item_small_size_width">90dp</dimen>
-    <dimen name="item_small_size_height">120dp</dimen>
+    <dimen name="item_small_size_height">130dp</dimen>
 
 
     <dimen name="normal_parent_size_height">320dp</dimen>
