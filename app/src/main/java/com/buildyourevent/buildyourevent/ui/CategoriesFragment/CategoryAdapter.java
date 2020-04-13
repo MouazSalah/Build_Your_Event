@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.R;
+import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
 import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
 import java.util.List;
@@ -90,10 +92,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                 SharedPrefMethods prefMethods = new SharedPrefMethods(mContext);
                 prefMethods.saveCategoryId(categoryItem.getId());
 
-                Fragment currentFragment = new ProductsFragment();
+                MovementManager.replaceFragment(mContext, new ProductsFragment(), R.id.nav_host_fragment,"ProductsFragment");
+
+                /*Fragment currentFragment = new ProductsFragment();
                 FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.nav_host_fragment, currentFragment);
-                ft.commit();
+                ft.commit();*/
             }
         });
     }

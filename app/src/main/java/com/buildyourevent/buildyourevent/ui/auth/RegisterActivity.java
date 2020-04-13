@@ -1,6 +1,7 @@
 package com.buildyourevent.buildyourevent.ui.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -65,6 +68,12 @@ public class RegisterActivity extends AppCompatActivity
     ProgressBar registerProgressBar;
     @BindView(R.id.conditions_checkbox)
     CheckBox conditionCheckBox;
+    @BindView(R.id.conditions_layout)
+    LinearLayout conditionLayout;
+    @BindView(R.id.register_layout)
+    LinearLayout registerLayout;
+    @BindView(R.id.condition_button)
+    Button conditonBtn;
 
     int countryId, cityId;
 
@@ -278,6 +287,22 @@ public class RegisterActivity extends AppCompatActivity
         finish();
     }
 
+    @OnClick(R.id.conditions_checkbox)
+    void showConditions(View v)
+    {
+        conditionLayout.setVisibility(View.VISIBLE);
+        registerLayout.setAlpha((float) .1);
+    }
+
+
+    @OnClick(R.id.condition_button)
+    void agreeConditions(View v)
+    {
+        conditionLayout.setVisibility(View.GONE);
+        conditionCheckBox.setChecked(true);
+        registerLayout.setAlpha((float) 1);
+    }
+
 
     @OnClick(R.id.register_userimage)
     void selectUserImage(View v)
@@ -321,7 +346,6 @@ public class RegisterActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
-
     }
 
 

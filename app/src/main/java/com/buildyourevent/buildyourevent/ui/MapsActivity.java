@@ -16,8 +16,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
+import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
 import com.buildyourevent.buildyourevent.ui.products.ProductDetailsFragment;
 import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -172,10 +174,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @OnClick(R.id.select_location_button)
     void selectLocation(View v)
     {
-        Fragment currentFragment = new ProductDetailsFragment();
+        MovementManager.replaceFragment(this, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
+
+        /*Fragment currentFragment = new ProductDetailsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.nav_host_fragment, currentFragment);
-        ft.commit();
+        ft.commit();*/
 
        /* Intent intent = new Intent(getApplicationContext(), ProductDetailsActivity.class);
         startActivity(intent);
@@ -187,10 +191,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         super.onBackPressed();
 
-        Fragment currentFragment = new ProductDetailsFragment();
+        MovementManager.replaceFragment(this, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
+
+
+       /* Fragment currentFragment = new ProductDetailsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.nav_host_fragment, currentFragment);
-        ft.commit();
+        ft.commit();*/
 
         /*Intent intent = new Intent(getApplicationContext(), ProductDetailsActivity.class);
         startActivity(intent);

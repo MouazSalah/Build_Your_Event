@@ -141,7 +141,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     private DatePickerDialog.OnDateSetListener startDatePicker, endDatePicker;
 
     UserViewModel viewModel;
-    int productId;
     UserData userData;
     SharedPrefMethods prefMethods;
     SubCategoryData subCategoryData;
@@ -203,8 +202,7 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
 
-        productId = prefMethods.getProductId();
-        Log.d(Codes.APP_TAGS, "product details Id: " + productId);
+        Log.d(Codes.APP_TAGS, "product details Id: " + prefMethods.getProductId());
 
         if (prefMethods.getSubCategoryData() != null)
         {
@@ -214,7 +212,7 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         if (prefMethods.getUserData() != null) {
             userData = prefMethods.getUserData();
         }
-        viewModel.getProductDetails(productId).observe(this, new Observer<ProductDetailsData>() {
+        viewModel.getProductDetails(prefMethods.getProductId()).observe(this, new Observer<ProductDetailsData>() {
             @Override
             public void onChanged(ProductDetailsData data)
             {
@@ -455,7 +453,7 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
             e.printStackTrace();
         }
 
-        AddToCartsRequest addToCartsRequest = new AddToCartsRequest(lat, log, userData.getId(), productId, qtyCounter, daysCounter,
+        AddToCartsRequest addToCartsRequest = new AddToCartsRequest(lat, log, userData.getId(), prefMethods.getProductId(), qtyCounter, daysCounter,
                 startDate, endDate, userData.getToken(),address);
 
         viewModel.addToCarts(addToCartsRequest).observe(this, new Observer<AddToCartResponse>() {
@@ -697,7 +695,7 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
                 {
                     for (int i = 0; i < cartResponse.getData().size(); i ++)
                     {
-                        if (cartResponse.getData().get(i).getProductId() == productId)
+                        if (cartResponse.getData().get(i).getProductId() == prefMethods.getProductId())
                         {
                             paymentLayout.setVisibility(View.GONE);
                             dataLayout.setAlpha((float) 1);

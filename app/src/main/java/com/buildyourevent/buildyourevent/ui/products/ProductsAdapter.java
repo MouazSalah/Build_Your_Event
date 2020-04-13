@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.product.ProductData;
+import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
+import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
 
@@ -69,14 +71,15 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
                 mContext.startActivity(intent);*/
 
                 prefMethods.saveProductId(product.getProductId());
-                Fragment currentFragment = new ProductDetailsFragment();
+                MovementManager.replaceFragment(mContext, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
+
+               /* Fragment currentFragment = new ProductDetailsFragment();
                 FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.nav_host_fragment, currentFragment);
-                ft.commit();
+                ft.commit();*/
             }
         });
     }
-
 
 
     @Override
