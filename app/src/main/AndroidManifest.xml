@@ -21,8 +21,9 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.products.UpdateProductActivity"></activity>
-        <activity android:name=".ui.products.AddProductActivity" />
+        <activity android:name=".ui.userproducts.MyProductsActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".ui.userproducts.UpdateProductActivity" />
+        <activity android:name=".ui.userproducts.AddProductActivity" />
         <activity android:name=".ui.auth.ConditionsActivity" />
         <activity
             android:name=".ui.auth.ChooseCountryActivity"
@@ -38,9 +39,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".ui.MapsActivity"

@@ -28,6 +28,7 @@ import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetail
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
 import java.util.List;
 
@@ -136,6 +137,11 @@ public class UserViewModel extends ViewModel
     public LiveData<AddToCartResponse> addToCarts(AddToCartsRequest addToCartsRequest)
     {
         return userRepository.getAddToCartsMutableLiveData(addToCartsRequest);
+    }
+
+    public LiveData<UserOwnProductResponse> showOwnProducts(int userId, String apiToken)
+    {
+        return userRepository.getShowAllUserProductMutapleLiveData(userId, apiToken);
     }
 
     public LiveData<RemoveCartResponse> removeFromCart(RemoveCartRequest removeCartRequest)

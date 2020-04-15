@@ -201,6 +201,8 @@ public class AuthRepository
             @Override
             public void onResponse(Call<SendCodeResponse> call, Response<SendCodeResponse> response)
             {
+                Log.d("eventsontime", "code / " + response.message());
+
                 if (!response.isSuccessful())
                 {
                     Log.d(Codes.APP_TAGS, "send code not success" + response.message());

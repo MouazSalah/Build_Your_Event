@@ -196,4 +196,7 @@ Visual reality event technology
 في حال قراءة الشروط والاحكام جيداً يتوجب عليك الموافقة عليها وستكون انت المسؤول بعد ذلك، وفي حال وقوع اي مشكلة ستكون انت المسؤول وسيتم إتخاذ الإجراء المناسب في ذلك.
 
     </string>
+    <string name="category_hint">Category</string>
+    <string name="sub_category">SubCategory</string>
+    <string name="add_to_my_products"> Add </string>
 </resources>

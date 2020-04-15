@@ -1,4 +1,4 @@
-package com.buildyourevent.buildyourevent.ui.products;
+package com.buildyourevent.buildyourevent.ui.userproducts;
 
 import androidx.appcompat.app.AppCompatActivity;
 

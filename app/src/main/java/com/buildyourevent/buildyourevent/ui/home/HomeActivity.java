@@ -3,7 +3,6 @@ package com.buildyourevent.buildyourevent.ui.home;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
 import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
 import com.buildyourevent.buildyourevent.ui.CategoriesFragment.HomeFragment;
 import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
+import com.buildyourevent.buildyourevent.ui.userproducts.MyProductsActivity;
 import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
@@ -27,8 +27,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -229,6 +227,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //            ft.replace(R.id.nav_host_fragment, currentFragment);
 //            ft.commit();
             MovementManager.replaceFragment(this, new ProfileFragment(), R.id.nav_host_fragment,"ProfileFragment");
+        }
+        if (id == R.id.nav_productsoption)
+        {
+            Intent intent = new Intent(getApplicationContext(), MyProductsActivity.class);
+            startActivity(intent);
         }
         if (id == R.id.nav_settinoption) {
 //            currentFragment = new SettingFragment();

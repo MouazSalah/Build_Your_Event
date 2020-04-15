@@ -24,6 +24,8 @@ import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartReq
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductData;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,10 @@ public class UserRepository
     private MutableLiveData<OrderResponse> confirmOrderMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<ProductDetailsData> productDetailsDataMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<UserOwnProductResponse> userOwnProductsMutableLiveData = new MutableLiveData<>();
+
+
 
     public UserRepository()
     {
@@ -130,7 +136,6 @@ public class UserRepository
 
         return categoryMutableLiveData;
     }
-
 
     public MutableLiveData<List<SubCategoryData>> getSubCategoryMutableLiveData(int categoryId)
     {
@@ -348,4 +353,34 @@ public class UserRepository
 
         return confirmOrderMutableLiveData;
     }
+
+
+    public MutableLiveData<UserOwnProductResponse> getShowAllUserProductMutapleLiveData(int userId, String apiToekn)
+    {
+        Call<UserOwnProductResponse> responseCall = interfaceApi.showOwnProducts(userId, apiToekn);
+        responseCall.enqueue(new Callback<UserOwnProductResponse>()
+        {
+            @Override
+            public void onResponse(Call<UserOwnProductResponse> call, Response<UserOwnProductResponse> response)
+            {
+                Log.d("eventsontime", response.message());
+                if (!response.isSuccessful())
+                {
+
+                }
+                else
+                {
+                    UserOwnProductResponse userOwnProductResponse = response.body();
+                    userOwnProductsMutableLiveData.setValue(userOwnProductResponse);
+                }
+            }
+            @Override
+            public void onFailure(Call<UserOwnProductResponse> call, Throwable t)
+            {
+            }
+        });
+
+        return userOwnProductsMutableLiveData;
+    }
+
 }

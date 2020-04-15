@@ -79,8 +79,6 @@ public class VerifyCodeActivity extends AppCompatActivity
                 {
                     if (verifyCodeIntent.equals("register"))
                     {
-                         // UserData userData =  verifyCodeResponse.getData();
-                         // prefMethods.SaveUserData(verifyCodeResponse.getData());
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         customType(VerifyCodeActivity.this,"left-to-right");

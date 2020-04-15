@@ -24,6 +24,7 @@ import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartReq
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -109,7 +110,24 @@ public interface InterfaceApi
     Call<ResetPasswordResponse> resetPassword(@Field("email") String email, @Field("password") String password);
 
 
+    @FormUrlEncoded
     @POST("update-password")
     Call<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest changePasswordRequest);
 
+    @FormUrlEncoded
+    @POST("show_own_products")
+    Call<UserOwnProductResponse> showOwnProducts(@Field("user_id") int userId, @Field("api_token") String apiToken);
+
+    @FormUrlEncoded
+    @POST("add_product")
+    Call<ChangePasswordResponse> addOwnProducts(@Field("user_id") int userId, @Field("api_token") String apiToken);
+
+    @FormUrlEncoded
+    @POST("remove_product")
+    Call<ChangePasswordResponse> removeProduct(@Field("product_id") String productId,
+                                               @Field("user_id") int userId,
+                                               @Field("api_token") String apiToken);
+    @FormUrlEncoded
+    @POST("update-product")
+    Call<ChangePasswordResponse> updateProduct(@Body ChangePasswordRequest changePasswordRequest);
 }
