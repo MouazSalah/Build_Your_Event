@@ -1,11 +1,12 @@
-package com.buildyourevent.buildyourevent.model.data.productdetails;
+package com.buildyourevent.buildyourevent.model.data.aboutus;
 
+import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class ProductDetailsResponse{
+public class AboutUsResponse{
 
 	@SerializedName("data")
-	private ProductDetailsData productDetailsData;
+	private List<AboutUsItem> data;
 
 	@SerializedName("message")
 	private String message;
@@ -13,12 +14,12 @@ public class ProductDetailsResponse{
 	@SerializedName("status")
 	private int status;
 
-	public void setProductDetailsData(ProductDetailsData productDetailsData){
-		this.productDetailsData = productDetailsData;
+	public void setData(List<AboutUsItem> data){
+		this.data = data;
 	}
 
-	public ProductDetailsData getProductDetailsData(){
-		return productDetailsData;
+	public List<AboutUsItem> getData(){
+		return data;
 	}
 
 	public void setMessage(String message){
@@ -40,8 +41,8 @@ public class ProductDetailsResponse{
 	@Override
  	public String toString(){
 		return 
-			"ProductDetailsResponse{" + 
-			"data = '" + productDetailsData + '\'' +
+			"AboutUsResponse{" + 
+			"data = '" + data + '\'' + 
 			",message = '" + message + '\'' + 
 			",status = '" + status + '\'' + 
 			"}";

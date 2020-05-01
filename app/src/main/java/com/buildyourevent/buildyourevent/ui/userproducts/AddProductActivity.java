@@ -1,13 +1,11 @@
 package com.buildyourevent.buildyourevent.ui.userproducts;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -27,11 +26,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -45,18 +46,16 @@ import com.buildyourevent.buildyourevent.model.auth.cities.CityData;
 import com.buildyourevent.buildyourevent.model.auth.countries.CountryData;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
-import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
-import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
-import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.model.data.userproduct.request.AddOwnProduct;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
+import com.buildyourevent.buildyourevent.ui.CategoriesFragment.CategoryAdapter;
 import com.buildyourevent.buildyourevent.ui.MapsActivity;
 import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
-import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
-import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.ui.auth.CountriesAdapter;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -71,10 +70,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -82,60 +87,42 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
-import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class AddProductActivity extends AppCompatActivity implements OnMapReadyCallback
 {
-    @BindView(R.id.subcategory_imageview)  CircleImageView subCategoryImage;
-    @BindView(R.id.subcategoryname_textview)
-    TextView subCategoryName;
-    @BindView(R.id.product_imageview)
-    ImageView productImg;
-    @BindView(R.id.producttitle_textview)
-    TextView productName;
-    @BindView(R.id.producprice_textview)
-    TextView productPrice;
-    @BindView(R.id.availableamount_textview)
-    TextView productAmount;
-    @BindView(R.id.qty_textview)
-    TextView qtyTextView;
-    @BindView(R.id.days_textviw)
-    TextView daysTextView;
-    // @BindView(R.id.productcountry_spinner) Spinner countrySpinner;
-    @BindView(R.id.productcity_spinner)
-    Spinner citySpinner;
+    @BindView(R.id.addproduct_imageview) ImageView ivProduct;
+    @BindView(R.id.chooseaddproduct_imageview) ImageView ivChhoseProduct;
 
-    @BindView(R.id.payment_layout)
-    LinearLayout paymentLayout;
+    @BindView(R.id.addproductname_textview) EditText etProductName;
+    @BindView(R.id.addproductdescription_textview) EditText etProductDesc;
+    @BindView(R.id.addproductstatus_textview) EditText etProductStatus;
+    @BindView(R.id.addproductprice_textview) EditText etProductPrice;
+    @BindView(R.id.addproductstock_textview) EditText etProductStock;
 
-    @BindView(R.id.startday_textview)
-    TextView startDayTextView;
-    @BindView(R.id.startmonth_textview)
-    TextView startMonthTextView;
-    @BindView(R.id.startyear_textview)
-    TextView startYearTextView;
-    @BindView(R.id.endday_textview)
-    TextView endDayTextView;
-    @BindView(R.id.endmonth_textview)
-    TextView endMonthTextView;
-    @BindView(R.id.endyear_textview)
-    TextView endYearTextView;
+    @BindView(R.id.addproduct_categoryspinner) Spinner spinnerCategory;
+    @BindView(R.id.addproduct_subcategoryspinner) Spinner spinnerSubCategory;
+    @BindView(R.id.addproductcity_spinner) Spinner spinnerCities;
 
-    @BindView(R.id.productdata_layout)
-    LinearLayout dataLayout;
-    @BindView(R.id.details_progressbar)
-    ProgressBar detailsProgressBar;
+    @BindView(R.id.addproduct_qtytext) TextView tvQuantity;
 
-    ProductDetailsData productDetailsData;
+    @BindView(R.id.addproduct_startdaytext) TextView tvStartDay;
+    @BindView(R.id.addproduct_startmonthtext) TextView tvStartMonth;
+    @BindView(R.id.addproduct_startyeartext) TextView tvStartYear;
+    @BindView(R.id.addproduct_enddaytext) TextView tvEndDay;
+    @BindView(R.id.addproduct_endmonthtext) TextView tvEndMonth;
+    @BindView(R.id.addproduct_endyeartext) TextView tvEndYear;
+
+    @BindView(R.id.addproduct_progressbar) ProgressBar progressBar;
 
     int qtyCounter = 0;
-    int daysCounter = 0;
 
     private Calendar calendar;
     private int startDay, startMonth, startYear, endDay, endMonth, endYear;
-    private int mintDay, minMonth, minYear, maxDay, maxMonth, maxYear;
     private DatePickerDialog.OnDateSetListener startDatePicker, endDatePicker;
 
     UserViewModel viewModel;
@@ -146,18 +133,25 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     double lat, log;
     String address;
 
+    static Bitmap bitmapPhoto;
+    private int PICK_IMAGE_REQUEST = 1;
+    MultipartBody.Part pic = null;
+    File imageFile;
+
+    int categoryId, subCategoryId;
+
     FusedLocationProviderClient mFusedLocationClient;
 
-    String countryName, cityName;
-    List<CountryData> countriesList = new ArrayList<>();
+    String startDate, endDate;
+    String cityName;
+    List<CategoryData> categoriesList = new ArrayList<>();
+    List<SubCategoryData> subCategoryList = new ArrayList<>();
+
     List<CityData> citiesList = new ArrayList<>();
 
     private GoogleMap mMap;
 
     boolean isProductExist = false;
-
-    @BindView(R.id.subcategorydata_layout)
-    RelativeLayout subCategoryDataLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -174,14 +168,6 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, this.getBaseContext().getResources().getDisplayMetrics());
 
-/*
-        SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.map_fragment, mMapFragment);
-        fragmentTransaction.commit();
-        mMapFragment.getMapAsync(this);
-*/
-
         getLocation();
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -193,27 +179,19 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
-
         Log.d(Codes.APP_TAGS, "product details Id: " + prefMethods.getProductId());
 
-        if (prefMethods.getSubCategoryData() != null) {
+        if (prefMethods.getSubCategoryData() != null)
+        {
             subCategoryData = prefMethods.getSubCategoryData();
         }
 
-        if (prefMethods.getUserData() != null) {
+        if (prefMethods.getUserData() != null)
+        {
             userData = prefMethods.getUserData();
         }
-        viewModel.getProductDetails(prefMethods.getProductId()).observe(this, new Observer<ProductDetailsData>() {
-            @Override
-            public void onChanged(ProductDetailsData data) {
-                productDetailsData = data;
-                setupDataToViews(data);
-                Log.d(Codes.APP_TAGS, "product details data: " + productDetailsData.getName());
-            }
-        });
 
-        qtyTextView.setText("" + 0);
-        daysTextView.setText("" + 0);
+        tvQuantity.setText("" + 0);
 
         calendar = Calendar.getInstance();
         if (userData != null) {
@@ -222,75 +200,80 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
         // checkProductValidationDate();
 
-
-/*
-        viewModel.getAllCountries().observe(this, new Observer<List<CountryData>>() {
+        viewModel.getAllCategories().observe(this, new Observer<List<CategoryData>>()
+        {
             @Override
-            public void onChanged(List<CountryData> countryData) {
-                countriesList = countryData;
-                buildCountriesSpinner();
+            public void onChanged(List<CategoryData> categoryItems)
+            {
+                categoriesList = (ArrayList<CategoryData>) categoryItems;
+                if (categoriesList.size() != 0)
+                {
+                    buildCategoriesSpinner();
+                }
             }
-        });*/
+        });
+    }
 
-/*
-        locationListener = new LocationListener() {
+    private void buildCategoriesSpinner()
+    {
+        CategorySpinnerAdapter categorySpinnerAdapter = new CategorySpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item,
+                                                android.R.id.text1, categoriesList);
+        spinnerCategory.setAdapter(categorySpinnerAdapter);
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onLocationChanged(Location location) {
-                userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                lat = userLocation.latitude;
-                log = userLocation.longitude;
-                Log.d(Codes.APP_TAGS, "lat location // " + userLocation.latitude);
-                Log.d(Codes.APP_TAGS, "log location // " + userLocation.longitude);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
+            {
+                categoryId = categoriesList.get(pos).getId();
+                Log.e(TAG, "onItemSelected: " + categoriesList.get(pos).getId());
+                getSybCategories(categoryId);
+                Log.d(Codes.APP_TAGS, "countries size: " +  categoriesList.size());
             }
 
             @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+    }
+
+    private void getSybCategories(int categoryId)
+    {
+        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<List<SubCategoryData>>()
+        {
+            @Override
+            public void onChanged(List<SubCategoryData> subCategoryData)
+            {
+                subCategoryList = (ArrayList<SubCategoryData>) subCategoryData;
+                if (categoriesList.size() != 0)
+                {
+                    buildSubCategorySpinner();
+                }
+            }
+        });
+    }
+
+    public void buildSubCategorySpinner()
+    {
+        SubCategorySpinnerAdapter subCategorySpinnerAdapter = new SubCategorySpinnerAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                android.R.id.text1, subCategoryList);
+        spinnerSubCategory.setAdapter(subCategorySpinnerAdapter);
+        spinnerSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
+            {
+                subCategoryId = subCategoryList.get(pos).getSubCatId();
             }
 
             @Override
-            public void onProviderEnabled(String s) {
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
             }
-
-            @Override
-            public void onProviderDisabled(String s) {
-            }
-        };
-
-        if (Build.VERSION.SDK_INT < 23) {
-
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-        } *//*else {
-
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-            } else {
-
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                Log.d(Codes.APP_TAGS, "lat / " + userLocation.latitude);
-                Log.d(Codes.APP_TAGS, "log / " + userLocation.longitude);
-                lat = userLocation.latitude;
-                log = userLocation.longitude;
-            }
-        }*/
-
+        });
     }
 
     private void showGPSDisabledAlertToUser() {
@@ -316,23 +299,6 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-   /* private void buildCountriesSpinner() {
-        CountriesAdapter countriesAdapter = new CountriesAdapter(this, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, countriesList);
-        countrySpinner.setAdapter(countriesAdapter);
-        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                countryName = countriesList.get(pos).getCountryName();
-                getCities(countriesList.get(pos).getId());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }*/
-
     private void getCities(int countryId) {
         Log.d(Codes.APP_TAGS, "get cities method");
         viewModel.getAllCities(countryId).observe(this, new Observer<List<CityData>>() {
@@ -349,8 +315,8 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     public void buildCitiesSpinner() {
         CitiesAdapter citiesAdapter = new CitiesAdapter(this, android.R.layout.simple_spinner_dropdown_item,
                 android.R.id.text1, citiesList);
-        citySpinner.setAdapter(citiesAdapter);
-        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerCities.setAdapter(citiesAdapter);
+        spinnerCities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 cityName = citiesList.get(pos).getCityName();
@@ -365,25 +331,68 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-    private void setupDataToViews(ProductDetailsData productDetailsData) {
-        if (subCategoryData != null) {
-            //  subCategoryDataLayout.setVisibility(View.GONE);
-            Glide.with(this).load(subCategoryData.getSubcategoryImage()).into(subCategoryImage);
-            subCategoryName.setText(subCategoryData.getSubcategoryName());
-        }
-
-        Glide.with(this).load(productDetailsData.getImage()).into(productImg);
-        productName.setText(productDetailsData.getName());
-        productPrice.setText("" + productDetailsData.getPrice());
-        productAmount.setText("" + productDetailsData.getAvailableQuantity());
-        qtyTextView.setText("" + productDetailsData.getAvailableQuantity());
-
-        startDayTextView.setText(String.valueOf(startDay));
-
-        Log.d(Codes.APP_TAGS, "product data set to views");
+    @OnClick(R.id.chooseaddproduct_imageview)
+    void ChoseProductImage(View v)
+    {
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
     }
 
-    @OnClick(R.id.selectlocationonmap_button)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
+        {
+            Uri mImageUri = data.getData();
+            imageFile = new File(mImageUri.getLastPathSegment());
+            try {
+                bitmapPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ivProduct.setImageBitmap(bitmapPhoto);
+            InputStream is = null;
+            try
+            {
+                is = getContentResolver().openInputStream(data.getData());
+                uploadImage(getBytes(is));
+            } catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public byte[] getBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
+
+        int buffSize = 1024;
+        byte[] buff = new byte[buffSize];
+
+        int len = 0;
+        while ((len = is.read(buff)) != -1) {
+            byteBuff.write(buff, 0, len);
+        }
+
+        return byteBuff.toByteArray();
+    }
+
+    private void uploadImage(byte[] imageBytes)
+    {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
+
+        pic = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
+    }
+
+    @OnClick(R.id.btnaddproduct_selectlocation)
     void selectLocation(View v) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
@@ -394,68 +403,95 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
         prefMethods.saveUserCandidates(list);
     }
 
-    @OnClick(R.id.product_back_imageview)
-    void goBack(View v) {
-        Fragment currentFragment = new ProductsFragment();
-        FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.nav_host_fragment, currentFragment);
-        ft.commit();
+    @OnClick(R.id.addproduct_button)
+    void addProduct(View view)
+    {
+        Log.d(Codes.APP_TAGS, "add button");
+        try
+        {
+            if (checkProductValidationDate() == true)
+            {
+                Log.d(Codes.APP_TAGS, "date validated");
 
-        /*
-        Intent intent = new Intent(getActivity(), ProductsActivity.class);
-        startActivity(intent);*/
-    }
+                if (etProductName.getText().toString().isEmpty())
+                {
+                    etProductName.setError("please enter product name");
+                }
+                else if (etProductDesc.getText().toString().isEmpty())
+                {
+                    etProductDesc.setError("please enter product description");
+                }
+                else if (etProductStatus.getText().toString().isEmpty())
+                {
+                    etProductStatus.setError("please enter product status");
+                }
+                else if (etProductStock.getText().toString().isEmpty())
+                {
+                    etProductStock.setError("please enter product stock");
+                }
+                else if (etProductPrice.getText().toString().isEmpty())
+                {
+                    etProductPrice.setError("please enter product price");
+                } else
+                    {
+                        addProductTOMyProducts();
+                }
+            }
 
-    @OnClick(R.id.buyproduct_button)
-    void buyProduct(View view) {
-        paymentLayout.setVisibility(View.VISIBLE);
-        dataLayout.setAlpha((float) .1);
-    }
-
-    @OnClick(R.id.continuepayment_button)
-    void OpenPaymentActivity(View view) {
-        if (userData == null) {
-            paymentLayout.setVisibility(View.GONE);
-            dataLayout.setAlpha((float) 1);
-            Toast.makeText(this, "you must to login first", Toast.LENGTH_SHORT).show();
-            return;
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-
-        isProductExistInCarts();
     }
 
-    private void addPdocutTOCarts() {
-        String startDate = startDay + "/" + startMonth + "/" + startYear;
-        String endDate = endDay + "/" + endMonth + "/" + endYear;
+    private void addProductTOMyProducts()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        startDate = startDay + "/" + startMonth + "/" + startYear;
+        endDate = endDay + "/" + endMonth + "/" + endYear;
         try {
             address = getAddress();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        AddToCartsRequest addToCartsRequest = new AddToCartsRequest(lat, log, userData.getId(), prefMethods.getProductId(), qtyCounter, daysCounter,
-                startDate, endDate, userData.getToken(), address);
+        RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(userData.getId()));
+        RequestBody user_token = RequestBody.create(MediaType.parse("text/plain"), userData.getToken());
+        RequestBody product_name = RequestBody.create(MediaType.parse("text/plain"), etProductName.getText().toString());
+        RequestBody product_price = RequestBody.create(MediaType.parse("text/plain"), etProductPrice.getText().toString());
+        RequestBody product_stock = RequestBody.create(MediaType.parse("text/plain"), etProductStock.getText().toString());
+        RequestBody start_date = RequestBody.create(MediaType.parse("text/plain"), startDate);
+        RequestBody product_quantity = RequestBody.create(MediaType.parse("text/plain"), tvQuantity.getText().toString());
+        RequestBody product_status = RequestBody.create(MediaType.parse("text/plain"), etProductStatus.getText().toString());
+        RequestBody product_desc = RequestBody.create(MediaType.parse("text/plain"), etProductDesc.getText().toString());
+        RequestBody category_id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categoryId));
+        RequestBody subCategory_id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(subCategoryId));
+        RequestBody city_name = RequestBody.create(MediaType.parse("text/plain"), cityName);
 
-        viewModel.addToCarts(addToCartsRequest).observe(this, new Observer<AddToCartResponse>() {
+        viewModel.addProduct(pic, user_id, user_token, product_name, product_price, product_stock,
+                             start_date, product_quantity, product_status, product_desc,
+                            category_id, subCategory_id, city_name).observe(this, new Observer<AddProductResponse>()
+        {
             @Override
-            public void onChanged(AddToCartResponse addToCartResponse) {
-                Log.d(Codes.APP_TAGS, "carts activity // " + addToCartResponse.toString());
-                if (addToCartResponse.getStatus() == 200) {
-                    Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
+            public void onChanged(AddProductResponse addProductResponse)
+            {
+                if (addProductResponse.getStatus() == 200)
+                {
+                    progressBar.setVisibility(View.GONE);
+                    Intent intent = new Intent(getApplicationContext(), MyProductsActivity.class);
                     startActivity(intent);
-                    detailsProgressBar.setVisibility(View.GONE);
-                } else {
-                    dataLayout.setAlpha((float) 1);
-                    detailsProgressBar.setVisibility(View.GONE);
-                    paymentLayout.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "Try Again...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProductActivity.this, "done // " + addProductResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(AddProductActivity.this, "failed // " + addProductResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
     }
 
     @Optional
-    @OnClick({R.id.startday_textview, R.id.startmonth_textview, R.id.startyear_textview})
+    @OnClick({R.id.addproduct_startdaytext, R.id.addproduct_startmonthtext, R.id.addproduct_startyeartext})
     void selectStartDate(View view) {
         final Calendar newCalendar = Calendar.getInstance();
         DatePickerDialog StartTime = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -477,9 +513,9 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
                     // setDay(Integer.valueOf(mthYr[0]));
                     startMonth = (Integer.valueOf(mthYr[0]));
                 }
-                startDayTextView.setText("" + startDay);
-                startMonthTextView.setText("" + startMonth);
-                startYearTextView.setText("" + startYear);
+                tvStartDay.setText("" + startDay);
+                tvStartMonth.setText("" + startMonth);
+                tvStartYear.setText("" + startYear);
 
                 Log.d(Codes.APP_TAGS, "" + startDay);
             }
@@ -491,7 +527,7 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     @Optional
-    @OnClick({R.id.endday_textview, R.id.endmonth_textview, R.id.endyear_textview})
+    @OnClick({R.id.addproduct_enddaytext, R.id.addproduct_endmonthtext, R.id.addproduct_endyeartext})
     void selectEndDate(View view) {
         final Calendar newCalendar = Calendar.getInstance();
         DatePickerDialog endTime = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -515,6 +551,9 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
                     // setDay(Integer.valueOf(mthYr[0]));
                     endMonth = (Integer.valueOf(mthYr[0]));
                 }
+                tvEndDay.setText("" + endDay);
+                tvEndMonth.setText("" + endMonth);
+                tvEndYear.setText("" + endYear);
                 //  checkProductValidationDate();
             }
 
@@ -523,31 +562,17 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
         endTime.show();
     }
 
-    @OnClick(R.id.increment_qty)
+    @OnClick(R.id.addproduct_incrementqty)
     void incrementQty(View v) {
         qtyCounter++;
-        qtyTextView.setText("" + qtyCounter);
+        tvQuantity.setText("" + qtyCounter);
     }
 
-    @OnClick(R.id.decrement_qty)
+    @OnClick(R.id.addproduct_decrementqty)
     void decrementQty(View v) {
         if (qtyCounter != 0) {
             qtyCounter--;
-            qtyTextView.setText("" + qtyCounter);
-        }
-    }
-
-    @OnClick(R.id.increment_days)
-    void incrementDays(View v) {
-        daysCounter++;
-        daysTextView.setText("" + daysCounter);
-    }
-
-    @OnClick(R.id.decrement_days)
-    void decrementDays(View v) {
-        if (daysCounter != 0) {
-            daysCounter--;
-            daysTextView.setText("" + daysCounter);
+            tvQuantity.setText("" + qtyCounter);
         }
     }
 
@@ -615,7 +640,7 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
                      mLocationRequest.setFastestInterval(0);
                      mLocationRequest.setNumUpdates(1);
 
-                     mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+                     mFusedLocationClient = LocationServices.getFusedLocationProviderClient(AddProductActivity.this);
                      mFusedLocationClient.requestLocationUpdates(
                              mLocationRequest, mLocationCallback,
                              Looper.myLooper()
@@ -629,7 +654,6 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     );
     }
 
-
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -639,7 +663,8 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
         }
     };
 
-    public String getAddress() throws IOException {
+    public String getAddress() throws IOException
+    {
         Geocoder geocoder;
         List<Address> addresses;
         geocoder = new Geocoder(this, Locale.getDefault());
@@ -656,62 +681,30 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
         return state + " , " + city + " , " + country;
     }
 
+   public boolean checkProductValidationDate() throws ParseException
+   {
+       boolean result = false;
+       SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+       Date d1 = sdformat.parse(startDay + "-" + startMonth + "-" + startYear);
+       Date d2 = sdformat.parse(endDay + "-" + endMonth + "-" + endYear);
 
-    public void isProductExistInCarts() {
-        detailsProgressBar.setVisibility(View.VISIBLE);
-        viewModel.getAllCarts(userData.getId(), userData.getToken()).observe(this, new Observer<CartResponse>() {
-            @Override
-            public void onChanged(CartResponse cartResponse) {
-                if (cartResponse.getStatus() == 200) {
-                    for (int i = 0; i < cartResponse.getData().size(); i++) {
-                        if (cartResponse.getData().get(i).getProductId() == prefMethods.getProductId()) {
-                            paymentLayout.setVisibility(View.GONE);
-                            dataLayout.setAlpha((float) 1);
-                            detailsProgressBar.setVisibility(View.GONE);
-                        } else {
-                            paymentLayout.setVisibility(View.GONE);
-                            dataLayout.setAlpha((float) 1);
+       if(d1.compareTo(d2) > 0)
+       {
+           Toast.makeText(this, "Date 1 occurs after Date 2", Toast.LENGTH_SHORT).show();
+           result = false;
+       }
+       else if(d1.compareTo(d2) < 0)
+       {
+         System.out.println("Date 1 occurs before Date 2");
+         result = true;
+       }
+       else if(d1.compareTo(d2) == 0)
+       {
+         System.out.println("Both dates are equal");
+         result = false;
+       }
 
-                            addPdocutTOCarts();
-                        }
-                    }
-                }
-            }
-        });
-
+       return result;
     }
-
- /*   public void checkProductValidationDate()
-    {
-        String startDat = "27/1/2020";
-        String[] tokens = startDat.split("/");
-
-        endDayTextView.setText("" + endDay);
-        endMonthTextView.setText("" + endMonth);
-        endYearTextView.setText("" + endYear);
-
-        if (startDay < mintDay && startMonth < minMonth && startYear < minYear)
-        {
-            startDayTextView.setText("" + mintDay);
-            startMonthTextView.setText("" + minMonth);
-            startYearTextView.setText("" + minYear);
-        }
-        else
-        {
-            endDayTextView.setText("" + maxDay);
-            endMonthTextView.setText("" + maxMonth);
-            endYearTextView.setText("" + maxYear);
-        }
-        if (startDay > mintDay && startMonth > minMonth && startYear > minYear)
-        {
-            endDayTextView.setText("" + maxDay);
-            endMonthTextView.setText("" + maxMonth);
-            endYearTextView.setText("" + maxYear);
-        }
-        else
-        {
-
-        }
-    }*/
 }
 

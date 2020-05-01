@@ -21,10 +21,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,6 +52,8 @@ import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
+import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
+import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.ui.MapsActivity;
 import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
@@ -70,7 +74,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.hzn.lib.EasyTransition;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -80,6 +83,7 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
@@ -95,19 +99,19 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     TextView subCategoryName;
     @BindView(R.id.product_imageview)
     ImageView productImg;
-    @BindView(R.id.producttitle_textview)
-    TextView productName;
+    @BindView(R.id.productdetails_nametext) TextView productName;
     @BindView(R.id.producprice_textview)
     TextView productPrice;
-    @BindView(R.id.availableamount_textview)
-    TextView productAmount;
-    @BindView(R.id.qty_textview)
-    TextView qtyTextView;
-    @BindView(R.id.days_textviw)
-    TextView daysTextView;
-    // @BindView(R.id.productcountry_spinner) Spinner countrySpinner;
+
+    @BindView(R.id.details_availableqty) TextView availableQuantity;
+    @BindView(R.id.details_quantitytext) TextView qtyTextView;
+
     @BindView(R.id.productcity_spinner)
     Spinner citySpinner;
+
+
+    @BindView(R.id.details_startdate)TextView startDataText;
+    @BindView(R.id.details_enddate)TextView endDataText;
 
     @BindView(R.id.payment_layout)
     LinearLayout paymentLayout;
@@ -122,8 +126,17 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     TextView endDayTextView;
     @BindView(R.id.endmonth_textview)
     TextView endMonthTextView;
+    @BindView(R.id.ratingbar)
+    RatingBar ratingBar;
     @BindView(R.id.endyear_textview)
     TextView endYearTextView;
+
+    @BindView(R.id.rate_layout) LinearLayout rateLayout;
+    @BindView(R.id.btn_ratebar)
+    Button rateBtn;
+    @BindView(R.id.btn_showratinglayout) Button btnShowRatingLayout;
+
+    @BindView(R.id.details_productprice) TextView priceTextView;
 
     @BindView(R.id.productdata_layout)
     LinearLayout dataLayout;
@@ -137,7 +150,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
 
     private Calendar calendar;
     private int startDay, startMonth, startYear, endDay, endMonth, endYear;
-    private int mintDay, minMonth, minYear, maxDay, maxMonth, maxYear;
     private DatePickerDialog.OnDateSetListener startDatePicker, endDatePicker;
 
     UserViewModel viewModel;
@@ -176,10 +188,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         View root = inflater.inflate(R.layout.activity_details, container, false);
         ButterKnife.bind(this, root);
 
-      /*  SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
-                .findFragmentById(R.id.map_fragment);
-        mapFragment.getMapAsync( this::onMapReady);*/
-
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         FragmentTransaction fragmentTransaction =
                 getChildFragmentManager().beginTransaction();
@@ -212,7 +220,7 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         if (prefMethods.getUserData() != null) {
             userData = prefMethods.getUserData();
         }
-        viewModel.getProductDetails(prefMethods.getProductId()).observe(this, new Observer<ProductDetailsData>() {
+        viewModel.getProductDetails(prefMethods.getProductId()).observe(getActivity(), new Observer<ProductDetailsData>() {
             @Override
             public void onChanged(ProductDetailsData data)
             {
@@ -223,7 +231,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         });
 
         qtyTextView.setText("" + 0);
-        daysTextView.setText("" + 0);
 
         calendar = Calendar.getInstance();
         if (userData != null)
@@ -233,76 +240,37 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
 
         // checkProductValidationDate();
 
-
-/*
-        viewModel.getAllCountries().observe(this, new Observer<List<CountryData>>() {
-            @Override
-            public void onChanged(List<CountryData> countryData) {
-                countriesList = countryData;
-                buildCountriesSpinner();
-            }
-        });*/
-
-/*
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                lat = userLocation.latitude;
-                log = userLocation.longitude;
-                Log.d(Codes.APP_TAGS, "lat location // " + userLocation.latitude);
-                Log.d(Codes.APP_TAGS, "log location // " + userLocation.longitude);
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-            }
-        };
-
-        if (Build.VERSION.SDK_INT < 23) {
-
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-        } *//*else {
-
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-            } else {
-
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                Log.d(Codes.APP_TAGS, "lat / " + userLocation.latitude);
-                Log.d(Codes.APP_TAGS, "log / " + userLocation.longitude);
-                lat = userLocation.latitude;
-                log = userLocation.longitude;
-            }
-        }*/
-
         return root;
+    }
+
+    private void getCities(int countryId) {
+        Log.d(Codes.APP_TAGS, "get cities method");
+        viewModel.getAllCities(countryId).observe(getActivity(), new Observer<List<CityData>>() {
+            @Override
+            public void onChanged(List<CityData> cityData) {
+                Log.d(Codes.APP_TAGS, "cities size: " + cityData.size());
+                citiesList = cityData;
+                buildCitiesSpinner();
+                Log.d(Codes.APP_TAGS, "size: " + citiesList.size());
+            }
+        });
+    }
+
+    public void buildCitiesSpinner() {
+        CitiesAdapter citiesAdapter = new CitiesAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item,
+                android.R.id.text1, citiesList);
+        citySpinner.setAdapter(citiesAdapter);
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                cityName = citiesList.get(pos).getCityName();
+                Log.e(TAG, "onItemSelected: " + citiesList.get(pos).getId());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void showGPSDisabledAlertToUser() {
@@ -327,61 +295,10 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         alert.show();
     }
 
-
-   /* private void buildCountriesSpinner() {
-        CountriesAdapter countriesAdapter = new CountriesAdapter(this, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, countriesList);
-        countrySpinner.setAdapter(countriesAdapter);
-        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                countryName = countriesList.get(pos).getCountryName();
-                getCities(countriesList.get(pos).getId());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }*/
-
-    private void getCities(int countryId) {
-        Log.d(Codes.APP_TAGS, "get cities method");
-        viewModel.getAllCities(countryId).observe(this, new Observer<List<CityData>>() {
-            @Override
-            public void onChanged(List<CityData> cityData) {
-                Log.d(Codes.APP_TAGS, "cities size: " + cityData.size());
-                citiesList = cityData;
-                buildCitiesSpinner();
-                Log.d(Codes.APP_TAGS, "size: " + citiesList.size());
-            }
-        });
-    }
-
-    public void buildCitiesSpinner() {
-        CitiesAdapter citiesAdapter = new CitiesAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item,
-                android.R.id.text1, citiesList);
-        citySpinner.setAdapter(citiesAdapter);
-        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                cityName = citiesList.get(pos).getCityName();
-                Log.e(TAG, "onItemSelected: " + citiesList.get(pos).getId());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-
     private void setupDataToViews(ProductDetailsData productDetailsData)
     {
         if (subCategoryData != null)
         {
-            //  subCategoryDataLayout.setVisibility(View.GONE);
             Glide.with(this).load(subCategoryData.getSubcategoryImage()).into(subCategoryImage);
             subCategoryName.setText(subCategoryData.getSubcategoryName());
         }
@@ -389,8 +306,13 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         Glide.with(this).load(productDetailsData.getImage()).into(productImg);
         productName.setText(productDetailsData.getName());
         productPrice.setText("" + productDetailsData.getPrice());
-        productAmount.setText("" + productDetailsData.getAvailableQuantity());
-        qtyTextView.setText("" + productDetailsData.getAvailableQuantity());
+        qtyTextView.setText("" + productDetailsData.getNewAvailableQty());
+        availableQuantity.setText("" + productDetailsData.getCurrentStock());
+        priceTextView.setText("" + productDetailsData.getPrice());
+
+        startDataText.setText("Available From: " + productDetailsData.getAvailableDate());
+        startDataText.setText("To: " + productDetailsData.getAvailableDate());
+
 
         startDayTextView.setText(String.valueOf(startDay));
 
@@ -416,10 +338,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.nav_host_fragment, currentFragment);
         ft.commit();
-
-        /*
-        Intent intent = new Intent(getActivity(), ProductsActivity.class);
-        startActivity(intent);*/
     }
 
 
@@ -428,6 +346,42 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         paymentLayout.setVisibility(View.VISIBLE);
         dataLayout.setAlpha((float) .1);
     }
+
+    @OnClick(R.id.btn_showratinglayout)
+    void showRatingLayout(View v)
+    {
+        rateLayout.setVisibility(View.VISIBLE);
+        dataLayout.setAlpha((float) .1);
+    }
+
+    @OnClick(R.id.btn_ratebar)
+    void rateProduct(View v)
+    {
+        detailsProgressBar.setVisibility(View.VISIBLE);
+
+        ProductRateRequest request = new ProductRateRequest(userData.getId(), userData.getToken(),
+                productDetailsData.getProductId(), ratingBar.getNumStars() );
+        viewModel.rateProduct(request).observe(this, new Observer<ProductRateResponse>()
+        {
+            @Override
+            public void onChanged(ProductRateResponse productRateResponse)
+            {
+                if (productRateResponse.getStatus() == 200)
+                {
+                    Toast.makeText(getActivity(), "Thanks", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Try again", Toast.LENGTH_SHORT).show();
+                }
+
+                detailsProgressBar.setVisibility(View.GONE);
+                rateLayout.setVisibility(View.GONE);
+                dataLayout.setAlpha((float) 1);
+            }
+        });
+    }
+
 
     @OnClick(R.id.continuepayment_button)
     void OpenPaymentActivity(View view)
@@ -545,30 +499,16 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         endTime.show();
     }
 
-    @OnClick(R.id.increment_qty)
+    @OnClick(R.id.productdetails_incrementqty)
     void incrementQty(View v) {
         qtyCounter++;
         qtyTextView.setText("" + qtyCounter);
     }
 
-    @OnClick(R.id.decrement_qty) void decrementQty(View v) {
+    @OnClick(R.id.productdetails_decrementqty) void decrementQty(View v) {
         if (qtyCounter != 0) {
             qtyCounter--;
             qtyTextView.setText("" + qtyCounter);
-        }
-    }
-
-    @OnClick(R.id.increment_days)
-    void incrementDays(View v) {
-        daysCounter++;
-        daysTextView.setText("" + daysCounter);
-    }
-
-    @OnClick(R.id.decrement_days)
-    void decrementDays(View v) {
-        if (daysCounter != 0) {
-            daysCounter--;
-            daysTextView.setText("" + daysCounter);
         }
     }
 
@@ -712,42 +652,5 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
                 }
             }
         });
-
     }
-
- /*   public void checkProductValidationDate()
-    {
-        String startDat = "27/1/2020";
-        String[] tokens = startDat.split("/");
-
-        endDayTextView.setText("" + endDay);
-        endMonthTextView.setText("" + endMonth);
-        endYearTextView.setText("" + endYear);
-
-        if (startDay < mintDay && startMonth < minMonth && startYear < minYear)
-        {
-            startDayTextView.setText("" + mintDay);
-            startMonthTextView.setText("" + minMonth);
-            startYearTextView.setText("" + minYear);
-        }
-        else
-        {
-            endDayTextView.setText("" + maxDay);
-            endMonthTextView.setText("" + maxMonth);
-            endYearTextView.setText("" + maxYear);
-        }
-        if (startDay > mintDay && startMonth > minMonth && startYear > minYear)
-        {
-            endDayTextView.setText("" + maxDay);
-            endMonthTextView.setText("" + maxMonth);
-            endYearTextView.setText("" + maxYear);
-        }
-        else
-        {
-
-        }
-    }*/
-
-
-
 }

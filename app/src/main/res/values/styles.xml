@@ -21,6 +21,19 @@
     </style>
 
 
+    <style name="rippleWhite">
+        <item name="mrl_rippleOverlay">true</item>
+        <item name="mrl_rippleAlpha">0.4</item>
+        <item name="mrl_rippleColor">#fff</item>
+    </style>
+
+    <style name="rippleGray">
+        <item name="mrl_rippleOverlay">true</item>
+        <item name="mrl_rippleAlpha">0.4</item>
+        <item name="mrl_rippleColor">#C8C8C8</item>
+    </style>
+
+
     <style name="edittext_style">
         <item name="android:layout_width"> match_parent </item>
         <item name="android:layout_height"> wrap_content </item>

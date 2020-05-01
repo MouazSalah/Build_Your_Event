@@ -199,4 +199,7 @@ Visual reality event technology
     <string name="category_hint">Category</string>
     <string name="sub_category">SubCategory</string>
     <string name="add_to_my_products"> Add </string>
+    <string name="no_products">You don\'t have any products</string>
+    <string name="rate">Rate This Product</string>
+    <string name="update">Update</string>
 </resources>

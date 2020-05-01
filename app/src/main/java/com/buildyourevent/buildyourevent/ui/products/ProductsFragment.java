@@ -82,7 +82,7 @@ public class ProductsFragment extends Fragment implements SubCategoryAdapter.onS
         subCategoryprogressBar.setVisibility(View.VISIBLE);
         subCategoryRecyclerView.setVisibility(View.GONE);
 
-        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<List<SubCategoryData>>()
+        viewModel.getAllSubCategories(categoryId).observe(getActivity(), new Observer<List<SubCategoryData>>()
         {
             @Override
             public void onChanged(List<SubCategoryData> subCategoryData)

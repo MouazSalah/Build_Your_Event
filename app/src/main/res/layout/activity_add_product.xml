@@ -74,7 +74,15 @@
                 <EditText
                     android:id="@+id/addproductprice_textview"
                     style="@style/edittext_style"
+                    android:inputType="number"
                     android:hint="price" />
+
+
+                <EditText
+                    android:id="@+id/addproductstock_textview"
+                    style="@style/edittext_style"
+                    android:inputType="number"
+                    android:hint="stock" />
 
                 <LinearLayout style="@style/edittext_style">
 
@@ -125,7 +133,7 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:id="@+id/increment_qty"
+                        android:id="@+id/addproduct_incrementqty"
                         android:layout_width="33dp"
                         android:layout_height="25dp"
                         android:background="@drawable/increament_background"
@@ -135,7 +143,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/decrement_qty"
+                        android:id="@+id/addproduct_decrementqty"
                         android:layout_width="33dp"
                         android:layout_height="25dp"
                         android:layout_marginStart="10dp"
@@ -146,7 +154,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/qty_textview"
+                        android:id="@+id/addproduct_qtytext"
                         android:layout_width="50dp"
                         android:layout_height="25dp"
                         android:layout_marginStart="40dp"
@@ -168,59 +176,6 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/increment_days"
-                        android:layout_width="33dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/increament_background"
-                        android:gravity="center"
-                        android:text="+"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/decrement_days"
-                        android:layout_width="33dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/increament_background"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/days_textviw"
-                        android:layout_width="50dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="40dp"
-                        android:background="@drawable/product_counter_btn"
-                        android:gravity="center"
-                        android:text="2"
-                        android:textColor="#28928B"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="10dp"
-                        android:gravity="center"
-                        android:text="@string/days"
-                        android:textColor="#51A7A1"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -434,29 +389,34 @@
                     android:layout_marginEnd="10dp"
                     tools:context=".MapsActivity" />
 
-                <RelativeLayout
+                <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
+                    style="@style/rippleWhite"
+                    android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
 
                     <Button
                         android:id="@+id/addproduct_button"
-                        android:layout_width="wrap_content"
+                        android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="20dp"
+                        android:layout_marginEnd="92dp"
                         android:background="@drawable/auth_buttons"
                         android:gravity="center"
                         android:padding="5dp"
                         android:paddingStart="30dp"
                         android:paddingEnd="30dp"
+                        android:layout_marginBottom="25dp"
                         android:text="@string/add_to_my_products"
                         android:textColor="#51A7A1"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
+                </com.balysv.materialripple.MaterialRippleLayout>
 
             </LinearLayout>
 
@@ -469,7 +429,12 @@
                 android:visibility="gone"
                 android:layout_centerInParent="true"/>
 
+
+
         </RelativeLayout>
+
+
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

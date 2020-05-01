@@ -8,14 +8,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/white"
-    tools:context=".ui.products.ProductDetailsActivity">
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        >
+        android:layout_marginBottom="30dp">
 
         <LinearLayout
             android:id="@+id/productdata_layout"
@@ -75,9 +73,70 @@
 
             </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/productdetails_nametext"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Oppo Reno 2f"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textColor="#28928B" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/details_availableqty"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="end"
+                    android:text="105 Available"
+                    android:textAllCaps="true"
+                    android:textColor="#E83E3E"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/details_productprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="end"
+                    android:text="147 $"
+                    android:textAllCaps="true"
+                    android:textColor="#28928B"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -89,15 +148,26 @@
                     android:paddingTop="3dp">
 
                     <TextView
-                        android:id="@+id/availableamount_textview"
+                        android:id="@+id/details_startdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="30dp"
+                        android:gravity="end"
+                        android:text="Available From: 15-11-2020"
+                        android:textAllCaps="false"
+                        android:textColor="#28928B" />
+
+                    <TextView
+                        android:id="@+id/details_availquantity"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="end"
                         android:layout_marginEnd="5dp"
-                        android:gravity="end"
-                        android:textAllCaps="true"
-                        android:textColor="#E83E3E"
-                        android:textStyle="bold" />
+                        android:gravity="start"
+                        android:text="To: 15-11-2020"
+                        android:textColor="#28928B" />
 
                 </LinearLayout>
 
@@ -107,16 +177,16 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/producttitle_textview"
+                        android:id="@+id/details_enddate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="end"
                         android:layout_marginEnd="30dp"
                         android:gravity="end"
-                        android:textAllCaps="true"
-                        android:textColor="#28928B"
-                        android:textSize="18sp" />
+                        android:text="Available To: 15-11-2020"
+                        android:textAllCaps="false"
+                        android:textColor="#28928B" />
 
                     <TextView
                         android:id="@+id/producprice_textview"
@@ -126,6 +196,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="end"
                         android:layout_marginEnd="5dp"
+                        android:text="159$"
                         android:gravity="end"
                         android:textAllCaps="true"
                         android:textColor="#28928B" />
@@ -149,7 +220,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/increment_qty"
+                    android:id="@+id/productdetails_incrementqty"
                     android:layout_width="33dp"
                     android:layout_height="25dp"
                     android:background="@drawable/increament_background"
@@ -159,7 +230,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/decrement_qty"
+                    android:id="@+id/productdetails_decrementqty"
                     android:layout_width="33dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="10dp"
@@ -170,9 +241,9 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/qty_textview"
-                    android:layout_width="50dp"
-                    android:layout_height="25dp"
+                    android:id="@+id/details_quantitytext"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="40dp"
                     android:background="@drawable/product_counter_btn"
                     android:gravity="center"
@@ -182,14 +253,15 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="5dp"
-                    android:gravity="center"
-                    android:text="@string/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Qty"
+                    android:textAllCaps="true"
                     android:textColor="#51A7A1"
                     android:textSize="14sp"
                     android:textStyle="bold" />
+
 
             </LinearLayout>
 
@@ -198,20 +270,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/increment_days"
+                    android:id="@+id/productdetails_incrementdays"
                     android:layout_width="33dp"
                     android:layout_height="25dp"
                     android:background="@drawable/increament_background"
                     android:gravity="center"
                     android:text="+"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/decrement_days"
+                    android:id="@+id/productdetails_decrementdays"
                     android:layout_width="33dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="10dp"
@@ -222,9 +295,9 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/days_textviw"
-                    android:layout_width="50dp"
-                    android:layout_height="25dp"
+                    android:id="@+id/productdetails_daystext"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="40dp"
                     android:background="@drawable/product_counter_btn"
                     android:gravity="center"
@@ -234,11 +307,11 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:gravity="center"
-                    android:text="@string/days"
+                    android:text="days"
+                    android:textAllCaps="true"
                     android:textColor="#51A7A1"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -249,7 +322,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -265,8 +338,8 @@
                 <TextView
                     android:id="@+id/startday_textview"
                     android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="31dp"
                     android:background="@drawable/product_counter_btn"
                     android:gravity="center"
                     android:padding="3dp"
@@ -304,7 +377,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="8dp"
                     android:gravity="center"
                     android:text="@string/startdate_productstate"
                     android:textAllCaps="true"
@@ -334,7 +407,7 @@
                     android:id="@+id/endday_textview"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="31dp"
+                    android:layout_marginStart="46dp"
                     android:background="@drawable/product_counter_btn"
                     android:gravity="center"
                     android:padding="3dp"
@@ -372,7 +445,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
                     android:gravity="center"
                     android:text="@string/enddate_productstate"
                     android:textAllCaps="true"
@@ -511,11 +584,28 @@
                 android:layout_marginTop="20dp"
                 tools:context=".MapsActivity" />
 
+            <Button
+                android:id="@+id/btn_showratinglayout"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:background="@drawable/continue_btn"
+                android:gravity="center"
+                android:padding="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/rate"
+                android:textColor="#fff"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp">
 
                 <Button
                     android:id="@+id/buyproduct_button"
@@ -537,6 +627,51 @@
             </RelativeLayout>
 
 
+
+        </LinearLayout>
+
+        <!-- rating notes -->
+        <LinearLayout
+            android:id="@+id/rate_layout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@drawable/notes_background"
+            android:orientation="vertical"
+            android:paddingStart="5dp"
+            android:paddingTop="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:paddingEnd="5dp"
+            android:visibility="gone"
+            android:paddingBottom="15dp">
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Notes"
+                android:id="@+id/ratingbar"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#E83E3E"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_ratebar"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/auth_buttons"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Save"
+                android:textColor="#51A7A1"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

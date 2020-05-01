@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.buildyourevent.buildyourevent.database.InterfaceApi;
 import com.buildyourevent.buildyourevent.database.RetrofitClient;
+import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
+import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
@@ -20,16 +22,22 @@ import com.buildyourevent.buildyourevent.model.data.product.ProductData;
 import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
+import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
-import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductData;
+import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +71,14 @@ public class UserRepository
     private MutableLiveData<ProductDetailsData> productDetailsDataMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<UserOwnProductResponse> userOwnProductsMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<AddProductResponse> addNewProductsMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<UpdateProductResponse> updateProductMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<RemoveProductResponse> removeProductsMutableLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<AboutUsResponse> aboutUsMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ProductRateResponse> productRateMutableLiveData = new MutableLiveData<>();
 
 
 
@@ -217,7 +233,7 @@ public class UserRepository
                 if (response.isSuccessful())
                 {
                     Log.e(TAG, response.body().toString() );
-                    productDetailsDataMutableLiveData.setValue(response.body().getData());
+                    productDetailsDataMutableLiveData.setValue(response.body().getProductDetailsData());
                     // line dh kan bydeeny null value
                    // Log.d(Codes.APP_TAGS, "data of product/// " + response.body().getProductDetailsData().toString());
 //                    ProductDetailsData productDetailsData = response.body().getProductDetailsData();
@@ -383,4 +399,157 @@ public class UserRepository
         return userOwnProductsMutableLiveData;
     }
 
+
+    public MutableLiveData<AddProductResponse>
+    getAddNewProductsMutableLiveData(MultipartBody.Part pic, RequestBody string1,
+                                    RequestBody string2, RequestBody string3,
+                                    RequestBody string4, RequestBody string5,
+                                    RequestBody string6, RequestBody string7,
+                                    RequestBody string8, RequestBody string9,
+                                    RequestBody string10, RequestBody string11,
+                                    RequestBody string12)
+    {
+        Call<AddProductResponse> responseCall = interfaceApi.addOwnProducts(pic, string1,string2, string3, string4, string5, string6,
+                                                                            string7, string8, string9, string10, string11, string12);
+        responseCall.enqueue(new Callback<AddProductResponse>()
+        {
+            @Override
+            public void onResponse(Call<AddProductResponse> call, Response<AddProductResponse> response)
+            {
+                Log.d("eventsontime", response.message());
+                if (!response.isSuccessful())
+                {
+
+                }
+                else
+                {
+                    AddProductResponse userOwnProductResponse = response.body();
+                    addNewProductsMutableLiveData.setValue(userOwnProductResponse);
+                }
+            }
+            @Override
+            public void onFailure(Call<AddProductResponse> call, Throwable t)
+            {
+            }
+        });
+
+        return addNewProductsMutableLiveData;
+    }
+
+    public MutableLiveData<UpdateProductResponse> getUpdateProductsMutableLiveData(MultipartBody.Part pic, RequestBody string1,
+                                                                                   RequestBody string2, RequestBody string3,
+                                                                                   RequestBody string4, RequestBody string5,
+                                                                                   RequestBody string6, RequestBody string7,
+                                                                                   RequestBody string8, RequestBody string9,
+                                                                                   RequestBody string10, RequestBody string11,
+                                                                                   RequestBody string12, RequestBody string13)
+    {
+        Call<UpdateProductResponse> responseCall = interfaceApi.updateProduct(pic, string1,string2, string3, string4, string5, string6,
+                                                                       string7, string8, string9, string10, string11, string12, string13);
+        responseCall.enqueue(new Callback<UpdateProductResponse>()
+        {
+            @Override
+            public void onResponse(Call<UpdateProductResponse> call, Response<UpdateProductResponse> response)
+            {
+                Log.d("eventsontime", response.message());
+                if (!response.isSuccessful())
+                {
+
+                }
+                else
+                {
+                    UpdateProductResponse userOwnProductResponse = response.body();
+                    updateProductMutableLiveData.setValue(userOwnProductResponse);
+                }
+            }
+            @Override
+            public void onFailure(Call<UpdateProductResponse> call, Throwable t)
+            {
+            }
+        });
+
+        return updateProductMutableLiveData;
+    }
+
+    public MutableLiveData<ProductRateResponse> getProductRateMutableLiveData(ProductRateRequest productRateRequest)
+    {
+        Call<ProductRateResponse> responseCall = interfaceApi.rateProduct(productRateRequest);
+        responseCall.enqueue(new Callback<ProductRateResponse>()
+        {
+            @Override
+            public void onResponse(Call<ProductRateResponse> call, Response<ProductRateResponse> response)
+            {
+                Log.d("eventsontime", response.message());
+                if (!response.isSuccessful())
+                {
+
+                }
+                else
+                {
+                    ProductRateResponse userOwnProductResponse = response.body();
+                    productRateMutableLiveData.setValue(userOwnProductResponse);
+                }
+            }
+            @Override
+            public void onFailure(Call<ProductRateResponse> call, Throwable t)
+            {
+            }
+        });
+
+        return productRateMutableLiveData;
+    }
+
+
+    public MutableLiveData<RemoveProductResponse> getRemoveProductsMutableLiveData(RemoveProductRequest removeProductRequest)
+    {
+        Call<RemoveProductResponse> responseCall = interfaceApi.removeProduct(removeProductRequest);
+        responseCall.enqueue(new Callback<RemoveProductResponse>()
+        {
+            @Override
+            public void onResponse(Call<RemoveProductResponse> call, Response<RemoveProductResponse> response)
+            {
+                Log.d("eventsontime", response.message());
+                if (!response.isSuccessful())
+                {
+
+                }
+                else
+                {
+                    RemoveProductResponse userOwnProductResponse = response.body();
+                    removeProductsMutableLiveData.setValue(userOwnProductResponse);
+                }
+            }
+            @Override
+            public void onFailure(Call<RemoveProductResponse> call, Throwable t)
+            {
+            }
+        });
+
+        return removeProductsMutableLiveData;
+    }
+
+
+    public MutableLiveData<AboutUsResponse> getAboutUsMutableLiveData()
+    {
+        Call<AboutUsResponse> responseCall = interfaceApi.getAboutUs();
+        responseCall.enqueue(new Callback<AboutUsResponse>()
+        {
+            @Override
+            public void onResponse(Call<AboutUsResponse> call, Response<AboutUsResponse> response)
+            {
+                Log.d("eventsontime", response.message());
+                if (response.isSuccessful())
+                {
+                    AboutUsResponse userOwnProductResponse = response.body();
+                    aboutUsMutableLiveData.setValue(userOwnProductResponse);
+                }
+            }
+            @Override
+            public void onFailure(Call<AboutUsResponse> call, Throwable t)
+            {
+            }
+        });
+
+        return aboutUsMutableLiveData;
+    }
 }

@@ -1,13 +1,8 @@
-package com.buildyourevent.buildyourevent.model.data.userproduct.response;
+package com.buildyourevent.buildyourevent.model.data.updateproduct;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class UserOwnProductData implements Serializable {
-
-	@SerializedName("cat_image")
-	private String catImage;
+public class UpdateProductData {
 
 	@SerializedName("image")
 	private String image;
@@ -15,14 +10,17 @@ public class UserOwnProductData implements Serializable {
 	@SerializedName("new_available_qty")
 	private int newAvailableQty;
 
-	@SerializedName("cat_name")
-	private String catName;
+	@SerializedName("owner_id")
+	private int ownerId;
 
 	@SerializedName("sub_cat_id")
 	private int subCatId;
 
 	@SerializedName("available_date")
 	private String availableDate;
+
+	@SerializedName("description")
+	private String description;
 
 	@SerializedName("created_at")
 	private String createdAt;
@@ -36,9 +34,6 @@ public class UserOwnProductData implements Serializable {
 	@SerializedName("rate")
 	private Object rate;
 
-	@SerializedName("sub_cat_name")
-	private String subCatName;
-
 	@SerializedName("price")
 	private String price;
 
@@ -51,19 +46,11 @@ public class UserOwnProductData implements Serializable {
 	@SerializedName("cat_id")
 	private int catId;
 
+	@SerializedName("location")
+	private String location;
+
 	@SerializedName("status")
 	private String status;
-
-	@SerializedName("sub_cat_image")
-	private String subCatImage;
-
-	public void setCatImage(String catImage){
-		this.catImage = catImage;
-	}
-
-	public String getCatImage(){
-		return catImage;
-	}
 
 	public void setImage(String image){
 		this.image = image;
@@ -81,12 +68,12 @@ public class UserOwnProductData implements Serializable {
 		return newAvailableQty;
 	}
 
-	public void setCatName(String catName){
-		this.catName = catName;
+	public void setOwnerId(int ownerId){
+		this.ownerId = ownerId;
 	}
 
-	public String getCatName(){
-		return catName;
+	public int getOwnerId(){
+		return ownerId;
 	}
 
 	public void setSubCatId(int subCatId){
@@ -103,6 +90,14 @@ public class UserOwnProductData implements Serializable {
 
 	public String getAvailableDate(){
 		return availableDate;
+	}
+
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public String getDescription(){
+		return description;
 	}
 
 	public void setCreatedAt(String createdAt){
@@ -137,14 +132,6 @@ public class UserOwnProductData implements Serializable {
 		return rate;
 	}
 
-	public void setSubCatName(String subCatName){
-		this.subCatName = subCatName;
-	}
-
-	public String getSubCatName(){
-		return subCatName;
-	}
-
 	public void setPrice(String price){
 		this.price = price;
 	}
@@ -177,6 +164,14 @@ public class UserOwnProductData implements Serializable {
 		return catId;
 	}
 
+	public void setLocation(String location){
+		this.location = location;
+	}
+
+	public String getLocation(){
+		return location;
+	}
+
 	public void setStatus(String status){
 		this.status = status;
 	}
@@ -185,35 +180,26 @@ public class UserOwnProductData implements Serializable {
 		return status;
 	}
 
-	public void setSubCatImage(String subCatImage){
-		this.subCatImage = subCatImage;
-	}
-
-	public String getSubCatImage(){
-		return subCatImage;
-	}
-
 	@Override
  	public String toString(){
 		return 
-			"DataItem{" + 
-			"cat_image = '" + catImage + '\'' + 
-			",image = '" + image + '\'' + 
+			"Data{" + 
+			"image = '" + image + '\'' + 
 			",new_available_qty = '" + newAvailableQty + '\'' + 
-			",cat_name = '" + catName + '\'' + 
+			",owner_id = '" + ownerId + '\'' + 
 			",sub_cat_id = '" + subCatId + '\'' + 
 			",available_date = '" + availableDate + '\'' + 
+			",description = '" + description + '\'' + 
 			",created_at = '" + createdAt + '\'' + 
 			",current_stock = '" + currentStock + '\'' + 
 			",updated_at = '" + updatedAt + '\'' + 
 			",rate = '" + rate + '\'' + 
-			",sub_cat_name = '" + subCatName + '\'' + 
 			",price = '" + price + '\'' + 
 			",product_id = '" + productId + '\'' + 
 			",name = '" + name + '\'' + 
 			",cat_id = '" + catId + '\'' + 
+			",location = '" + location + '\'' + 
 			",status = '" + status + '\'' + 
-			",sub_cat_image = '" + subCatImage + '\'' + 
 			"}";
 		}
 }

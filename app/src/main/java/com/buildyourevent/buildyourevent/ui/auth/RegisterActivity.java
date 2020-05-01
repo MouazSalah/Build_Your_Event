@@ -1,7 +1,6 @@
 package com.buildyourevent.buildyourevent.ui.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -79,14 +78,16 @@ public class RegisterActivity extends AppCompatActivity
 
     static Bitmap bitmapPhoto;
     private int PICK_IMAGE_REQUEST = 1;
+    MultipartBody.Part pic = null;
+    File imageFile;
+
+
 
     List<CountryData> countriesList = new ArrayList<>();
     List<CityData> citiesList = new ArrayList<>();
 
-    File imageFile;
     UserViewModel viewModel;
 
-    MultipartBody.Part pic = null;
 
 
     @Override
@@ -211,8 +212,7 @@ public class RegisterActivity extends AppCompatActivity
             public void onChanged(SendCodeResponse sendCodeResponse) {
                 if (sendCodeResponse.getStatus() == 200)
                 {
-                    Intent intent = new Intent(getApplicationContext(), VerifyCodeActivity.class);
-                    intent.putExtra(Codes.VERIFY_CODE_INTENT, intentValue);
+                    Intent intent = new Intent(getApplicationContext(), RegisterVerifyCodeActivity.class);
                     intent.putExtra(Codes.RECOVERY_EMAIL, etEmail.getText().toString());
                     startActivity(intent);
                 }

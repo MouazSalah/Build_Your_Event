@@ -16,6 +16,7 @@ import com.buildyourevent.buildyourevent.model.auth.logout.LogoutRequest;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
 import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordResponse;
+import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
@@ -25,9 +26,16 @@ import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
 import com.buildyourevent.buildyourevent.model.data.product.ProductData;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
+import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
+import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.request.AddOwnProduct;
+import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
 import java.util.List;
@@ -152,5 +160,50 @@ public class UserViewModel extends ViewModel
     public LiveData<OrderResponse> confirmOrder(OrderRequest orderRequest)
     {
         return userRepository.getConfirmOrderMutableLiveData(orderRequest);
+    }
+
+
+    public LiveData<UserOwnProductResponse> showAllOwnProducts(int userId, String apiToekn)
+    {
+        return userRepository.getShowAllUserProductMutapleLiveData(userId, apiToekn);
+    }
+
+    public LiveData<AddProductResponse> addProduct(MultipartBody.Part pic, RequestBody string1,
+                                                   RequestBody string2, RequestBody string3,
+                                                   RequestBody string4, RequestBody string5,
+                                                   RequestBody string6, RequestBody string7,
+                                                   RequestBody string8, RequestBody string9,
+                                                   RequestBody string10, RequestBody string11,
+                                                   RequestBody string12)
+    {
+        return userRepository.getAddNewProductsMutableLiveData(pic, string1,string2, string3, string4, string5, string6,
+                string7, string8, string9, string10, string11, string12);
+    }
+
+    public LiveData<UpdateProductResponse> updateProduct(MultipartBody.Part pic, RequestBody string1,
+                                                         RequestBody string2, RequestBody string3,
+                                                         RequestBody string4, RequestBody string5,
+                                                         RequestBody string6, RequestBody string7,
+                                                         RequestBody string8, RequestBody string9,
+                                                         RequestBody string10, RequestBody string11,
+                                                         RequestBody string12, RequestBody string13)
+    {
+        return userRepository.getUpdateProductsMutableLiveData(pic, string1,string2, string3, string4, string5, string6,
+                string7, string8, string9, string10, string11, string12, string13);
+    }
+
+    public LiveData<RemoveProductResponse> removeProduct(RemoveProductRequest removeProductRequest)
+    {
+        return userRepository.getRemoveProductsMutableLiveData(removeProductRequest);
+    }
+
+    public LiveData<ProductRateResponse> rateProduct(ProductRateRequest productRateRequest)
+    {
+        return userRepository.getProductRateMutableLiveData(productRateRequest);
+    }
+
+    public LiveData<AboutUsResponse> getAboutUs( )
+    {
+        return userRepository.getAboutUsMutableLiveData();
     }
 }

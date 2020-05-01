@@ -84,9 +84,8 @@ public class ForgetPasswordActivity extends AppCompatActivity
             {
                 if (sendCodeResponse.getStatus() == 200)
                 {
-                    Intent intent = new Intent(getApplicationContext(), VerifyCodeActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), PasswordVerifyCodeActivity.class);
                     intent.putExtra(Codes.RECOVERY_EMAIL, etEmail.getText().toString());
-                    intent.putExtra(Codes.VERIFY_CODE_INTENT, "reset_password");
                     startActivity(intent);
                     customType(ForgetPasswordActivity.this,"left-to-right");
                     verifyCodeProgressBar.setVisibility(View.GONE);
@@ -99,5 +98,4 @@ public class ForgetPasswordActivity extends AppCompatActivity
             }
         });
     }
-
 }

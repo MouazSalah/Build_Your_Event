@@ -1,25 +1,32 @@
 package com.buildyourevent.buildyourevent.model.data.userproduct.request;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RemoveProductRequest
 {
-    String product_id;
+    @SerializedName("product_id")
+    int product_id;
+
+    @SerializedName("user_id")
     int user_id;
+
+    @SerializedName("api_token")
     String api_token;
 
     public RemoveProductRequest() {
     }
 
-    public RemoveProductRequest(String product_id, int user_id, String api_token) {
+    public RemoveProductRequest(int product_id, int user_id, String api_token) {
         this.product_id = product_id;
         this.user_id = user_id;
         this.api_token = api_token;
     }
 
-    public String getProduct_id() {
+    public int getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(String product_id) {
+    public void setProduct_id(int product_id) {
         this.product_id = product_id;
     }
 

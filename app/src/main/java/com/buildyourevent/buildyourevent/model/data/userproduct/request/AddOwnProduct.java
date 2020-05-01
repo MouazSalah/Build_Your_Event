@@ -1,8 +1,7 @@
 package com.buildyourevent.buildyourevent.model.data.userproduct.request;
 
-public class addOwnProduct
-{
-    String user_id;
+public class AddOwnProduct {
+    int user_id;
     String api_token;
     String name;
     String price;
@@ -11,17 +10,16 @@ public class addOwnProduct
     String new_available_qty;
     String status;
     String description;
-    String cat_id;
-    String sub_cat_id;
+    int cat_id;
+    int sub_cat_id;
     String location;
 
-    public addOwnProduct() {
+    public AddOwnProduct(int id, String token, String s, String toString, String string, String startDate, String endDate, String s1, String toString1, String string1, int i, int i1, String address) {
     }
 
-    public addOwnProduct(String user_id, String api_token, String name, String price,
-                         String current_stock, String available_at, String new_available_qty,
-                         String status, String description, String cat_id, String sub_cat_id, String location)
-    {
+    public AddOwnProduct(int user_id, String api_token, String name, String price, String current_stock,
+                         String available_at, String new_available_qty, String status,
+                         String description, int cat_id, int sub_cat_id, String location) {
         this.user_id = user_id;
         this.api_token = api_token;
         this.name = name;
@@ -36,11 +34,11 @@ public class addOwnProduct
         this.location = location;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 
@@ -108,19 +106,19 @@ public class addOwnProduct
         this.description = description;
     }
 
-    public String getCat_id() {
+    public int getCat_id() {
         return cat_id;
     }
 
-    public void setCat_id(String cat_id) {
+    public void setCat_id(int cat_id) {
         this.cat_id = cat_id;
     }
 
-    public String getSub_cat_id() {
+    public int getSub_cat_id() {
         return sub_cat_id;
     }
 
-    public void setSub_cat_id(String sub_cat_id) {
+    public void setSub_cat_id(int sub_cat_id) {
         this.sub_cat_id = sub_cat_id;
     }
 

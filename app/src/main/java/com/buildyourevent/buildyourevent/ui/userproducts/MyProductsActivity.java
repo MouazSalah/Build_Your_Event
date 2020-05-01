@@ -30,6 +30,8 @@ import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
+import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
+import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductData;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
@@ -41,6 +43,7 @@ import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -52,13 +55,9 @@ import butterknife.OnClick;
 public class MyProductsActivity extends AppCompatActivity implements UserProductAdapter.onCartItemListener
 {
     @BindView(R.id.myproducts_recyclerview) RecyclerView productsRecyclerView;
-    @BindView(R.id.emptyproducts_layout) LinearLayout emptyProductsLayout;
+    @BindView(R.id.emptymyproducts_layout) LinearLayout emptyProductsLayout;
     @BindView(R.id.notlogin_layout) LinearLayout notLoginLayout;
     @BindView(R.id.myproducts_progressBar) ProgressBar progressBar;
-/*
-
-    @BindView(R.id.cartscount_textview) TextView cartsCounTextView;
-*/
 
     SharedPrefMethods prefMethods;
     UserData userData;
@@ -103,44 +102,31 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
 
     private void getUserProducts()
     {
-        viewModel.showOwnProducts(userData.getId(), userData.getToken()).observe(this, new Observer<UserOwnProductResponse>() {
+        viewModel.showAllOwnProducts(userData.getId(), userData.getToken()).observe(this, new Observer<UserOwnProductResponse>()
+        {
             @Override
             public void onChanged(UserOwnProductResponse productResponse)
             {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(MyProductsActivity.this, "" + productResponse.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
- /*       viewModel.showOwnProducts(userData.getId(), userData.getToken()).observe(this, new Observer<UserOwnProductResponse>() {
-            @Override
-            public void onChanged(UserOwnProductResponse productResponse)
-            {
-
-                Toast.makeText(getApplicationContext(), "" + productResponse.getStatus(), Toast.LENGTH_SHORT).show();
-
                 if (productResponse.getStatus() == 200)
                 {
-                    productsList = (ArrayList<UserOwnProductData>) productResponse.getData();
-                    notLoginLayout.setVisibility(View.GONE);
-                    emptyProductsLayout.setVisibility(View.GONE);
-                    productsRecyclerView.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                    buildRecyclerView();
-                   // cartsCounTextView.setText("" + productsList.size());
-                }
-                else
-                {
-                    notLoginLayout.setVisibility(View.GONE);
-                    emptyProductsLayout.setVisibility(View.VISIBLE);
-                    productsRecyclerView.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.GONE);
-                  //  cartsCounTextView.setText("0");
+                    productsList = productResponse.getData();
+                    if (productResponse.getData().size() == 0)
+                    {
+                        progressBar.setVisibility(View.GONE);
+                        emptyProductsLayout.setVisibility(View.VISIBLE);
+                        productsRecyclerView.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        buildRecyclerView();
+                        progressBar.setVisibility(View.GONE);
+                        emptyProductsLayout.setVisibility(View.GONE);
+                        productsRecyclerView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
- */   }
+   }
 
 
     private void buildRecyclerView()
@@ -171,6 +157,7 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
         finish();
     }
 
+
     @OnClick(R.id.loginnow_button)
     void loginNowTask(View v)
     {
@@ -197,6 +184,7 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
                 if (which == 1)
                 {
                     Intent intent = new Intent(getApplicationContext(), UpdateProductActivity.class);
+                    intent.putExtra("product_data", userOwnProductData);
                     startActivity(intent);
                 }
             }
@@ -208,11 +196,12 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
     private void removeProduct(UserOwnProductData userOwnProductData)
     {
         progressBar.setVisibility(View.VISIBLE);
-        RemoveCartRequest removeCartRequest = new RemoveCartRequest(userData.getId(), userData.getToken(), 1);
-        viewModel.removeFromCart(removeCartRequest).observe(this, new Observer<RemoveCartResponse>() {
+        RemoveProductRequest removeProductRequest = new RemoveProductRequest(userOwnProductData.getProductId(), userData.getId(), userData.getToken());
+        viewModel.removeProduct(removeProductRequest).observe(this, new Observer<RemoveProductResponse>() {
             @Override
-            public void onChanged(RemoveCartResponse removeCartResponse) {
-                if (removeCartResponse.getStatus() == 200)
+            public void onChanged(RemoveProductResponse removeProductResponse)
+            {
+                if (removeProductResponse.getStatus() == 200)
                 {
                     progressBar.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
