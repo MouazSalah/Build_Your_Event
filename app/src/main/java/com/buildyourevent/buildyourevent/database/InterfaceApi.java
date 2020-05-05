@@ -33,6 +33,7 @@ import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProd
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
+import butterknife.Optional;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -81,7 +82,7 @@ public interface InterfaceApi
 
     @FormUrlEncoded
     @POST("sub-category")
-    Call<SubCategoryResponse> getAllSubCategories( @Field("category_id") int categoryId);
+    Call<SubCategoryResponse> getAllSubCategories(@Field("category_id") int categoryId);
 
     @FormUrlEncoded
     @POST("products")

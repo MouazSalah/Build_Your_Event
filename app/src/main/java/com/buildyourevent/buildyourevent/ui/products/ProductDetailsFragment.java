@@ -102,22 +102,19 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     @BindView(R.id.productdetails_nametext) TextView productName;
     @BindView(R.id.producprice_textview)
     TextView productPrice;
+    @BindView(R.id.details_cityevent)TextView cityTextView;
 
     @BindView(R.id.details_availableqty) TextView availableQuantity;
     @BindView(R.id.details_quantitytext) TextView qtyTextView;
 
-    @BindView(R.id.productcity_spinner)
-    Spinner citySpinner;
-
-
     @BindView(R.id.details_startdate)TextView startDataText;
-    @BindView(R.id.details_enddate)TextView endDataText;
 
     @BindView(R.id.payment_layout)
     LinearLayout paymentLayout;
 
     @BindView(R.id.startday_textview)
     TextView startDayTextView;
+
     @BindView(R.id.startmonth_textview)
     TextView startMonthTextView;
     @BindView(R.id.startyear_textview)
@@ -136,8 +133,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     Button rateBtn;
     @BindView(R.id.btn_showratinglayout) Button btnShowRatingLayout;
 
-    @BindView(R.id.details_productprice) TextView priceTextView;
-
     @BindView(R.id.productdata_layout)
     LinearLayout dataLayout;
     @BindView(R.id.details_progressbar)
@@ -148,10 +143,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     int qtyCounter = 0;
     int daysCounter = 0;
 
-    private Calendar calendar;
-    private int startDay, startMonth, startYear, endDay, endMonth, endYear;
-    private DatePickerDialog.OnDateSetListener startDatePicker, endDatePicker;
-
     UserViewModel viewModel;
     UserData userData;
     SharedPrefMethods prefMethods;
@@ -161,10 +152,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
     String address;
 
     FusedLocationProviderClient mFusedLocationClient;
-
-    String countryName, cityName;
-    List<CountryData> countriesList = new ArrayList<>();
-    List<CityData> citiesList = new ArrayList<>();
 
     private GoogleMap mMap;
 
@@ -209,7 +196,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
-
         Log.d(Codes.APP_TAGS, "product details Id: " + prefMethods.getProductId());
 
         if (prefMethods.getSubCategoryData() != null)
@@ -232,45 +218,9 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
 
         qtyTextView.setText("" + 0);
 
-        calendar = Calendar.getInstance();
-        if (userData != null)
-        {
-            getCities(userData.getCountryId());
-        }
-
-        // checkProductValidationDate();
+       // calendar = Calendar.getInstance();
 
         return root;
-    }
-
-    private void getCities(int countryId) {
-        Log.d(Codes.APP_TAGS, "get cities method");
-        viewModel.getAllCities(countryId).observe(getActivity(), new Observer<List<CityData>>() {
-            @Override
-            public void onChanged(List<CityData> cityData) {
-                Log.d(Codes.APP_TAGS, "cities size: " + cityData.size());
-                citiesList = cityData;
-                buildCitiesSpinner();
-                Log.d(Codes.APP_TAGS, "size: " + citiesList.size());
-            }
-        });
-    }
-
-    public void buildCitiesSpinner() {
-        CitiesAdapter citiesAdapter = new CitiesAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item,
-                android.R.id.text1, citiesList);
-        citySpinner.setAdapter(citiesAdapter);
-        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                cityName = citiesList.get(pos).getCityName();
-                Log.e(TAG, "onItemSelected: " + citiesList.get(pos).getId());
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     private void showGPSDisabledAlertToUser() {
@@ -308,16 +258,13 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         productPrice.setText("" + productDetailsData.getPrice());
         qtyTextView.setText("" + productDetailsData.getNewAvailableQty());
         availableQuantity.setText("" + productDetailsData.getCurrentStock());
-        priceTextView.setText("" + productDetailsData.getPrice());
 
-        startDataText.setText("Available From: " + productDetailsData.getAvailableDate());
-        startDataText.setText("To: " + productDetailsData.getAvailableDate());
-
-
-        startDayTextView.setText(String.valueOf(startDay));
+        startDataText.setText("" + productDetailsData.getAvailableDate());
+       // cityTextView.setText("" + productDetailsData.get);
 
         Log.d(Codes.APP_TAGS, "product data set to views");
     }
+
 
     @OnClick(R.id.selectlocationonmap_button)
     void selectLocation(View v)
@@ -339,7 +286,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         ft.replace(R.id.nav_host_fragment, currentFragment);
         ft.commit();
     }
-
 
     @OnClick(R.id.buyproduct_button)
     void buyProduct(View view) {
@@ -399,8 +345,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
 
     private void addPdocutTOCarts()
     {
-        String startDate = startDay + "/" + startMonth + "/" + startYear;
-        String endDate = endDay + "/" + endMonth + "/" + endYear;
         try {
             address = getAddress();
         } catch (IOException e) {
@@ -408,7 +352,7 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
         }
 
         AddToCartsRequest addToCartsRequest = new AddToCartsRequest(lat, log, userData.getId(), prefMethods.getProductId(), qtyCounter, daysCounter,
-                startDate, endDate, userData.getToken(),address);
+                productDetailsData.getAvailableDate(), productDetailsData.getAvailableDate(), userData.getToken(),address);
 
         viewModel.addToCarts(addToCartsRequest).observe(this, new Observer<AddToCartResponse>() {
             @Override
@@ -426,98 +370,6 @@ public class ProductDetailsFragment extends Fragment implements OnMapReadyCallba
                 }
             }
         });
-    }
-
-    @Optional
-    @OnClick({R.id.startday_textview, R.id.startmonth_textview, R.id.startyear_textview})
-    void selectStartDate(View view) {
-        final Calendar newCalendar = Calendar.getInstance();
-        DatePickerDialog StartTime = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                //calendar.set(1, dayOfMonth);
-
-                startDay = dayOfMonth;
-                startYear = year;
-                String myFormat = "MM/yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                String dateFormat = sdf.format(calendar.getTime());
-
-                if (dateFormat.length() > 0) {
-                    String[] mthYr = dateFormat.toString().split("/");
-                    // setDay(Integer.valueOf(mthYr[0]));
-                    startMonth = (Integer.valueOf(mthYr[0]));
-                }
-                startDayTextView.setText("" + startDay);
-                startMonthTextView.setText("" + startMonth);
-                startYearTextView.setText("" + startYear);
-
-                Log.d(Codes.APP_TAGS, "" + startDay);
-            }
-
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-        StartTime.show();
-
-    }
-
-    @Optional
-    @OnClick({R.id.endday_textview, R.id.endmonth_textview, R.id.endyear_textview})
-    void selectEndDate(View view)
-    {
-        final Calendar newCalendar = Calendar.getInstance();
-        DatePickerDialog endTime = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                //view.findViewById(Resources.getSystem().getIdentifier("year", "id", "android")).setVisibility(View.GONE);
-                // TODO Auto-generated method stub
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                //calendar.set(1, dayOfMonth);
-
-                endDay = dayOfMonth;
-                endYear = year;
-                String myFormat = "MM/yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-                String dateFormat = sdf.format(calendar.getTime());
-
-                if (dateFormat.length() > 0)
-                {
-                    String[] mthYr = dateFormat.toString().split("/");
-                    // setDay(Integer.valueOf(mthYr[0]));
-                    endMonth = (Integer.valueOf(mthYr[0]));
-                }
-                //  checkProductValidationDate();
-            }
-
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-        endTime.show();
-    }
-
-    @OnClick(R.id.productdetails_incrementqty)
-    void incrementQty(View v) {
-        qtyCounter++;
-        qtyTextView.setText("" + qtyCounter);
-    }
-
-    @OnClick(R.id.productdetails_decrementqty) void decrementQty(View v) {
-        if (qtyCounter != 0) {
-            qtyCounter--;
-            qtyTextView.setText("" + qtyCounter);
-        }
-    }
-
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
-    public DatePickerDialog.OnDateSetListener getDate() {
-        return startDatePicker;
     }
 
     @Override

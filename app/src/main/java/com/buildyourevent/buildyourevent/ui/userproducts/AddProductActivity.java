@@ -198,7 +198,7 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
             getCities(userData.getCountryId());
         }
 
-        // checkProductValidationDate();
+         //checkProductValidationDate();
 
         viewModel.getAllCategories().observe(this, new Observer<List<CategoryData>>()
         {
@@ -297,7 +297,6 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
-
 
     private void getCities(int countryId) {
         Log.d(Codes.APP_TAGS, "get cities method");
@@ -437,6 +436,10 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
                         addProductTOMyProducts();
                 }
             }
+            else
+            {
+                Toast.makeText(this, "Check Date is validated", Toast.LENGTH_SHORT).show();
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -554,7 +557,11 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
                 tvEndDay.setText("" + endDay);
                 tvEndMonth.setText("" + endMonth);
                 tvEndYear.setText("" + endYear);
-                //  checkProductValidationDate();
+                try {
+                    checkProductValidationDate();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));

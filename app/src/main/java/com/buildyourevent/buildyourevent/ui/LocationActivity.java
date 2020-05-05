@@ -3,7 +3,6 @@ package com.buildyourevent.buildyourevent.ui;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,10 +15,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
-import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
 import com.buildyourevent.buildyourevent.ui.products.ProductDetailsFragment;
 import com.buildyourevent.buildyourevent.ui.products.ProductInfoActivity;
 import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.ui.userproducts.AddProductActivity;
 import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,8 +41,8 @@ import java.util.Locale;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
-{
+public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
+
     private GoogleMap mMap;
     double lat, log;
     FusedLocationProviderClient mFusedLocationClient;
@@ -60,12 +59,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_location);
         ButterKnife.bind(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.location_fragment);
         mapFragment.getMapAsync(this);
 
         getLocation();
@@ -90,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.clear();
 
         SharedPrefMethods prefMethods = new SharedPrefMethods(this);
-        List <Double> listLatLng = prefMethods.getUserCandidates();
+        List<Double> listLatLng = prefMethods.getUserCandidates();
         lat = listLatLng.get(0);
         log = listLatLng.get(1);
 
@@ -134,30 +133,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mFusedLocationClient.getLastLocation().
-            addOnCompleteListener(new OnCompleteListener<Location>()
-                 {
-                     @Override
-                     public void onComplete(@NonNull Task<Location> task) {
-                         Location location = task.getResult();
-                         if (location == null) {
-                             LocationRequest mLocationRequest = new LocationRequest();
-                             mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                             mLocationRequest.setInterval(0);
-                             mLocationRequest.setFastestInterval(0);
-                             mLocationRequest.setNumUpdates(1);
+                addOnCompleteListener(new OnCompleteListener<Location>()
+                                      {
+                                          @Override
+                                          public void onComplete(@NonNull Task<Location> task) {
+                                              Location location = task.getResult();
+                                              if (location == null) {
+                                                  LocationRequest mLocationRequest = new LocationRequest();
+                                                  mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                                                  mLocationRequest.setInterval(0);
+                                                  mLocationRequest.setFastestInterval(0);
+                                                  mLocationRequest.setNumUpdates(1);
 
-                             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
-                             mFusedLocationClient.requestLocationUpdates(
-                                     mLocationRequest, mLocationCallback,
-                                     Looper.myLooper()
-                             );
-                         } else {
-                             lat = location.getLatitude();
-                             log = location.getLongitude();
-                         }
-                     }
-                 }
-        );
+                                                  mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+                                                  mFusedLocationClient.requestLocationUpdates(
+                                                          mLocationRequest, mLocationCallback,
+                                                          Looper.myLooper()
+                                                  );
+                                              } else {
+                                                  lat = location.getLatitude();
+                                                  log = location.getLongitude();
+                                              }
+                                          }
+                                      }
+                );
     }
 
 
@@ -172,17 +171,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
-    @OnClick(R.id.select_location_button)
+    @OnClick(R.id.button_selectLocation)
     void selectLocation(View v)
     {
-      //  MovementManager.replaceFragment(this, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
-
-        /*Fragment currentFragment = new ProductDetailsFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.nav_host_fragment, currentFragment);
-        ft.commit();*/
-
-        Intent intent = new Intent(getApplicationContext(), ProductInfoActivity.class);
+        Intent intent = new Intent(getApplicationContext(), AddProductActivity.class);
         startActivity(intent);
         finish();
     }
@@ -192,11 +184,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         super.onBackPressed();
 
-       // MovementManager.replaceFragment(this, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
-        Intent intent = new Intent(getApplicationContext(), ProductInfoActivity.class);
+        Intent intent = new Intent(getApplicationContext(), AddProductActivity.class);
         startActivity(intent);
         finish();
-
 
        /* Fragment currentFragment = new ProductDetailsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

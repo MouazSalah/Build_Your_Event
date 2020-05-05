@@ -95,7 +95,7 @@ public class ProductsFragment extends Fragment implements SubCategoryAdapter.onS
             }
         });
 
-        viewModel.getAllProducts("0").observe(this, new Observer<List<ProductData>>()
+        viewModel.getAllProducts("0").observe(getActivity(), new Observer<List<ProductData>>()
         {
             @Override
             public void onChanged(List<ProductData> productData)

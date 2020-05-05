@@ -71,7 +71,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
                 mContext.startActivity(intent);*/
 
                 prefMethods.saveProductId(product.getProductId());
-                MovementManager.replaceFragment(mContext, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
+                Intent intent = new Intent(mContext.getApplicationContext(), ProductInfoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+
+
+               // MovementManager.replaceFragment(mContext, new ProductDetailsFragment(), R.id.nav_host_fragment,"ProductDetailsFragment");
 
                /* Fragment currentFragment = new ProductDetailsFragment();
                 FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();

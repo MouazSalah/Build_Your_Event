@@ -80,8 +80,6 @@ public class UserRepository
     private MutableLiveData<AboutUsResponse> aboutUsMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<ProductRateResponse> productRateMutableLiveData = new MutableLiveData<>();
 
-
-
     public UserRepository()
     {
         interfaceApi = RetrofitClient.getApiClient(Codes.AUTH_BASE_URL).create(InterfaceApi.class);

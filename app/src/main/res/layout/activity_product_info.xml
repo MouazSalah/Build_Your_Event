@@ -9,7 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ui.products.ProductInfoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -74,64 +75,63 @@
             </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/productdetails_nametext"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginEnd="30dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Oppo Reno 2f"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:textColor="#28928B" />
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/details_availableqty"
-                    android:layout_width="match_parent"
+                    android:id="@+id/productdetails_nametext"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="5dp"
-                    android:gravity="end"
-                    android:text="105 Available"
-                    android:textAllCaps="true"
-                    android:textColor="#E83E3E"
-                    android:textStyle="bold" />
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Oppo Reno 2f"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:textColor="#28928B" />
 
-                <TextView
-                    android:id="@+id/producprice_textview"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="5dp"
-                    android:text="159$"
-                    android:gravity="end"
-                    android:textAllCaps="true"
-                    android:textColor="#E83E3E"
-                    />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/details_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="end"
+                        android:text="105 Available"
+                        android:textAllCaps="true"
+                        android:textColor="#E83E3E"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/details_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="5dp"
+                        android:text="159$"
+                        android:gravity="end"
+                        android:textAllCaps="true"
+                        android:textColor="#E83E3E"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-
-        <View
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
@@ -142,6 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -180,11 +181,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/productdetails_incrementdays"
+                    android:id="@+id/details_incrementqty"
                     android:layout_width="33dp"
                     android:layout_height="25dp"
                     android:background="@drawable/increament_background"
@@ -194,7 +194,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/productdetails_decrementdays"
+                    android:id="@+id/details_decrementqty"
                     android:layout_width="33dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="10dp"
@@ -205,7 +205,58 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/productdetails_daystext"
+                    android:id="@+id/details_qtytext"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@drawable/product_counter_btn"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="#28928B"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="qty"
+                    android:textAllCaps="true"
+                    android:textColor="#51A7A1"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/details_incrementdays"
+                    android:layout_width="33dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/increament_background"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/details_decrementdays"
+                    android:layout_width="33dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/increament_background"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/details_daytext"
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="40dp"
@@ -228,82 +279,78 @@
 
             </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/start_date"
-                android:textAllCaps="true"
-                android:textColor="#51A7A1"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/start_date"
+                    android:textAllCaps="true"
+                    android:textColor="#51A7A1"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
 
-            <TextView
-                android:id="@+id/startday_textview"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="31dp"
-                android:background="@drawable/product_counter_btn"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="2"
-                android:textColor="#28928B"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/details_startday"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="31dp"
+                    android:background="@drawable/product_counter_btn"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="2"
+                    android:textColor="#28928B"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/startmonth_textview"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/product_counter_btn"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="10"
-                android:textColor="#28928B"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/details_startmonth"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/product_counter_btn"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="10"
+                    android:textColor="#28928B"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/startyear_textview"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/product_counter_btn"
-                android:gravity="center"
-                android:padding="3dp"
-                android:text="2019"
-                android:textColor="#28928B"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/details_startyear"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/product_counter_btn"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="2019"
+                    android:textColor="#28928B"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:text="@string/startdate_productstate"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="10sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="@string/startdate_productstate"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="8sp" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-
-        <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -317,7 +364,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/endday_textview"
+                    android:id="@+id/details_endday"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="46dp"
@@ -330,7 +377,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/endmonth_textview"
+                    android:id="@+id/details_endmonth"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -343,8 +390,8 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/endyear_textview"
-                    android:layout_width="80dp"
+                    android:id="@+id/details_endyear"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:background="@drawable/product_counter_btn"
@@ -363,45 +410,7 @@
                     android:text="@string/enddate_productstate"
                     android:textAllCaps="true"
                     android:textColor="#E83E3E"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="AVailable From:"
-                    android:textAllCaps="true"
-                    android:textColor="#51A7A1"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/details_startdate"
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/product_counter_btn"
-                        android:gravity="center"
-                        android:text="105"
-                        android:textColor="#28928B"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                    android:textSize="8sp" />
 
             </LinearLayout>
 
@@ -412,10 +421,9 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:text="@string/product_cityevent"
                     android:textAllCaps="true"
                     android:textColor="#51A7A1"
@@ -423,20 +431,31 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content">
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/edittext_background"
+                    android:inputType="text"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="5dp"
+                    android:textColorHint="@color/greenbeautiful"
+                    android:textSize="10sp">
 
-                    <TextView
-                        android:id="@+id/details_cityevent"
-                        android:layout_width="100dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/product_counter_btn"
+
+                    <Spinner
+                        android:id="@+id/details_cityspinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="105"
-                        android:textColor="#28928B"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </LinearLayout>
 
@@ -446,8 +465,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:orientation="vertical">
+
                 <Button
                     android:id="@+id/selectlocationonmap_button"
                     android:layout_width="wrap_content"

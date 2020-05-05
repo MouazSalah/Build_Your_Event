@@ -1,6 +1,7 @@
 package com.buildyourevent.buildyourevent.ui.CategoriesFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
 import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.ui.products.SubCategoryActivity;
 import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
@@ -92,7 +94,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                 SharedPrefMethods prefMethods = new SharedPrefMethods(mContext);
                 prefMethods.saveCategoryId(categoryItem.getId());
 
-                MovementManager.replaceFragment(mContext, new ProductsFragment(), R.id.nav_host_fragment,"ProductsFragment");
+                Intent intent = new Intent(mContext, SubCategoryActivity.class);
+                mContext.startActivity(intent);
+
+                //  MovementManager.replaceFragment(mContext, new ProductsFragment(), R.id.nav_host_fragment,"ProductsFragment");
 
                 /*Fragment currentFragment = new ProductsFragment();
                 FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();

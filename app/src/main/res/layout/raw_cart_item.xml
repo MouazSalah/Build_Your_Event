@@ -14,8 +14,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:padding="5dp"
-        app:srcCompat="@drawable/ic_launcher_background"
-        />
+        app:srcCompat="@drawable/ic_launcher_background" />
 
 
     <LinearLayout
@@ -34,8 +33,8 @@
             android:lineSpacingExtra="2sp"
             android:text="Oppo Reno 2f"
             android:textColor="#2e2e2e"
-            android:layout_marginTop="20dp"
-            android:textSize="15sp"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"
             android:textStyle="normal" />
 
         <TextView
@@ -43,6 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:lineSpacingExtra="2sp"
             android:text="30 $"
             android:textColor="#4d4d4d"
