@@ -11,7 +11,6 @@
     <string name="title_profile"> Profile </string>
     <string name="title_Settings"> Setting </string>
 
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -28,7 +27,6 @@
     <string name="autgorized_signature">Authorized signature</string>
     <string name="pay">Pay</string>
 
-
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
@@ -36,13 +34,16 @@
     <string name="btn_change">change</string>
     <string name="new_pass">new password</string>
     <string name="btn_send">send email</string>
+
     <string name="btn_remove">remove account</string>
     <string name="change_email">change email</string>
-    <string name="change_password">change password</string>
-    <string name="send_password_reset_email">send password reset email</string>
     <string name="remove_user">remove account</string>
     <string name="btn_sign_out">sign out</string>
     <string name="title_favorites">Favorites</string>
+
+
+    <string name="change_password">change password</string>
+    <string name="send_password_reset_email">send password reset email</string>
     <string name="remember_me">Remember me</string>
     <string name="forget_password">Forget Password?</string>
     <string name="password_hint">Password</string>
@@ -71,18 +72,6 @@
     <string name="confirm">Confirm</string>
     <string name="resend">Resend?</string>
 
-
-    <string name="note_one">
-        1- before you receive items you should double check if it is ok becouse you should handover same as you receive
-    </string>
-
-    <string name="note_two">
-        2- whenever you will receive you should have to give money cash orcheck as warranty and when you handover we will return youyour money or check
-    </string>
-
-    <string name="note_three">
-        3- the price not included the transportation and fixing it is willadd to your bill efore you pay
-    </string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="view_supported_banks_and_cards">View Supported Banks and Cards</string>
@@ -130,19 +119,6 @@
     <string name="product_countryevent">Event Country </string>
     <string name="product_cityevent">Event City </string>
 
-    <integer-array name="collections_images">
-        {R.drawable.watch0,R.drawable.summer1,R.drawable.summer2,R.drawable.winter,R.drawable.summer1,,R.drawable.winter,}
-        R.drawable.watch0,R.drawable.summer1,R.drawable.summer2,R.drawable.winter,R.drawable.summer1,
-        R.drawable.summer1};
-    </integer-array>
-
-    <string-array name="collections_titles">
-        {"Furnitures","Technologies","Tents and Sunshades","Captures and Recorder","Sunglasses",
-        "Human Resources"
-        "Plants" , "Tools" , "Hospitality" , "Online Services" , "Decoration and Parts" , "Stages",
-        "Fun Zone" , "Fireworks and Shows"
-        , "Traditional", "Booths and Food Trucks", "Advertising" }
-    </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_location">Map</string>
     <string name="select_location_from_map">Select Location From Map</string>
@@ -174,32 +150,63 @@ Visual reality event technology
 توفير الجهد والمال وجعل كل شخص يستطيع إدارة فعاليته بنفسه.
 رؤيتنا
 جعل عالم الفعاليات اكثر سهولة وفي متناول الجميع.
-
     </string>
 
-    <string name="conditions">
-         قبل الموافقة على التعامل مع تطبيق build you event يرجى قراءة الشروط والاحكام بعناية والموافقة عليها
-الشروط بالنسبة للمؤجر
-1- تقوم كل شركة بتحميل كافة منتجاتها ضمن التطببق بنفسها.
-2- على كل شركة إدارة منتجاتها خطوة بخطوة والكميات والايام المتاحة لكل منتج، واي تقصير من قبل اي شركة سيتم إيقاف التعامل معها مباشرة، لعدم المتابعة ، وبالتالي سنفقد المصداقية معها ومع الزبون.
-3- لا يسمح بوضع اي شعار او رقم هاتف او موقع إلكتروني او اي شيئ يدل على اسم الشركة المضيفة للمنتج.
-4- تقوم إدارة التطبيق بمراجعة المنتج قبل طرحه في الطبيق والموافقة عليه.
-5- على كل شركة التأكد عند تسليم البضاعة أن تكون بحالة جيدة لانه سيتم تسليمها بنفس الحالة التي تم استلامها، اذا لم يتم التأكد من البضاعة ستكون كل شركة هي المسؤولةعن هذه المشكلة وسيترتب عليها غرامة أو إيقاف التعامل مباشرة.
-6- على كل شركة إرسال موظف او اكثر من قبلها وارتداء لباس يحمل شعار التطببق حتى تسليم البضاعة بالحالة الجيدة وبالتالي سيكون مسؤول عن اي ضرر في حالة التركيب والتحميل.
-7- سيكون هناك مبلغ ضمان لبعض المنتجات من كل زبون سيقوم بإستئجار المنتجات، وستقوم إدارة التطبيق بحجز المبلغ ريثما يتم إرجاع البضاعة بالحالة الجيدة عند انتهاء الفعالية بنفس الحالة التي استلمها بها.
-8- تقوم إدارة التطبيق بخصم نسبة 10% من اجمالي المبلغ كأجور خدمات للتطبيق.
-9- مبلغ الاجار يتم حجزه في التطبيق ريثما تتم عملية التركيب ويوافق العميل على صحة المنتج، وبعدها يتم تحويل نسبة 50% من المبلغ ريثما تتم إرجاع المنتج دون اي مشاكلة أو اضرار وبعدها يتم تحويل المبلغ المتبقي إلى الشركة المؤجرة للمنتج.
-الشروط بالنسبة للمستأجر
-1- قبل استلام البضاعة يجب التأكد من سلامتها لانك يجب تسليمها سليمة كما استلمتها.
-2- عند تقديم الطلب يتوجب عليك دفع مبلغ ضمان في بعض الحالات لحفظ الحقوق، ويتم ارجاع مبلغ الضمان عند الانتهاء من المنتجات وإرجاعها كما استلمتها.
-3- السعر غير شامل التركيب والتوصيل في بعض الحالات، وإن وجد سيتم إضافته إلى الفاتورة قبل إتمام عملية الدفع.
-في حال قراءة الشروط والاحكام جيداً يتوجب عليك الموافقة عليها وستكون انت المسؤول بعد ذلك، وفي حال وقوع اي مشكلة ستكون انت المسؤول وسيتم إتخاذ الإجراء المناسب في ذلك.
-
-    </string>
     <string name="category_hint">Category</string>
     <string name="sub_category">SubCategory</string>
     <string name="add_to_my_products"> Add </string>
     <string name="no_products">You don\'t have any products</string>
     <string name="rate">Rate This Product</string>
     <string name="update">Update</string>
+    <string name="about_company"> About Company</string>
+    <string name="description">description</string>
+    <string name="status">status</string>
+    <string name="price">price</string>
+    <string name="stock">stock</string>
+    <string name="category">Category</string>
+    <string name="subcategory">SubCategory</string>
+    <string name="available">Available</string>
+    <string name="not_available">Not Available</string>
+    <string name="add">Add</string>
+
+    <string name="conditionss"> Terms and conditions </string>
+    <string name="condition_welcome"> Welcome </string>
+    <string name="condition_title"> Before you accept the Terms and conditions You have to read well  </string>
+    <string name="condition_user"> Terms and conditions for lessor </string>
+    <string name="user_condition1"> 1-	every company will upload the products by them self  </string>
+    <string name="user_condition2"> 2-	every company should manage products by them self. step by step availability, quantity, date available. And will by have full responsibility about all products you add, if any company will not following the products, we will stop business with them directly.</string>
+    <string name="user_condition3">  3-	Not allowed to add any logo or contact or website or any thinks about your company on your projects photos or products details. Wallpaper of products photo should by white color.</string>
+    <string name="user_condition4">  4-	We will check all products before adding to Apps</string>
+    <string name="user_condition5"> 5-	All companies should double check if the products it is in good condition or no because you should receive same condition you handover, and if any company will not follow our structure we will stop the business with them.</string>
+    <string name="user_condition6"> 6-	Every company should send one or more employee with wearing our T-shirt have logo App, and your employee have full responsibility to load and unload the products and fix and remove the projects.</string>
+    <string name="user_condition7"> 7-	In some products we will have warranty money. Will hold it until retune the products in good condition or if the projects will not in good condition we will deduct from amount.</string>
+    <string name="user_condition8">  8-	We will deduct 10% of the amount of rental feed as service feed.</string>
+    <string name="user_condition9"> 9-	The rental feed will hold in app management until the costumer receive the products in good condition, then you will receive 50% of amount and balance amount will receive while finish the event and retune the products.</string>
+    <string name="user_condition10"> 10-	In (safety products Section) you have to load photo of your products once you load and unload so we will know how was products condition.</string>
+    <string name="user_condition11"> 11-	If you have (3D Model) of your projects will by more good, but it iss not important.</string>
+
+    <string name="condition_admin"> Terms and conditions for tenant</string>
+    <string name="admin_condition1"> 1-	Before you receive the Products you should chick if it iss in good condition or not because you have to retune in same condition you receive.</string>
+    <string name="admin_condition2"> 2-	Whenever you order you have to deposit some money on some products as warrant to have over the Products in same condition and then we will return your money.</string>
+    <string name="admin_condition3">  3-	The price will not include fixing and delivery in some Conditions, if there is so will adding to your bill before you complete the payment. </string>
+    <string name="admin_condition4"> 4-	In (safety products Section) you have to load photo of your products once you load and unload so we will know how was products condition.</string>
+
+    <string name="condition_warn"> If you read all Terms and conditions  please  accept. Because if you not read you will be have full responsibility after that.</string>
+
+    <string name="payment_title"> Note </string>
+    <string name="payment1">      1-	Before you receive the Products you should chick if it is in good condition or not because you have to retune in same condition you receive. </string>
+    <string name="payment2">     2-	Whenever you order you have to deposit some money on some products as warrant to have over the Products in same condition and then we will return your money.</string>
+    <string name="payment3">     3-	The price will not include fixing and delivery in some Conditions, if there is so will adding to your bill before you complete the payment.</string>
+    <string name="payment4">      4-	In (safety products Section) you have to load photo of your products once you load and unload so we will know how was products condition.</string>
+    <string name="profile">Profile</string>
+    <string name="my_products">My Products</string>
+    <string name="carts">Carts</string>
+    <string name="logout">Logout</string>
+    <string name="about_us">About Us</string>
+    <string name="setting">Setting</string>
+    <string name="add_new_product">Add New Product</string>
+    <string name="accept_conditions">Accept Terms and Conditions</string>
+    <string name="options">Options</string>
+
+
 </resources>

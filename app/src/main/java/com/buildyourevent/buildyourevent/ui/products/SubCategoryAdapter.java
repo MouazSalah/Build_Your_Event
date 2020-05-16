@@ -19,13 +19,10 @@ import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
-import com.google.android.material.checkbox.MaterialCheckBox;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import butterknife.ButterKnife;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -78,11 +75,6 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             params.setMarginEnd(20);
             params.topMargin = 20;
         }
-
-        // params.setMarginStart(20);
-        // params.setMarginEnd(20);
-        //  params.topMargin = 20;
-        // holder.itemView.setLayoutParams(params);
         holder.setAnimation();
         holder.setData(getCurrentItem(position));
     }
@@ -115,7 +107,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                     {
                         getCurrentItem(getAdapterPosition()).setSelect(false);
                         itemView.setSelected(false);
-                        subCategoryListener.onUnSelected(getCurrentItem(getAdapterPosition()).getSubCatId());
+                        subCategoryListener.onUnSelected(getCurrentItem(getAdapterPosition()).getId());
                         mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
                         selectImage.setImageResource(R.drawable.filter_background);
                     }
@@ -123,34 +115,12 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                     {
                         itemView.setSelected(true);
                         getCurrentItem(getAdapterPosition()).setSelect(true);
-                        subCategoryListener.onSelected(getCurrentItem(getAdapterPosition()).getSubCatId());   //!!!!!!
+                        subCategoryListener.onSelected(getCurrentItem(getAdapterPosition()).getId());   //!!!!!!
                         selectImage.setImageResource(R.drawable.icon_selected_foreground);
                         mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
                     }
                 }
             });
-           /* itemView.setOnClickListener(v ->
-            {
-                if (getCurrentItem(getAdapterPosition()).isSelect())
-                {
-                    getCurrentItem(getAdapterPosition()).setSelect(false);
-                    itemView.setSelected(false);
-                    //checkBox.setChecked(false);
-                    subCategoryListener.onUnSelected(getCurrentItem(getAdapterPosition()).getSubCatId());
-                    mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
-                    selectImage.setImageResource(R.drawable.filter_background);
-                }
-                else
-                {
-                    itemView.setSelected(true);
-                    getCurrentItem(getAdapterPosition()).setSelect(true);
-                    // checkBox.setChecked(true);
-
-                    subCategoryListener.onSelected(getCurrentItem(getAdapterPosition()).getSubCatId());
-                    selectImage.setImageResource(R.drawable.icon_selected_foreground);
-                    mutableLiveData.setValue(getCurrentItem(getAdapterPosition()));
-                }
-            });*/
         }
 
         public void setAnimation() {
@@ -163,12 +133,20 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             subCategoryListener.onSubCategoryClick(getAdapterPosition(), getCurrentItem(getAdapterPosition()));
         }
 
-        public void setData(SubCategoryData item) {
-
+        public void setData(SubCategoryData item)
+        {
             tvName.setText(item.getSubcategoryName());
             // loading album cover using Glide library
-            Glide.with(mContext).load(item.getSubcategoryImage()).error(R.drawable.app_logo)
-                    .placeholder(R.drawable.app_logo).into(itemImage);
+            if (item.getSubcategoryName().equals("ALL"))
+            {
+                Glide.with(mContext).load(item.getSubcategoryImage()).error(R.drawable.all_image)
+                        .placeholder(R.drawable.all_image).into(itemImage);
+            }
+            else
+            {
+                Glide.with(mContext).load(item.getSubcategoryImage()).error(R.drawable.app_logo)
+                        .placeholder(R.drawable.app_logo).into(itemImage);
+            }
         }
     }
 

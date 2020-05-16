@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -34,26 +33,22 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.cities.CityData;
-import com.buildyourevent.buildyourevent.model.auth.countries.CountryData;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
+import com.buildyourevent.buildyourevent.model.data.addproduct.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
-import com.buildyourevent.buildyourevent.model.data.userproduct.request.AddOwnProduct;
-import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
-import com.buildyourevent.buildyourevent.ui.CategoriesFragment.CategoryAdapter;
-import com.buildyourevent.buildyourevent.ui.MapsActivity;
+import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
+import com.buildyourevent.buildyourevent.ui.location.MapsActivity;
 import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
-import com.buildyourevent.buildyourevent.ui.auth.CountriesAdapter;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -64,7 +59,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -140,6 +134,8 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
     int categoryId, subCategoryId;
 
+    LocationManager locationManager;
+
     FusedLocationProviderClient mFusedLocationClient;
 
     String startDate, endDate;
@@ -152,6 +148,8 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     private GoogleMap mMap;
 
     boolean isProductExist = false;
+
+    String dayDate, monthDate, yearDate;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -170,7 +168,7 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
         getLocation();
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Log.d(Codes.APP_TAGS, "GPS is Enabled in your devide");
         } else {
@@ -200,18 +198,36 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
          //checkProductValidationDate();
 
-        viewModel.getAllCategories().observe(this, new Observer<List<CategoryData>>()
+        viewModel.getAllCategories().observe(this, new Observer<CategoryResponse>()
         {
             @Override
-            public void onChanged(List<CategoryData> categoryItems)
+            public void onChanged(CategoryResponse categoryResponse)
             {
-                categoriesList = (ArrayList<CategoryData>) categoryItems;
+                categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
                 if (categoriesList.size() != 0)
                 {
                     buildCategoriesSpinner();
                 }
             }
         });
+
+        getCurrentDate();
+    }
+
+    public void getCurrentDate()
+    {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        tvStartDay.setText("" + day);
+        tvStartMonth.setText("" + month);
+        tvStartYear.setText("" + year);
+
+        tvEndDay.setText("" + day);
+        tvEndMonth.setText("" + month);
+        tvEndYear.setText("" + year);
     }
 
     private void buildCategoriesSpinner()
@@ -240,12 +256,12 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
     private void getSybCategories(int categoryId)
     {
-        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<List<SubCategoryData>>()
+        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<SubCategoryResponse>()
         {
             @Override
-            public void onChanged(List<SubCategoryData> subCategoryData)
+            public void onChanged(SubCategoryResponse response)
             {
-                subCategoryList = (ArrayList<SubCategoryData>) subCategoryData;
+                subCategoryList = (ArrayList<SubCategoryData>) response.getData();
                 if (categoriesList.size() != 0)
                 {
                     buildSubCategorySpinner();
@@ -265,7 +281,7 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
             {
-                subCategoryId = subCategoryList.get(pos).getSubCatId();
+                subCategoryId = subCategoryList.get(pos).getId();
             }
 
             @Override
@@ -392,19 +408,41 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     @OnClick(R.id.btnaddproduct_selectlocation)
-    void selectLocation(View v) {
-        Intent intent = new Intent(this, MapsActivity.class);
+    void selectLocation(View v)
+    {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            List<Double> list = new ArrayList<>();
+            list.add(lat);
+            list.add(log);
+            prefMethods.saveUserCandidates(list);
+
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+
+            // getLocation();
+            Log.d(Codes.APP_TAGS, "GPS is Enabled in your devide");
+        } else {
+            showGPSDisabledAlertToUser();
+        }
+
+      /*  Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
 
         List<Double> list = new ArrayList<>();
         list.add(lat);
         list.add(log);
-        prefMethods.saveUserCandidates(list);
+        prefMethods.saveUserCandidates(list);*/
     }
 
     @OnClick(R.id.addproduct_button)
     void addProduct(View view)
     {
+
+        Log.d(Codes.APP_TAGS, "Product Day : " + dayDate);
+        Log.d(Codes.APP_TAGS, "Product Month : " + monthDate);
+        Log.d(Codes.APP_TAGS, "Product Year : " + yearDate);
+
         Log.d(Codes.APP_TAGS, "add button");
         try
         {
@@ -449,13 +487,8 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
     private void addProductTOMyProducts()
     {
         progressBar.setVisibility(View.VISIBLE);
-        startDate = startDay + "/" + startMonth + "/" + startYear;
+        startDate = yearDate + "/" + monthDate + "/" + dayDate;
         endDate = endDay + "/" + endMonth + "/" + endYear;
-        try {
-            address = getAddress();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(userData.getId()));
         RequestBody user_token = RequestBody.create(MediaType.parse("text/plain"), userData.getToken());
@@ -477,6 +510,9 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onChanged(AddProductResponse addProductResponse)
             {
+                Log.d(Codes.APP_TAGS, "add product done");
+                Log.d(Codes.APP_TAGS, "add product done // " +  addProductResponse.getMessage());
+
                 if (addProductResponse.getStatus() == 200)
                 {
                     progressBar.setVisibility(View.GONE);
@@ -502,7 +538,6 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, monthOfYear);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                //calendar.set(1, dayOfMonth);
 
                 startDay = dayOfMonth;
                 startYear = year;
@@ -513,20 +548,21 @@ public class AddProductActivity extends AppCompatActivity implements OnMapReadyC
 
                 if (dateFormat.length() > 0) {
                     String[] mthYr = dateFormat.toString().split("/");
-                    // setDay(Integer.valueOf(mthYr[0]));
+                    monthDate = String.valueOf(mthYr[0]);
                     startMonth = (Integer.valueOf(mthYr[0]));
                 }
                 tvStartDay.setText("" + startDay);
                 tvStartMonth.setText("" + startMonth);
                 tvStartYear.setText("" + startYear);
 
-                Log.d(Codes.APP_TAGS, "" + startDay);
+                dayDate = String.valueOf(dayOfMonth);
+                yearDate = String.valueOf(year);
+
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         StartTime.show();
-
     }
 
     @Optional

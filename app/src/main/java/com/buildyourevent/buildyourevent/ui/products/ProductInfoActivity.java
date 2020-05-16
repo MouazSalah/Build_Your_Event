@@ -7,8 +7,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -50,10 +48,11 @@ import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
+import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
-import com.buildyourevent.buildyourevent.ui.MapsActivity;
+import com.buildyourevent.buildyourevent.ui.location.MapsActivity;
 import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
 import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
@@ -67,7 +66,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -151,6 +149,7 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
 
     UserViewModel viewModel;
     UserData userData;
+    int countryId;
     SharedPrefMethods prefMethods;
     SubCategoryData subCategoryData;
 
@@ -159,6 +158,7 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
     String cityName;
 
     FusedLocationProviderClient mFusedLocationClient;
+    LocationManager locationManager;
 
     private GoogleMap mMap;
 
@@ -172,7 +172,8 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
 
@@ -193,13 +194,14 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
         mMapFragment.getMapAsync(this);
 */
 
-        getLocation();
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            getLocation();
             Log.d(Codes.APP_TAGS, "GPS is Enabled in your devide");
         } else {
-            showGPSDisabledAlertToUser();
+             showGPSDisabledAlertToUser();
         }
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
@@ -210,26 +212,58 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
             subCategoryData = prefMethods.getSubCategoryData();
         }
 
-        if (prefMethods.getUserData() != null) {
+        if (prefMethods.getUserData() != null)
+        {
             userData = prefMethods.getUserData();
+            getCities(userData.getCountryId());
         }
-        viewModel.getProductDetails(prefMethods.getProductId()).observe(this, new Observer<ProductDetailsData>() {
+        else
+        {
+            countryId = prefMethods.getCountryId();
+            getCities(countryId);
+        }
+
+        viewModel.getProductDetails(prefMethods.getProductId()).observe(this, new Observer<ProductDetailsResponse>()
+        {
             @Override
-            public void onChanged(ProductDetailsData data) {
-                productDetailsData = data;
-                setupDataToViews(data);
-                Log.d(Codes.APP_TAGS, "product details data: " + productDetailsData.getName());
+            public void onChanged(ProductDetailsResponse response)
+            {
+                productDetailsData = response.getData();
+                setupDataToViews();
             }
         });
 
-        tvQuantity.setText("" + 0);
-        getCities(userData.getCountryId());
+         tvQuantity.setText("" + 0);
          calendar = Calendar.getInstance();
     }
 
+    @OnClick(R.id.selectlocationonmap_button)
+    void selectLocation(View v)
+    {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            List<Double> list = new ArrayList<>();
+            list.add(lat);
+            list.add(log);
+
+            Log.d(Codes.APP_TAGS, "latitude info = " + lat);
+            Log.d(Codes.APP_TAGS, "longitude info = " + log);
+            prefMethods.saveUserCandidates(list);
+
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+
+            // getLocation();
+        } else {
+            showGPSDisabledAlertToUser();
+        }
+    }
+
+
     private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
+        alertDialogBuilder
+                .setMessage("The app needs location permissions. Please grant this permission to continue using the features of the app.")
                 .setCancelable(false)
                 .setPositiveButton("Settings",
                         new DialogInterface.OnClickListener() {
@@ -239,17 +273,11 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
                                 startActivity(callGPSSettingIntent);
                             }
                         });
-        alertDialogBuilder.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
 
-    private void setupDataToViews(ProductDetailsData productDetailsData)
+    private void setupDataToViews()
     {
         if (subCategoryData != null)
         {
@@ -298,23 +326,15 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
         });
     }
 
-    @OnClick(R.id.selectlocationonmap_button)
-    void selectLocation(View v) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-
-        List<Double> list = new ArrayList<>();
-        list.add(lat);
-        list.add(log);
-        prefMethods.saveUserCandidates(list);
-    }
-
     @OnClick(R.id.product_back_imageview)
-    void goBack(View v) {
-        Fragment currentFragment = new ProductsFragment();
+    void goBack(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(), SubCategoryActivity.class);
+        startActivity(intent);
+     /*   Fragment currentFragment = new ProductsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.nav_host_fragment, currentFragment);
-        ft.commit();
+        ft.commit();*/
     }
 
     @OnClick(R.id.buyproduct_button)
@@ -361,39 +381,6 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
         }
 
         isProductExistInCarts();
-    }
-
-    private void addPdocutTOCarts() {
-        try {
-            address = getAddress();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AddToCartsRequest addToCartsRequest = new AddToCartsRequest(lat, log, userData.getId(), prefMethods.getProductId(), qtyCounter, daysCounter,
-                productDetailsData.getAvailableDate(), productDetailsData.getAvailableDate(), userData.getToken(), address);
-
-        viewModel.addToCarts(addToCartsRequest).observe(this, new Observer<AddToCartResponse>()
-        {
-            @Override
-            public void onChanged(AddToCartResponse addToCartResponse)
-            {
-                Log.d(Codes.APP_TAGS, "carts activity // " + addToCartResponse.toString());
-                if (addToCartResponse.getStatus() == 200)
-                {
-                    Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
-                    startActivity(intent);
-                    detailsProgressBar.setVisibility(View.GONE);
-                }
-                else
-                {
-                    dataLayout.setAlpha((float) 1);
-                    detailsProgressBar.setVisibility(View.GONE);
-                    paymentLayout.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "Try Again...", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override
@@ -599,34 +586,85 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onChanged(CartResponse cartResponse)
             {
-                if (cartResponse.getStatus() == 200)
+                Log.d(Codes.APP_TAGS, "cart response // " + cartResponse.getMessage());
+                if (cartResponse.getStatus() == 200 )
                 {
-                    for (int i = 0; i < cartResponse.getData().size(); i++)
+                    if (cartResponse.getData().size() != 0)
                     {
-                        if (cartResponse.getData().get(i).getProductId() == prefMethods.getProductId())
+                        for (int i = 0; i < cartResponse.getData().size(); i++)
                         {
-                            paymentLayout.setVisibility(View.GONE);
-                            dataLayout.setAlpha((float) 1);
-                            detailsProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(ProductInfoActivity.this, "This product already exist in carts", Toast.LENGTH_SHORT).show();
+                            if (cartResponse.getData().get(i).getProductId() == prefMethods.getProductId())
+                            {
+                                Log.d(Codes.APP_TAGS, "product exist");
+                                paymentLayout.setVisibility(View.GONE);
+                                dataLayout.setAlpha((float) 1);
+                                detailsProgressBar.setVisibility(View.GONE);
+                                Toast.makeText(ProductInfoActivity.this, "This product already exist in carts", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), CartsActivity.class));
+                            }
+                            else
+                            {
+                                Log.d(Codes.APP_TAGS, "product not exist");
+                                paymentLayout.setVisibility(View.GONE);
+                                dataLayout.setAlpha((float) 1);
+                                detailsProgressBar.setVisibility(View.GONE);
+                                addProductToCarts();
+                            }
                         }
-                        else
-                        {
-                            paymentLayout.setVisibility(View.GONE);
-                            dataLayout.setAlpha((float) 1);
-                            detailsProgressBar.setVisibility(View.GONE);
-                            addPdocutTOCarts();
-
-                        }
+                    }
+                    else
+                    {
+                        Log.d(Codes.APP_TAGS, "product addedd");
+                        paymentLayout.setVisibility(View.GONE);
+                        dataLayout.setAlpha((float) 1);
+                        detailsProgressBar.setVisibility(View.GONE);
+                        addProductToCarts();
                     }
                 }
                 else
                 {
-                    addPdocutTOCarts();
+                    Log.d(Codes.APP_TAGS, "product upd add to carts");
+                    paymentLayout.setVisibility(View.GONE);
+                    dataLayout.setAlpha((float) 1);
+                    detailsProgressBar.setVisibility(View.GONE);
+                    addProductToCarts();
                 }
             }
         });
     }
+
+    private void addProductToCarts()
+    {
+        address = cityName;
+
+        AddToCartsRequest addToCartsRequest = new AddToCartsRequest(lat, log, userData.getId(), prefMethods.getProductId(), qtyCounter, daysCounter,
+                productDetailsData.getAvailableDate(), productDetailsData.getAvailableDate(), userData.getToken(), address);
+
+        viewModel.addToCarts(addToCartsRequest).observe(this, new Observer<AddToCartResponse>()
+        {
+            @Override
+            public void onChanged(AddToCartResponse addToCartResponse)
+            {
+                Log.d(Codes.APP_TAGS, "carts activity // " + addToCartResponse.toString());
+                if (addToCartResponse.getStatus() == 200)
+                {
+                    Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
+                    startActivity(intent);
+                    detailsProgressBar.setVisibility(View.GONE);
+                }
+                else
+                {
+                    dataLayout.setAlpha((float) 1);
+                    detailsProgressBar.setVisibility(View.GONE);
+                    paymentLayout.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "This Product is already exist in carts", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

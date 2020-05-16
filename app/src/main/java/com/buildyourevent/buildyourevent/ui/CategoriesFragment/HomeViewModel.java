@@ -3,7 +3,7 @@ package com.buildyourevent.buildyourevent.ui.CategoriesFragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.buildyourevent.buildyourevent.viewmodel.UserRepository;
+import com.buildyourevent.buildyourevent.database.UserRepository;
 
 public class HomeViewModel extends ViewModel
 {

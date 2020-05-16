@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -33,27 +34,29 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.cities.CityData;
-import com.buildyourevent.buildyourevent.model.auth.countries.CountryData;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
+import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
+import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
-import com.buildyourevent.buildyourevent.model.data.userproduct.request.AddOwnProduct;
-import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductData;
-import com.buildyourevent.buildyourevent.ui.MapsActivity;
+import com.buildyourevent.buildyourevent.ui.location.MapsActivity;
 import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
+import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -66,6 +69,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -144,10 +148,13 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
 
     private GoogleMap mMap;
 
-    @BindView(R.id.subcategorydata_layout)
-    RelativeLayout subCategoryDataLayout;
+    List<CategoryData> categoriesList = new ArrayList<>();
+    List<SubCategoryData> subCategoryList = new ArrayList<>();
 
-    UserOwnProductData productData;
+    UserOwnProductData prodctInfo;
+    ProductDetailsData productData;
+    private int categoryId, subCategoryId;
+    private String dayDate, monthDate, yearDate;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -173,7 +180,7 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
             showGPSDisabledAlertToUser();
         }
 
-        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        viewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         Log.d(Codes.APP_TAGS, "product details Id: " + prefMethods.getProductId());
 
@@ -194,19 +201,104 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
             getCities(userData.getCountryId());
         }
 
-        productData = (UserOwnProductData) getIntent().getSerializableExtra("product_data");
-        setDateToFields();
-        // checkProductValidationDate();
+        viewModel.getProductDetails(prefMethods.getProductId()).observe(this, new Observer<ProductDetailsResponse>() {
+            @Override
+            public void onChanged(ProductDetailsResponse response)
+            {
+                productData = response.getData();
+                setDataToFields();
+            }
+        });
+
+        viewModel.getAllCategories().observe(this, new Observer<CategoryResponse>()
+        {
+            @Override
+            public void onChanged(CategoryResponse categoryResponse)
+            {
+                categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
+                if (categoriesList.size() != 0)
+                {
+                    buildCategoriesSpinner();
+                }
+            }
+        });
+
     }
 
-    private void setDateToFields()
+    private void buildCategoriesSpinner()
     {
-        ivProduct.setImageResource(Integer.parseInt(productData.getImage()));
+        CategorySpinnerAdapter categorySpinnerAdapter = new CategorySpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item,
+                android.R.id.text1, categoriesList);
+        spinnerCategory.setAdapter(categorySpinnerAdapter);
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
+            {
+                categoryId = categoriesList.get(pos).getId();
+                Log.e(TAG, "onItemSelected: " + categoriesList.get(pos).getId());
+                getSybCategories(categoryId);
+                Log.d(Codes.APP_TAGS, "countries size: " +  categoriesList.size());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+    }
+
+    private void getSybCategories(int categoryId)
+    {
+        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<SubCategoryResponse>()
+        {
+            @Override
+            public void onChanged(SubCategoryResponse response)
+            {
+                subCategoryList = (ArrayList<SubCategoryData>) response.getData();
+                if (categoriesList.size() != 0)
+                {
+                    buildSubCategorySpinner();
+                }
+            }
+        });
+    }
+
+    public void buildSubCategorySpinner()
+    {
+        SubCategorySpinnerAdapter subCategorySpinnerAdapter = new SubCategorySpinnerAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                android.R.id.text1, subCategoryList);
+        spinnerSubCategory.setAdapter(subCategorySpinnerAdapter);
+        spinnerSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
+            {
+                subCategoryId = subCategoryList.get(pos).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+    }
+
+    private void setDataToFields()
+    {
+        Glide.with(this).load(productData.getImage()).into(ivProduct);
+
         etProductName.setText(productData.getName());
         etProductPrice.setText(productData.getPrice());
         etProductStatus.setText(productData.getStatus());
-        etProductStock.setText(productData.getCurrentStock());
+        etProductDesc.setText(productData.getDescription());
+        etProductStock.setText("" + productData.getCurrentStock());
         tvQuantity.setText("" + productData.getNewAvailableQty());
+
+        startDate = productData.getAvailableDate();
     }
 
     private void showGPSDisabledAlertToUser() {
@@ -266,14 +358,10 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
     @OnClick(R.id.chooseeditproduct_imageview)
     void ChoseProductImage(View v)
     {
-        //Create an Intent with action as ACTION_PICK
         Intent intent=new Intent(Intent.ACTION_PICK);
-        // Sets the type as image/*. This ensures only components of type image are selected
         intent.setType("image/*");
-        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        // Launching the Intent
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
     }
 
@@ -307,7 +395,6 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
-
     public byte[] getBytes(InputStream is) throws IOException {
         ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
 
@@ -322,7 +409,6 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
         return byteBuff.toByteArray();
     }
 
-
     private void uploadImage(byte[] imageBytes)
     {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
@@ -335,6 +421,7 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
     void selectLocation(View v) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
+        finish();
 
         List<Double> list = new ArrayList<>();
         list.add(lat);
@@ -345,28 +432,46 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
     @OnClick(R.id.editproduct_button)
     void addProduct(View view)
     {
-/*
-        try {
-            checkProductValidationDate();
-        } catch (ParseException e) {
-            e.printStackTrace();
+         if (etProductName.getText().toString().isEmpty())
+        {
+            etProductName.setError("please enter product name");
         }
-*/
-
-        addPdocutTOMyProducts();
-        Toast.makeText(this, "product added to my products", Toast.LENGTH_SHORT).show();
+        else if (etProductDesc.getText().toString().isEmpty())
+        {
+            etProductDesc.setError("please enter product description");
+        }
+        else if (etProductStatus.getText().toString().isEmpty())
+        {
+            etProductStatus.setError("please enter product status");
+        }
+        else if (etProductStock.getText().toString().isEmpty())
+        {
+            etProductStock.setError("please enter product stock");
+        }
+        else if (etProductPrice.getText().toString().isEmpty())
+        {
+            etProductPrice.setError("please enter product price");
+        }
+        else if (pic == null)
+         {
+             Toast.makeText(this, "please enter product image", Toast.LENGTH_SHORT).show();
+         }
+        else
+        {
+            UpdateProduct();
+        }
     }
 
-    private void addPdocutTOMyProducts()
+    private void UpdateProduct()
     {
-        startDate = startDay + "/" + startMonth + "/" + startYear;
-        endDate = endDay + "/" + endMonth + "/" + endYear;
+        progressBar.setVisibility(View.VISIBLE);
+        startDate = yearDate + "/" + monthDate + "/" + dayDate;
+
         try {
             address = getAddress();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(userData.getId()));
         RequestBody user_token = RequestBody.create(MediaType.parse("text/plain"), userData.getToken());
@@ -387,18 +492,19 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
                 category_id, subCategory_id, city_name).observe(this, new Observer<UpdateProductResponse>()
         {
             @Override
-            public void onChanged(UpdateProductResponse addProductResponse)
+            public void onChanged(UpdateProductResponse updateProductResponse)
             {
-                if (addProductResponse.getStatus() == 200)
+                Log.d(Codes.APP_TAGS, "update product // " + updateProductResponse.getMessage());
+                if (updateProductResponse.getStatus() == 200)
                 {
                     progressBar.setVisibility(View.GONE);
                     Intent intent = new Intent(getApplicationContext(), MyProductsActivity.class);
                     startActivity(intent);
-                    Toast.makeText(UpdateProductActivity.this, "done // " + addProductResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateProductActivity.this, "done // " + updateProductResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(UpdateProductActivity.this, "failed // " + addProductResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateProductActivity.this, "failed // " + updateProductResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
             }
@@ -416,8 +522,6 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 //calendar.set(1, dayOfMonth);
 
-                startDay = dayOfMonth;
-                startYear = year;
                 String myFormat = "MM/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -425,12 +529,15 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
 
                 if (dateFormat.length() > 0) {
                     String[] mthYr = dateFormat.toString().split("/");
-                    // setDay(Integer.valueOf(mthYr[0]));
-                    startMonth = (Integer.valueOf(mthYr[0]));
+                    monthDate = String.valueOf(mthYr[0]);
                 }
-                tvStartDay.setText("" + startDay);
-                tvStartMonth.setText("" + startMonth);
-                tvStartYear.setText("" + startYear);
+
+                dayDate = String.valueOf(dayOfMonth);
+                yearDate = String.valueOf(year);
+
+                tvStartDay.setText(dayDate);
+                tvStartMonth.setText(monthDate);
+                tvStartYear.setText( yearDate);
 
                 Log.d(Codes.APP_TAGS, "" + startDay);
             }
@@ -438,7 +545,6 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         StartTime.show();
-
     }
 
     @Optional
@@ -613,4 +719,23 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
             System.out.println("Both dates are equal");
         }
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
+    }
+
+    public String removeSpaces()
+    {
+        String str = productData.getAvailableDate();
+        str = str.replaceAll("\\s", "");
+        str = str.replaceAll("[\\[\\](){}]","");
+
+        return str;
+    }
+
 }
+

@@ -2,7 +2,7 @@ package com.buildyourevent.buildyourevent.model.data.productdetails;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProductDetailsData {
+public class ProductDetailsData{
 
 	@SerializedName("image")
 	private String image;
@@ -38,7 +38,7 @@ public class ProductDetailsData {
 	private String updatedAt;
 
 	@SerializedName("rate")
-	private int rate;
+	private Object rate;
 
 	@SerializedName("price")
 	private String price;
@@ -146,11 +146,11 @@ public class ProductDetailsData {
 		return updatedAt;
 	}
 
-	public void setRate(int rate){
+	public void setRate(Object rate){
 		this.rate = rate;
 	}
 
-	public int getRate(){
+	public Object getRate(){
 		return rate;
 	}
 

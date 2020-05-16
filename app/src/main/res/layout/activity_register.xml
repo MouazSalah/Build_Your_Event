@@ -2,7 +2,7 @@
     version="1.0"
     encoding="utf-8"?>
 
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,278 +12,414 @@
     android:background="@drawable/back_ground"
     tools:context=".ui.auth.RegisterActivity">
 
-    <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingTop="100dp"
-                    android:id="@+id/register_layout"
-                    android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-                        <TextView
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginTop="50dp"
-                            android:layout_marginRight="30dp"
-                            android:gravity="center"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp"
-                            android:text="@string/sign_up"
-                            android:textColor="#FFF"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="24dp"
+                android:id="@+id/register_layout"
+                android:orientation="vertical">
 
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/register_userimage"
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/user_name"
-                            android:inputType="text"
-                            android:padding="5dp"
-                            android:src="@drawable/user_icon"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp" />
+                    <TextView
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/sign_up"
+                        android:visibility="gone"
+                        android:textColor="#FFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
-                        <EditText
-                            android:id="@+id/register_username"
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/user_name"
-                            android:inputType="text"
-                            android:paddingStart="25dp"
-                            android:paddingTop="15dp"
-                            android:paddingEnd="25dp"
-                            android:paddingBottom="15dp"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp" />
-
-                        <EditText
-                            android:id="@+id/register_email"
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/email_hint"
-                            android:inputType="textEmailAddress"
-                            android:paddingStart="25dp"
-                            android:paddingTop="15dp"
-                            android:paddingEnd="25dp"
-                            android:paddingBottom="15dp"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/register_userimage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/user_name"
+                        android:inputType="text"
+                        android:padding="5dp"
+                        android:src="@drawable/user_icon"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp" />
 
 
-                        <EditText
-                            android:id="@+id/register_password"
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/password_hint"
-                            android:inputType="textPassword"
-                            android:paddingStart="25dp"
-                            android:paddingTop="15dp"
-                            android:paddingEnd="25dp"
-                            android:paddingBottom="15dp"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp" />
+                    <EditText
+                        android:id="@+id/register_username"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/user_name"
+                        android:inputType="text"
+                        android:paddingStart="25dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp" />
 
-                        <EditText
-                            android:id="@+id/register_mobile"
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/mobile_hint"
-                            android:inputType="text"
-                            android:paddingStart="25dp"
-                            android:paddingTop="15dp"
-                            android:paddingEnd="25dp"
-                            android:paddingBottom="15dp"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp" />
-
-                        <LinearLayout
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/country_hint"
-                            android:inputType="text"
-                            android:orientation="horizontal"
-                            android:paddingStart="25dp"
-                            android:paddingTop="15dp"
-                            android:paddingEnd="25dp"
-                            android:paddingBottom="15dp"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/country"
-                                    android:textColor="@color/greenbeautiful" />
-
-                                <Spinner
-                                    android:id="@+id/country_spinner"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="3"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/edittext_background"
-                            android:hint="@string/country_hint"
-                            android:inputType="text"
-                            android:orientation="horizontal"
-                            android:paddingStart="25dp"
-                            android:paddingTop="15dp"
-                            android:paddingEnd="25dp"
-                            android:paddingBottom="15dp"
-                            android:textColorHint="@color/greenbeautiful"
-                            android:textSize="14sp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/city"
-                                    android:textColor="@color/greenbeautiful" />
-
-                                <Spinner
-                                    android:id="@+id/city_spinner"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="3"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                        </LinearLayout>
+                    <EditText
+                        android:id="@+id/register_email"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/email_hint"
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="25dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp" />
 
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/conditions_checkbox"
-                            android:text="@string/agree_to_app_conditions"
-                            android:layout_marginTop="16dp"
-                            />
+                    <EditText
+                        android:id="@+id/register_password"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/password_hint"
+                        android:inputType="textPassword"
+                        android:paddingStart="25dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/register_signup_button"
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="60dp"
-                            android:layout_marginTop="50dp"
-                            android:layout_marginEnd="60dp"
-                            android:layout_marginBottom="6dp"
-                            android:background="@drawable/continue_btn"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:text="@string/sign_up"
-                            android:textColor="#fff"
-                            android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/register_mobile"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/mobile_hint"
+                        android:inputType="text"
+                        android:paddingStart="25dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp" />
 
+                    <LinearLayout
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/country_hint"
+                        android:inputType="text"
+                        android:orientation="horizontal"
+                        android:paddingStart="25dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp">
 
-                        <TextView
-                            android:id="@+id/register_login_button"
-                            android:layout_width="280dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="60dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="60dp"
-                            android:layout_marginBottom="6dp"
-                            android:background="@drawable/auth_buttons"
-                            android:drawableStart="@color/LightGrey"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:text="@string/login"
-                            android:textColor="#fff"
-                            android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/country"
+                                android:textColor="@color/greenbeautiful" />
 
-                </LinearLayout>
+                            <Spinner
+                                android:id="@+id/country_spinner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                <ProgressBar
-                    android:id="@+id/register_progressbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:minWidth="50dp"
-                    android:minHeight="50dp"
-                    android:visibility="gone" />
+                    </LinearLayout>
 
-        <LinearLayout
+                    <LinearLayout
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint="@string/country_hint"
+                        android:inputType="text"
+                        android:orientation="horizontal"
+                        android:paddingStart="25dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="25dp"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/greenbeautiful"
+                        android:textSize="14sp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/city"
+                                android:textColor="@color/greenbeautiful" />
+
+                            <Spinner
+                                android:id="@+id/city_spinner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/conditions_checkbox"
+                        android:background="?selectableItemBackground"
+                        android:text="@string/agree_to_app_conditions"
+                        android:layout_marginTop="16dp" />
+
+                    <TextView
+                        android:id="@+id/register_signup_button"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="60dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="@drawable/next_btn"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/sign_up"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/register_login_button"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="60dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="@drawable/ripple_btn_bg_rounded"
+                        android:drawableStart="@color/LightGrey"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/login"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/register_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:minWidth="50dp"
+                android:minHeight="50dp"
+                android:visibility="gone" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="30dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="10dp"
             android:visibility="gone"
             android:background="@drawable/notes_background"
             android:id="@+id/conditions_layout"
             android:layout_centerInParent="true">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="@string/conditions"/>
+               <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/back_ground"
+                    android:orientation="vertical"
+                    tools:context=".ui.auth.ConditionsActivity">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/condition_button"
-                android:textAllCaps="false"
-                android:text="Agree"
-                android:background="@drawable/fb_login_btn"
-                />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="@string/conditionss" />
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/condition_title" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/condition_user" />
+
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition1" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition2" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition3" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition4" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition5" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition6" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition7" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition8" />
+
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition9" />
+
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition10" />
+
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/user_condition11" />
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/condition_admin" />
+
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/admin_condition1" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/admin_condition2" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/admin_condition3" />
+
+                    <TextView
+                        style="@style/item_condition"
+                        android:text="@string/admin_condition4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/condition_warn" />
+
+                    <Button
+                        android:id="@+id/condition_button"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/next_btn"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginEnd="60dp"
+                        android:text="@string/accept_conditions"
+                        android:textSize="16sp"
+                        android:textColor="#fff"
+                        android:gravity="center"
+                        android:padding="8dp" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
 
         </RelativeLayout>
 
-</ScrollView>
+        </ScrollView>
+
+</LinearLayout>

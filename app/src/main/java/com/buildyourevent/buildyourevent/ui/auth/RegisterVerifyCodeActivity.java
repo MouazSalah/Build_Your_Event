@@ -17,6 +17,7 @@ import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.code.SendCodeResponse;
 import com.buildyourevent.buildyourevent.model.auth.code.VerifyCodeResponse;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
+import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
@@ -32,6 +33,8 @@ public class RegisterVerifyCodeActivity extends AppCompatActivity
 {
     @BindView(R.id.et_registercode) EditText etCode;
     @BindView(R.id.btn_confirm) TextView tvCodeText;
+    @BindView(R.id.verifycode_text) TextView tvCode;
+
     @BindView(R.id.verfiyregister_progressbar)
     ProgressBar verifyCodeProgressBar;
 
@@ -57,7 +60,7 @@ public class RegisterVerifyCodeActivity extends AppCompatActivity
 
         recoveryEmail = getIntent().getStringExtra(Codes.RECOVERY_EMAIL);
 
-        tvCodeText.append(recoveryEmail);
+        tvCode.append( " "  +recoveryEmail);
     }
 
     @OnClick(R.id.btn_confirm)
@@ -79,7 +82,7 @@ public class RegisterVerifyCodeActivity extends AppCompatActivity
                 if (verifyCodeResponse.getStatus() == 201)
                 {
                     verifyCodeProgressBar.setVisibility(View.GONE);
-                    Intent intent = new Intent(getApplicationContext(), NewPasswordActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.putExtra(Codes.RECOVERY_EMAIL, recoveryEmail);
                     startActivity(intent);
                     customType(RegisterVerifyCodeActivity.this,"left-to-right");

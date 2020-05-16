@@ -101,6 +101,17 @@ public class SharedPrefMethods
     }
 
 
+    public void saveCountryId(int id)
+    {
+        editor.putInt(Codes.COUNTRY_ID, id);
+        editor.commit();
+    }
+
+    public int getCountryId()
+    {
+        return pref.getInt(Codes.COUNTRY_ID, 1);
+    }
+
 
 
     public void saveProductId(int id)

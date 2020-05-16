@@ -15,13 +15,14 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_margin="10dp"
-        android:background="@drawable/item_product_background">
+        android:background="@drawable/subcategory_background">
 
         <ImageView
             android:id="@+id/userproduct_imageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
+            android:background="?selectableItemBackground"
             app:srcCompat="@drawable/user_icon" />
 
     </LinearLayout>

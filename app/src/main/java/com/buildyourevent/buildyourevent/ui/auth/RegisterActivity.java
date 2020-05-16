@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity
     @BindView(R.id.conditions_checkbox)
     CheckBox conditionCheckBox;
     @BindView(R.id.conditions_layout)
-    LinearLayout conditionLayout;
+    ScrollView conditionLayout;
     @BindView(R.id.register_layout)
     LinearLayout registerLayout;
     @BindView(R.id.condition_button)
@@ -81,19 +82,16 @@ public class RegisterActivity extends AppCompatActivity
     MultipartBody.Part pic = null;
     File imageFile;
 
-
-
     List<CountryData> countriesList = new ArrayList<>();
     List<CityData> citiesList = new ArrayList<>();
 
     UserViewModel viewModel;
-
-
+    SharedPrefMethods prefMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        SharedPrefMethods prefMethods = new SharedPrefMethods(this);
+        prefMethods = new SharedPrefMethods(this);
         Locale locale = new Locale(prefMethods.getUserLanguage());
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -116,106 +114,96 @@ public class RegisterActivity extends AppCompatActivity
     }
 
     @OnClick(R.id.register_signup_button)
-    void onSignupButton(View v)
-    {
-        registerProgressBar.setVisibility(View.VISIBLE);
-        if (checkMandatoryFields())
-        {
-            RegisterRequest userRequest = new RegisterRequest(etUserName.getText().toString(),etEmail.getText().toString() ,
-                    etPassword.getText().toString(), etMobile.getText().toString(), countryId, cityId, bitmapPhoto);
-
-            RequestBody user_name = RequestBody.create(MediaType.parse("text/plain"), etUserName.getText().toString());
-            RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), etEmail.getText().toString());
-            RequestBody user_password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
-            RequestBody user_mobile = RequestBody.create(MediaType.parse("text/plain"), etMobile.getText().toString());
-            RequestBody user_countryId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryId));
-            RequestBody user_cityId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(cityId));
-
-            Log.d(Codes.APP_TAGS, "request format: // " + userRequest);
-
-            viewModel.registerUser(pic, user_name, user_email, user_password, user_mobile, user_countryId, user_cityId).observe(this, new Observer<RegisterResponse>()
-            {
-                @Override
-                public void onChanged(RegisterResponse registerResponse)
-                {
-                    if (registerResponse.getStatus() == 200)
-                    {
-                        Log.d(Codes.APP_TAGS, "register activity");
-                        Log.d(Codes.APP_TAGS, "register activity" + registerResponse.getMessage());
-                        sendCode("register");
-                        registerProgressBar.setVisibility(View.GONE);
-                    }
-                    else if (registerResponse.getMessage().equals("The email has already been taken."))
-                    {
-                        Toast.makeText(RegisterActivity.this, getString(R.string.email_is_take), Toast.LENGTH_SHORT).show();
-                        sendCode("reset_password");
-                        registerProgressBar.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        registerProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(RegisterActivity.this, "" + registerResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-    }
-
-
-    public boolean checkMandatoryFields()
-    {
+    void onSignupButton(View v) {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if (etUserName.getText().toString().isEmpty()) {
+        if (etUserName.getText().toString().isEmpty())
+        {
             etUserName.setError(getString(R.string.enter_name));
-            return false;
-        } else if (etEmail.getText().toString().isEmpty()) {
+        } else if (etEmail.getText().toString().isEmpty())
+        {
             etEmail.setError(getString(R.string.enter_email));
-            return false;
         } else if (etPassword.getText().toString().isEmpty()) {
             etPassword.setError(getString(R.string.enter_password));
-            return false;
         } else if (!etEmail.getText().toString().matches(emailPattern)) {
             etEmail.setError(getString(R.string.invalid_email));
-            return false;
         } else if (etPassword.getText().toString().trim().length() < 6) {
             etPassword.setError(getString(R.string.short_password));
-            return false;
-        }
-        else if (etMobile.getText().toString().isEmpty())
-        {
+        } else if (etMobile.getText().toString().isEmpty()) {
             etMobile.setError(getString(R.string.enter_mobile));
-            return false;
-        }
-        else if (!conditionCheckBox.isChecked())
-        {
+        } else if (!conditionCheckBox.isChecked()) {
             Toast.makeText(this, getString(R.string.condition_toast), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if (countrySpinner == null || countrySpinner.getSelectedItem() == null) {
+        } else if (countrySpinner == null || countrySpinner.getSelectedItem() == null) {
             Toast.makeText(this, getString(R.string.choose_country), Toast.LENGTH_SHORT).show();
-            return false;
         } else if (citiesList == null || citySpinner.getSelectedItem() == null) {
             Toast.makeText(this, getString(R.string.choose_city), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else
-        {
-            return true;
+        } else {
+            registerProgressBar.setVisibility(View.VISIBLE);
+            registerTask();
         }
     }
 
-    private void sendCode(String intentValue)
+    public void registerTask()
     {
-        viewModel.sendCode(etEmail.getText().toString()).observe(this, new Observer<SendCodeResponse>() {
+        RegisterRequest userRequest = new RegisterRequest(etUserName.getText().toString(),etEmail.getText().toString() ,
+                etPassword.getText().toString(), etMobile.getText().toString(), countryId, cityId, bitmapPhoto);
+
+        RequestBody user_name = RequestBody.create(MediaType.parse("text/plain"), etUserName.getText().toString());
+        RequestBody user_email = RequestBody.create(MediaType.parse("text/plain"), etEmail.getText().toString());
+        RequestBody user_password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
+        RequestBody user_mobile = RequestBody.create(MediaType.parse("text/plain"), etMobile.getText().toString());
+        RequestBody user_countryId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryId));
+        RequestBody user_cityId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(cityId));
+
+        Log.d(Codes.APP_TAGS, "request format: // " + userRequest);
+
+        viewModel.registerUser(pic, user_name, user_email, user_password,
+                user_mobile, user_countryId , user_cityId).observe(this, new Observer<RegisterResponse>()
+        {
             @Override
-            public void onChanged(SendCodeResponse sendCodeResponse) {
+            public void onChanged(RegisterResponse registerResponse)
+            {
+                if (registerResponse.getStatus() == 200)
+                {
+                    registerProgressBar.setVisibility(View.GONE);
+                    sendCode();
+                }
+                else if (registerResponse.getMessage().equals("The email has already been taken."))
+                {
+                    Toast.makeText(RegisterActivity.this, getString(R.string.email_is_take), Toast.LENGTH_SHORT).show();
+                    registerProgressBar.setVisibility(View.GONE);
+                    sendCode();
+                }
+                else
+                {
+                    registerProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(RegisterActivity.this, "" + registerResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void sendCode()
+    {
+        registerProgressBar.setVisibility(View.VISIBLE);
+
+        viewModel.sendCode(etEmail.getText().toString()).observe(this, new Observer<SendCodeResponse>()
+        {
+            @Override
+            public void onChanged(SendCodeResponse sendCodeResponse)
+            {
                 if (sendCodeResponse.getStatus() == 200)
                 {
-                    Intent intent = new Intent(getApplicationContext(), RegisterVerifyCodeActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ConditionsActivity.class);
                     intent.putExtra(Codes.RECOVERY_EMAIL, etEmail.getText().toString());
                     startActivity(intent);
                 }
+                else
+                {
+                    Toast.makeText(RegisterActivity.this, "" + sendCodeResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                registerProgressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -230,9 +218,7 @@ public class RegisterActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
             {
                 countryId = countriesList.get(pos).getId();
-                Log.e(TAG, "onItemSelected: " + countriesList.get(pos).getId());
                 getCities(countriesList.get(pos).getId());
-                Log.d(Codes.APP_TAGS, "countries size: " +  countriesList.size());
             }
 
             @Override
@@ -245,16 +231,13 @@ public class RegisterActivity extends AppCompatActivity
 
     private void getCities(int countryId)
     {
-        Log.d(Codes.APP_TAGS, "get cities method");
         viewModel.getAllCities(countryId).observe(this, new Observer<List<CityData>>()
         {
             @Override
             public void onChanged(List<CityData> cityData)
             {
-                Log.d(Codes.APP_TAGS, "cities size: " +  cityData.size());
                 citiesList = cityData;
                 buildCitiesSpinner();
-                Log.d(Codes.APP_TAGS, "size: " +  citiesList.size());
             }
         });
     }
@@ -270,7 +253,6 @@ public class RegisterActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
             {
                 cityId = citiesList.get(pos).getId();
-                Log.e(TAG, "onItemSelected: " + citiesList.get(pos).getId());
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
@@ -290,31 +272,26 @@ public class RegisterActivity extends AppCompatActivity
     @OnClick(R.id.conditions_checkbox)
     void showConditions(View v)
     {
-        conditionLayout.setVisibility(View.VISIBLE);
-        registerLayout.setAlpha((float) .1);
+        // conditionLayout.setVisibility(View.VISIBLE);
+       // registerLayout.setAlpha((float) .1);
     }
-
 
     @OnClick(R.id.condition_button)
     void agreeConditions(View v)
     {
-        conditionLayout.setVisibility(View.GONE);
-        conditionCheckBox.setChecked(true);
-        registerLayout.setAlpha((float) 1);
+       // conditionLayout.setVisibility(View.GONE);
+       // conditionCheckBox.setChecked(true);
+       // registerLayout.setAlpha((float) 1);
     }
 
 
     @OnClick(R.id.register_userimage)
     void selectUserImage(View v)
     {
-        //Create an Intent with action as ACTION_PICK
         Intent intent=new Intent(Intent.ACTION_PICK);
-        // Sets the type as image/*. This ensures only components of type image are selected
         intent.setType("image/*");
-        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        // Launching the Intent
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
     }
 
@@ -348,7 +325,6 @@ public class RegisterActivity extends AppCompatActivity
         }
     }
 
-
     public byte[] getBytes(InputStream is) throws IOException {
         ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
 
@@ -363,12 +339,10 @@ public class RegisterActivity extends AppCompatActivity
         return byteBuff.toByteArray();
     }
 
-
     private void uploadImage(byte[] imageBytes)
     {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
 
         pic = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
-
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
 import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment
         progressBar.setVisibility(View.VISIBLE);
         categoryRecyclerView.setVisibility(View.GONE);
 
-        viewModel.getAllBanners().observe(this, new Observer<List<BannerData>>()
+        viewModel.getAllBanners().observe(getActivity(), new Observer<List<BannerData>>()
         {
             @Override
             public void onChanged(List<BannerData> bannerItems)
@@ -68,15 +70,20 @@ public class HomeFragment extends Fragment
             }
         });
 
-        viewModel.getAllCategories().observe(this, new Observer<List<CategoryData>>()
+        viewModel.getAllCategories().observe(getActivity(), new Observer<CategoryResponse>()
         {
             @Override
-            public void onChanged(List<CategoryData> categoryItems)
+            public void onChanged(CategoryResponse categoryResponse)
             {
-                categoriesList = (ArrayList<CategoryData>) categoryItems;
-                if (categoriesList != null)
+                categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
+                if (categoriesList.size() != 0)
                 {
                     setRecyclerView();
+                }
+                else
+                {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "لا يوجد اقسام", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -87,6 +94,8 @@ public class HomeFragment extends Fragment
     {
         final SliderImageAdapter adapter = new SliderImageAdapter(bannersList, getActivity());
         adapter.setCount(bannersList.size());
+
+        Log.d(Codes.APP_TAGS, "banner items count : " + bannersList.size());
 
         sliderView.setSliderAdapter(adapter);
         sliderView.setIndicatorAnimation(IndicatorAnimations.SLIDE); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!

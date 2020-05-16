@@ -22,14 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="22dp"
+        android:background="?selectableItemBackground"
         android:paddingEnd="22dp"
         android:paddingTop="20dp"
         android:paddingBottom="10dp"
         android:text="@string/change_password"
         android:textColor="#FFF"
         android:textSize="16sp"/>
-
-
 
     <View
         android:layout_width="match_parent"
@@ -41,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="22dp"
+        android:background="?selectableItemBackground"
         android:paddingEnd="22dp"
         android:paddingTop="20dp"
         android:paddingBottom="10dp"
@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="22dp"
             android:paddingEnd="22dp"
+            android:background="?selectableItemBackground"
             android:paddingTop="20dp"
             android:paddingBottom="10dp"
             android:text="@string/about_app"
@@ -77,6 +78,7 @@
         android:paddingStart="22dp"
         android:paddingEnd="22dp"
         android:paddingTop="20dp"
+        android:background="?selectableItemBackground"
         android:paddingBottom="10dp"
         android:text="@string/log_out"
         android:textColor="#FFF"

@@ -7,26 +7,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="120dp"
     android:gravity="center_vertical"
     android:background="#165854">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-
-        <ImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/nav_userimage"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20sp"
+            android:layout_marginStart="16sp"
             app:srcCompat="@drawable/person_icon" />
-
 
         <LinearLayout
             android:layout_width="0dp"
@@ -49,7 +45,7 @@
                 android:layout_marginTop="8dp"
                 android:id="@+id/nav_useremail"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -71,7 +67,5 @@
         android:layout_height="4dp"
         android:background="#37BFB6"
         />
-
-
 
 </LinearLayout>

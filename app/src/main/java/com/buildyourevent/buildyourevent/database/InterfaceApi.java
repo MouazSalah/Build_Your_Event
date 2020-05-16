@@ -4,11 +4,13 @@ import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswo
 import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswordResponse;
 import com.buildyourevent.buildyourevent.model.auth.code.VerifyCodeResponse;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
+import com.buildyourevent.buildyourevent.model.data.addproduct.AddProductResponse;
+import com.buildyourevent.buildyourevent.model.data.banner.BannerResponse;
+import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
 import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
-import com.buildyourevent.buildyourevent.model.data.banner.BannerResponse;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
 import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.auth.cities.CityResponse;
@@ -21,7 +23,6 @@ import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
 import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
-import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
@@ -29,11 +30,9 @@ import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordR
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
-import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
-import butterknife.Optional;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -57,11 +56,9 @@ public interface InterfaceApi
                                          @Part("name") RequestBody name,
                                          @Part("email") RequestBody email,
                                          @Part("password") RequestBody password,
+                                         @Part("mobile") RequestBody mobil,
                                          @Part("country_id") RequestBody country_id,
-                                         @Part("city_id") RequestBody city_id,
-                                         @Part("mobile") RequestBody mobil);
-
-
+                                         @Part("city_id") RequestBody city_id );
 
 
     @GET("countries")
@@ -87,6 +84,10 @@ public interface InterfaceApi
     @FormUrlEncoded
     @POST("products")
     Call<ProductResponse> getAllProducts(@Field("sub_cat_id") String subCategoryId);
+
+    @POST("products")
+    Call<ProductResponse> getProducts();
+
 
     @FormUrlEncoded
     @POST("product_details")
@@ -117,7 +118,6 @@ public interface InterfaceApi
     @POST("reset-password")
     Call<ResetPasswordResponse> resetPassword(@Field("email") String email, @Field("password") String password);
 
-
     @FormUrlEncoded
     @POST("update-password")
     Call<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest changePasswordRequest);
@@ -136,20 +136,19 @@ public interface InterfaceApi
                                             @Part("description") RequestBody desc, @Part("cat_id") RequestBody categoryId,
                                             @Part("sub_cat_id") RequestBody subCategoryId, @Part("location") RequestBody location);
 
+    @Multipart
+    @POST("product-update")
+    Call<UpdateProductResponse> updateProduct(@Part MultipartBody.Part image,
+                                              @Part("user_id") RequestBody userId, @Part("api_token") RequestBody apiToken,
+                                              @Part("product_id") RequestBody productId, @Part("name") RequestBody password,
+                                              @Part("price") RequestBody country_id, @Part("current_stock") RequestBody city_id,
+                                              @Part("available_at") RequestBody startDate,
+                                              @Part("new_available_qty") RequestBody availQty, @Part("status") RequestBody status,
+                                              @Part("description") RequestBody desc, @Part("cat_id") RequestBody categoryId,
+                                              @Part("sub_cat_id") RequestBody subCategoryId, @Part("location") RequestBody location);
 
     @POST("remove_product")
     Call<RemoveProductResponse> removeProduct(@Body RemoveProductRequest removeProductRequest);
-
-    @FormUrlEncoded
-    @POST("update-product")
-    Call<UpdateProductResponse> updateProduct(@Part MultipartBody.Part image,
-                                              @Part("user_id") RequestBody userId, @Part("api_token") RequestBody apiToken,
-                                              @Part("name") RequestBody password, @Part("price") RequestBody country_id,
-                                              @Part("current_stock") RequestBody city_id, @Part("available_at") RequestBody startDate,
-                                              @Part("new_available_qty") RequestBody availQty, @Part("status") RequestBody status,
-                                              @Part("description") RequestBody desc, @Part("cat_id") RequestBody categoryId,
-                                              @Part("sub_cat_id") RequestBody subCategoryId, @Part("location") RequestBody location,
-                                              @Part("product_id") RequestBody productId);
 
     @GET("about-us")
     Call<AboutUsResponse> getAboutUs();

@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity
     UserData userData = new UserData();
     @BindView(R.id.login_progressbar)
     ProgressBar loginProgressBar;
+    LoginResponse loginResponse ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,42 +71,10 @@ public class LoginActivity extends AppCompatActivity
         }
 
         putDataToFields();
-
     }
 
     @OnClick(R.id.login_continue_button)
     void onContinueButtonClicked(View v)
-    {
-        loginProgressBar.setVisibility(View.VISIBLE);
-        if (checkMandatoryFields())
-        {
-            LoginRequest loginRequest = new LoginRequest(emailEditText.getText().toString(), passwordEditText.getText().toString());
-            viewModel.loginCurrentUser(loginRequest).observe(this, new Observer<LoginResponse>() {
-                @Override
-                public void onChanged(LoginResponse loginResponse)
-                {
-                    Log.d(Codes.APP_TAGS,  "onlogin" + loginResponse.getStatus());
-                    if (loginResponse.getStatus() == 200)
-                    {
-                        Log.d(Codes.APP_TAGS,  "onlogin" + loginResponse.getUserData().toString());
-                        prefMethods.SaveUserData(loginResponse.getUserData());
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                        customType(LoginActivity.this,"bottom-to-up");
-                        loginProgressBar.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        Toast.makeText(LoginActivity.this, "" + loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        loginProgressBar.setVisibility(View.GONE);
-                    }
-                }
-            });
-        }
-    }
-
-
-    public boolean checkMandatoryFields()
     {
         String email = emailEditText.getText().toString().trim();
 
@@ -114,27 +83,52 @@ public class LoginActivity extends AppCompatActivity
         if (emailEditText.getText().toString().isEmpty())
         {
             emailEditText.setError("enter email");
-            return false;
         }
         else if (passwordEditText.getText().toString().isEmpty())
         {
             passwordEditText.setError("enter password");
-            return false;
         }
         else if (!email.matches(emailPattern))
         {
             emailEditText.setError("invalid email");
-            return false;
         }
         else if (passwordEditText.getText().toString().trim().length() < 6)
         {
             passwordEditText.setError("short password");
-            return false;
         }
         else
         {
-            return true;
+            loginResponse = new LoginResponse();
+            loginTask();
         }
+
+    }
+
+    public void loginTask()
+    {
+        loginProgressBar.setVisibility(View.VISIBLE);
+
+        LoginRequest loginRequest = new LoginRequest(emailEditText.getText().toString(), passwordEditText.getText().toString());
+        viewModel.loginCurrentUser(loginRequest).observe(this, new Observer<LoginResponse>() {
+            @Override
+            public void onChanged(LoginResponse loginResponse1)
+            {
+                loginResponse = loginResponse1;
+                if (loginResponse.getStatus() == 200)
+                {
+                    prefMethods.SaveUserData(loginResponse.getUserData());
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                    customType(LoginActivity.this,"bottom-to-up");
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+                }
+
+                loginProgressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 
@@ -144,7 +138,6 @@ public class LoginActivity extends AppCompatActivity
        passwordEditText.setText(userPassword);
 
     }
-
 
     @OnClick(R.id.login_create_account_textview)
     void startRegisterIntent()
@@ -162,12 +155,16 @@ public class LoginActivity extends AppCompatActivity
         customType(LoginActivity.this,"bottom-to-up");
     }
 
-
     @OnClick(R.id.login_forget_password)
     void forgetPasswordTask()
     {
         Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
         startActivity(intent);
         customType(LoginActivity.this,"bottom-to-up");
+    }
+
+    public void loginWithFacebook(View view)
+    {
+        Toast.makeText(this, "login with facebook", Toast.LENGTH_SHORT).show();
     }
 }

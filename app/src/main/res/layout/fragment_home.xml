@@ -80,7 +80,9 @@
                 android:orientation="vertical"
                 android:layout_marginTop="15dp"
                 android:nestedScrollingEnabled="false"
-                android:paddingLeft="16dp" />
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                />
 
         <ProgressBar
             android:id="@+id/categories_progressBar"

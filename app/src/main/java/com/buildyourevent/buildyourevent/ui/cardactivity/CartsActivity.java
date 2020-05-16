@@ -2,11 +2,9 @@ package com.buildyourevent.buildyourevent.ui.cardactivity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +30,7 @@ import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartReq
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
 import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
-import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
+import com.buildyourevent.buildyourevent.ui.products.ProductInfoActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
@@ -43,13 +41,13 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 public class CartsActivity extends AppCompatActivity implements CartAdapter.onCartItemListener
 {
     @BindView(R.id.carts_recyclerview) RecyclerView cartsRecyclerView;
     @BindView(R.id.emptycart_layout) LinearLayout emptyCardLayout;
     @BindView(R.id.notlogin_layout) LinearLayout notLoginLayout;
     @BindView(R.id.carts_progressBar) ProgressBar progressBar;
-
     @BindView(R.id.cartscount_textview) TextView cartsCounTextView;
 
     SharedPrefMethods prefMethods;
@@ -69,9 +67,8 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cards);
+        setContentView(R.layout.activity_carts);
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
@@ -119,12 +116,14 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
         });
     }
 
-
     private void buildRecyclerView()
     {
         cartsRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        cartsRecyclerView.setLayoutManager(mLayoutManager);
+
+        cartsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        //cartsRecyclerView.setLayoutManager(mLayoutManager);
 
         Log.d(Codes.APP_TAGS, "cards size: " + cartsList);
          cartAdapter = new CartAdapter(this, cartsList, this);
@@ -144,9 +143,11 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
         }
 
         OrderRequest orderRequest = new OrderRequest(userData.getId(), userData.getToken(), price);
-        viewModel.confirmOrder(orderRequest).observe(this, new Observer<OrderResponse>() {
+        viewModel.confirmOrder(orderRequest).observe(this, new Observer<OrderResponse>()
+        {
             @Override
-            public void onChanged(OrderResponse orderResponse) {
+            public void onChanged(OrderResponse orderResponse)
+            {
                 if (orderResponse.getStatus() == 200)
                 {
                     progressBar.setVisibility(View.GONE);
@@ -183,7 +184,6 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
         finish();
     }
 
-
     @Override
     public void onItemCartClick(int position)
     {
@@ -204,13 +204,8 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
                 {
                     prefMethods.saveProductId(cartsList.get(position).getProductId());
 
-                    Fragment currentFragment = new ProductsFragment();
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.nav_host_fragment, currentFragment);
-                    ft.commit();
-
-                    /*startActivity(new Intent(getApplicationContext(), ProductDetailsActivity.class));
-                    finish();*/
+                    startActivity(new Intent(getApplicationContext(), ProductInfoActivity.class));
+                    finish();
                 }
             }
         });
@@ -228,13 +223,12 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
                 {
                     progressBar.setVisibility(View.GONE);
                     cartAdapter.notifyDataSetChanged();
-                    Fragment currentFragment = new ProductsFragment();
+                    /*Fragment currentFragment = new ProductsFragment();
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.nav_host_fragment, currentFragment);
-                    ft.commit();
-                   /* Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
-                    startActivity(intent);
-                    finish();*/
+                    ft.commit();*/
+                    startActivity(new Intent(getApplicationContext(), CartsActivity.class));
+                    finish();
                 }
                 else
                 {
@@ -249,14 +243,7 @@ public class CartsActivity extends AppCompatActivity implements CartAdapter.onCa
     public void onBackPressed()
     {
         super.onBackPressed();
-
-        Fragment currentFragment = new ProductsFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.nav_host_fragment, currentFragment);
-        ft.commit();
-
-      /*  Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
-        finish();*/
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
     }
 }

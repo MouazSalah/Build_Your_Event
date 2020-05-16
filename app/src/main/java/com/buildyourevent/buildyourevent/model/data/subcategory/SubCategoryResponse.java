@@ -3,8 +3,8 @@ package com.buildyourevent.buildyourevent.model.data.subcategory;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class SubCategoryResponse
-{
+public class SubCategoryResponse{
+
 	@SerializedName("data")
 	private List<SubCategoryData> data;
 

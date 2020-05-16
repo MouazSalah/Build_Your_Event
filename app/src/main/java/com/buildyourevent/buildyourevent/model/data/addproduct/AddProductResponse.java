@@ -1,11 +1,11 @@
-package com.buildyourevent.buildyourevent.model.data.userproduct.response;
+package com.buildyourevent.buildyourevent.model.data.addproduct;
 
 import com.google.gson.annotations.SerializedName;
 
 public class AddProductResponse{
 
 	@SerializedName("data")
-	private AddPRoductData addPRoductData;
+	private AddProductData addProductData;
 
 	@SerializedName("message")
 	private String message;
@@ -13,12 +13,12 @@ public class AddProductResponse{
 	@SerializedName("status")
 	private int status;
 
-	public void setAddPRoductData(AddPRoductData addPRoductData){
-		this.addPRoductData = addPRoductData;
+	public void setAddProductData(AddProductData addProductData){
+		this.addProductData = addProductData;
 	}
 
-	public AddPRoductData getAddPRoductData(){
-		return addPRoductData;
+	public AddProductData getAddProductData(){
+		return addProductData;
 	}
 
 	public void setMessage(String message){
@@ -41,7 +41,7 @@ public class AddProductResponse{
  	public String toString(){
 		return 
 			"AddProductResponse{" + 
-			"data = '" + addPRoductData + '\'' +
+			"data = '" + addProductData + '\'' +
 			",message = '" + message + '\'' + 
 			",status = '" + status + '\'' + 
 			"}";

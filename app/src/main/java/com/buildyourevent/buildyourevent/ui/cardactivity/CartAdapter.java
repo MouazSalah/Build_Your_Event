@@ -24,7 +24,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>
 {
     private Context mContext;
     private List<CartDataItem> cardsList;
-
     private onCartItemListener listhener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -37,9 +36,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>
         public MyViewHolder(View view)
         {
             super(view);
-            cardName = (TextView) view.findViewById(R.id.cartname_textview);
-            cardPrice = (TextView) view.findViewById(R.id.cartprice_textview);
-            cardImage = (ImageView) view.findViewById(R.id.cartimage_textview);
+            cardName = (TextView) view.findViewById(R.id.itemcart_name);
+            cardPrice = (TextView) view.findViewById(R.id.itemcart_price);
+            cardImage = (ImageView) view.findViewById(R.id.itemcart_image);
 
             onCartItemListener = listhener;
             itemView.setOnClickListener(this);
@@ -64,7 +63,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>
     @Override
     public CartAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.raw_cart_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.raw_cart, parent, false);
         return new CartAdapter.MyViewHolder(itemView);
     }
 

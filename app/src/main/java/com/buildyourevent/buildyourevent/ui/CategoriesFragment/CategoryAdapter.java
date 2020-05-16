@@ -12,18 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.R;
-import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
-import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
 import com.buildyourevent.buildyourevent.ui.products.SubCategoryActivity;
-import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
 import java.util.List;
@@ -60,8 +54,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     {
         this.mContext = mContext;
         this.categoryList = categoryList;
-        Log.d(Codes.APP_TAGS, "adapter categories: " + categoryList.size());
-        Log.d(Codes.APP_TAGS, "adapter category name: " + categoryList.get(0).getCategoryName());
     }
  
     @Override
@@ -77,7 +69,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.setAnimation();
 
         CategoryData categoryItem = categoryList.get(position);
-        Log.d(Codes.APP_TAGS, "category name : " + categoryItem.getCategoryName());
         holder.name.setText(categoryItem.getCategoryName());
 
         Glide.with(mContext).load(categoryItem.getCategoryImage()).error(R.drawable.app_logo)
@@ -87,22 +78,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             @Override
             public void onClick(View view)
             {
-                /*Intent intent = new Intent(mContext, ProductsActivity.class);
-                intent.putExtra(Codes.CATEGORY_ID, categoryItem.getId());
-                mContext.startActivity(intent);*/
-
                 SharedPrefMethods prefMethods = new SharedPrefMethods(mContext);
                 prefMethods.saveCategoryId(categoryItem.getId());
 
                 Intent intent = new Intent(mContext, SubCategoryActivity.class);
                 mContext.startActivity(intent);
-
-                //  MovementManager.replaceFragment(mContext, new ProductsFragment(), R.id.nav_host_fragment,"ProductsFragment");
-
-                /*Fragment currentFragment = new ProductsFragment();
-                FragmentTransaction ft = ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.nav_host_fragment, currentFragment);
-                ft.commit();*/
             }
         });
     }

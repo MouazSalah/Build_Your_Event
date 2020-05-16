@@ -1,9 +1,161 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/back_ground"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="30dp"
+    android:orientation="vertical"
     tools:context=".ui.auth.ConditionsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/conditionss" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        android:text="@string/condition_title" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        android:text="@string/condition_user" />
+
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition1" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition2" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition3" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition4" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition5" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition6" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition7" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition8" />
+
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition9" />
+
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition10" />
+
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/user_condition11" />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:text="@string/condition_admin" />
+
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/admin_condition1" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/admin_condition2" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/admin_condition3" />
+
+    <TextView
+        style="@style/item_condition"
+        android:text="@string/admin_condition4" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:text="@string/condition_warn" />
+
+    <TextView
+        android:id="@+id/btn_acceptTerms"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/next_btn"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:text="@string/accept_conditions"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:padding="8dp" />
+
+</LinearLayout>
+
+
+</ScrollView>

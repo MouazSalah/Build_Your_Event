@@ -2,11 +2,9 @@ package com.buildyourevent.buildyourevent.ui.userproducts;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,32 +16,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.model.data.carts.CartDataItem;
-import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
-import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
-import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
-import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
-import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductData;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
-import com.buildyourevent.buildyourevent.ui.cardactivity.CartAdapter;
-import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
-import com.buildyourevent.buildyourevent.ui.cardactivity.PaymentActivity;
 import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
-import com.buildyourevent.buildyourevent.ui.products.ProductsFragment;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -90,7 +76,6 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
             emptyProductsLayout.setVisibility(View.GONE);
             productsRecyclerView.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(this, "empty", Toast.LENGTH_SHORT).show();
            // cartsCounTextView.setText("0");
         }
         else
@@ -128,12 +113,11 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
         });
    }
 
-
     private void buildRecyclerView()
     {
         productsRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        productsRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager manager2 = new GridLayoutManager(this, 2);
+        productsRecyclerView.setLayoutManager(manager2);
 
         Log.d(Codes.APP_TAGS, "cards size: " + productsList.size());
         adapter = new UserProductAdapter(this, productsList, this);
@@ -184,7 +168,7 @@ public class MyProductsActivity extends AppCompatActivity implements UserProduct
                 if (which == 1)
                 {
                     Intent intent = new Intent(getApplicationContext(), UpdateProductActivity.class);
-                    intent.putExtra("product_data", userOwnProductData);
+                    prefMethods.saveProductId(userOwnProductData.getProductId());
                     startActivity(intent);
                 }
             }

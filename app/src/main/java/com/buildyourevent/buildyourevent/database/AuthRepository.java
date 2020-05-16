@@ -1,4 +1,4 @@
-package com.buildyourevent.buildyourevent.viewmodel;
+package com.buildyourevent.buildyourevent.database;
 
 import android.util.Log;
 

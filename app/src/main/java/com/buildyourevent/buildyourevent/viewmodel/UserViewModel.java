@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.buildyourevent.buildyourevent.database.AuthRepository;
+import com.buildyourevent.buildyourevent.database.UserRepository;
 import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswordRequest;
 import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswordResponse;
 import com.buildyourevent.buildyourevent.model.auth.cities.CityData;
@@ -17,24 +19,23 @@ import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
 import com.buildyourevent.buildyourevent.model.auth.resetpassword.ResetPasswordResponse;
 import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
+import com.buildyourevent.buildyourevent.model.data.addproduct.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
-import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
-import com.buildyourevent.buildyourevent.model.data.product.ProductData;
-import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
+import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
+import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
-import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
-import com.buildyourevent.buildyourevent.model.data.userproduct.request.AddOwnProduct;
 import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
-import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
@@ -112,35 +113,36 @@ public class UserViewModel extends ViewModel
     }
 
 
-    public LiveData<List<CategoryData>> getAllCategories()
+    public LiveData<CategoryResponse> getAllCategories()
     {
         return userRepository.getCategoryMutableLiveData();
     }
 
-    public LiveData<List<SubCategoryData>> getAllSubCategories(int id)
+    public LiveData<SubCategoryResponse> getAllSubCategories(int id)
     {
         return userRepository.getSubCategoryMutableLiveData(id);
     }
 
 
-    public LiveData<List<ProductData>> getAllProducts(String subCategoryId)
+    public LiveData<ProductResponse> getAllProducts(String subCategoryId)
     {
         return userRepository.getProductsMutableLiveData(subCategoryId);
     }
 
-    public LiveData<ProductDetailsData> getProductDetails(int productId)
+    public LiveData<ProductResponse> getProducts()
     {
-        /*userRepository.getProductDetails(productId);
-        return userRepository.productDetailsMutableLiveData;*/
-        return userRepository.getProductDetails(productId);
+        return userRepository.getAllProductsMutableLiveData();
     }
 
+    public LiveData<ProductDetailsResponse> getProductDetails(int productId)
+    {
+        return userRepository.getProductDetails(productId);
+    }
 
     public LiveData<CartResponse> getAllCarts(int id, String token)
     {
         return userRepository.getCartssMutableLiveData(id, token);
     }
-
 
     public LiveData<AddToCartResponse> addToCarts(AddToCartsRequest addToCartsRequest)
     {

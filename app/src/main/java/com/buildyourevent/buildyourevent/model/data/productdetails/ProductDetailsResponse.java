@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class ProductDetailsResponse{
 
 	@SerializedName("data")
-	private ProductDetailsData productDetailsData;
+	private ProductDetailsData data;
 
 	@SerializedName("message")
 	private String message;
@@ -13,12 +13,12 @@ public class ProductDetailsResponse{
 	@SerializedName("status")
 	private int status;
 
-	public void setProductDetailsData(ProductDetailsData productDetailsData){
-		this.productDetailsData = productDetailsData;
+	public void setData(ProductDetailsData data){
+		this.data = data;
 	}
 
-	public ProductDetailsData getProductDetailsData(){
-		return productDetailsData;
+	public ProductDetailsData getData(){
+		return data;
 	}
 
 	public void setMessage(String message){
@@ -41,7 +41,7 @@ public class ProductDetailsResponse{
  	public String toString(){
 		return 
 			"ProductDetailsResponse{" + 
-			"data = '" + productDetailsData + '\'' +
+			"data = '" + data + '\'' + 
 			",message = '" + message + '\'' + 
 			",status = '" + status + '\'' + 
 			"}";

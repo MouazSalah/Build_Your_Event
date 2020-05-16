@@ -31,6 +31,8 @@ public class PasswordVerifyCodeActivity extends AppCompatActivity
     @BindView(R.id.verifycode_text) TextView tvCodeText;
     @BindView(R.id.verifycode_progressBar)
     ProgressBar verifyCodeProgressBar;
+    @BindView(R.id.verifycode_text1) TextView tvCode;
+
 
     String recoveryEmail;
     String verifyCodeIntent;
@@ -56,7 +58,7 @@ public class PasswordVerifyCodeActivity extends AppCompatActivity
         recoveryEmail = getIntent().getStringExtra(Codes.RECOVERY_EMAIL);
         verifyCodeIntent = getIntent().getStringExtra(Codes.VERIFY_CODE_INTENT);
 
-        tvCodeText.append(recoveryEmail);
+        tvCode.append(recoveryEmail);
     }
 
     @OnClick(R.id.verifycode_confirm)

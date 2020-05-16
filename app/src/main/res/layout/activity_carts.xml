@@ -23,24 +23,23 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/carts_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/ordercarts_button"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/continue_btn"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="@string/order_now"
-            android:textColor="#fff"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/ordercarts_button"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/next_btn"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/order_now"
+                android:textColor="#fff"
+                android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -53,11 +52,12 @@
         android:orientation="vertical"
         android:gravity="center"
         android:background="@color/white"
-        android:visibility="gone">
+        >
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="145dp"
+            android:tint="@color/white"
             app:srcCompat="@drawable/ic_shopping_cart_black" />
 
         <TextView
@@ -66,21 +66,30 @@
             android:gravity="center"
             android:text="@string/your_cart_is_empty" />
 
-        <TextView
-            android:id="@+id/startshopping_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:layout_width="280dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/item_product_background"
-            android:gravity="center"
-            android:paddingStart="25dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="25dp"
-            android:paddingBottom="5dp"
-            android:text="@string/start_shopping"
-            android:textColor="#DA4453"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            style="@style/rippleGray"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/startshopping_button"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/subcategory_background"
+                android:gravity="center"
+                android:paddingStart="25dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="25dp"
+                android:paddingBottom="5dp"
+                android:text="@string/start_shopping"
+                android:textColor="#DA4453"
+                android:textStyle="bold" />
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+
 
     </LinearLayout>
 
@@ -104,6 +113,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/your_are_not_login" />
+
 
         <TextView
             android:id="@+id/loginnow_button"

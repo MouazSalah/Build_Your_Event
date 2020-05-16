@@ -32,9 +32,9 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
         public MyViewHolder(View view)
         {
             super(view);
-            cardName = (TextView) view.findViewById(R.id.userproduct_nametext);
-            cardPrice = (TextView) view.findViewById(R.id.userproduct_pricetext);
-            cardImage = (ImageView) view.findViewById(R.id.userproduct_imageview);
+            cardName = (TextView) view.findViewById(R.id.itemproduct_name);
+            cardPrice = (TextView) view.findViewById(R.id.itemproduct_price);
+            cardImage = (ImageView) view.findViewById(R.id.itemproduct_imageview);
 
             onCartItemListener = listhener;
             itemView.setOnClickListener(this);
@@ -58,7 +58,7 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
     @Override
     public UserProductAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_product_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.raw_products, parent, false);
         return new UserProductAdapter.MyViewHolder(itemView);
     }
 

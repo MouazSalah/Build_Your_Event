@@ -13,38 +13,44 @@
             android:id="@+id/nav_profileoption"
             android:icon="@drawable/user_icon"
             android:iconTint="@color/white"
-            android:title="Profile"
+            android:title="@string/profile"
             />
 
 
         <item
             android:id="@+id/nav_productsoption"
-            android:icon="@drawable/home_icon"
+            android:icon="@drawable/shopping_image"
             android:iconTint="@color/white"
-            android:title="My Products" />
+            android:title="@string/my_products" />
 
         <item
             android:id="@+id/nav_cartsoption"
             android:icon="@drawable/home_icon"
             android:iconTint="@color/white"
-            android:title="Carts" />
+            android:title="@string/carts" />
 
     </group>
 
-    <item android:title="Options">
+    <item android:title="@string/options">
         <menu>
             <item
                 android:id="@+id/nav_settinoption"
-                android:title="Setting"
-                />
+                android:title="@string/setting"
+                android:iconTint="@color/white"
+                android:icon="@drawable/settingss_icon" />
 
             <item
                 android:id="@+id/nav_logoutoption"
-                android:title="Logout" />
+                android:title="@string/logout"
+                android:iconTint="@color/white"
+                android:icon="@drawable/not_login"/>
 
             <item
                 android:id="@+id/nav_aboutusoption"
-                android:title="About Us" />
+                android:title="@string/about_us"
+                android:iconTint="@color/white"
+                android:icon="@drawable/share_icon"
+                />
 
         </menu>
     </item>

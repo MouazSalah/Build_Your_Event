@@ -87,21 +87,22 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/skip_choosecountry_skibbtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/auth_buttons"
-        android:text="Continue"
-        android:textSize="16sp"
-        android:textColor="#fff"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:padding="8dp"
-        android:layout_marginBottom="6dp"
-        android:drawableStart="@color/LightGrey" />
+
+        <TextView
+            android:id="@+id/skip_choosecountry_skibbtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/ripple_btn_bg_rounded"
+            android:text="Continue"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:padding="8dp"
+            android:drawableStart="@color/LightGrey" />
+
 
 </LinearLayout>
 

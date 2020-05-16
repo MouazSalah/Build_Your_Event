@@ -14,7 +14,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.LocationActivity" />
+        tools:context=".ui.location.LocationActivity" />
 
     <Button
         android:id="@+id/button_selectLocation"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/next_btn"
         android:text="@string/select_a_location"
         android:textColor="@android:color/white" />
 

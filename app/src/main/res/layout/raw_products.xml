@@ -10,7 +10,7 @@
     android:layout_marginBottom="20dp"
     android:id="@+id/rawproduct_layout"
     android:layout_margin="10dp"
-    android:background="@drawable/item_product_background">
+    android:background="@drawable/subcategory_background">
 
     <ImageView
         android:id="@+id/itemproduct_imageview"
@@ -32,8 +32,7 @@
         android:paddingBottom="2dp"
         android:background="#10403D"
         android:layout_marginRight="1dp"
-        android:layout_marginLeft="1dp"
-        >
+        android:layout_marginLeft="1dp">
 
         <TextView
             android:id="@+id/itemproduct_name"
@@ -43,7 +42,7 @@
             android:text="T shirt"
             android:textColor="#FFF"
             android:layout_marginStart="5dp"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/itemproduct_price"
@@ -53,7 +52,7 @@
             android:text="60$"
             android:textColor="#34B4AB"
             android:layout_marginStart="10dp"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

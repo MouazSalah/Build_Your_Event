@@ -2,60 +2,84 @@ package com.buildyourevent.buildyourevent.model.data.banner;
 
 import com.google.gson.annotations.SerializedName;
 
-public class BannerData {
+public class BannerData{
+
+	@SerializedName("image")
+	private String image;
 
 	@SerializedName("updated_at")
-	private Object updatedAt;
+	private String updatedAt;
 
-	@SerializedName("banner_id")
-	private int bannerId;
+	@SerializedName("link")
+	private String link;
 
 	@SerializedName("created_at")
-	private Object createdAt;
+	private String createdAt;
 
-	@SerializedName("banner_image")
-	private String bannerImage;
+	@SerializedName("id")
+	private int id;
 
-	public void setUpdatedAt(Object updatedAt){
+	@SerializedName("title")
+	private String title;
+
+	public void setImage(String image){
+		this.image = image;
+	}
+
+	public String getImage(){
+		return image;
+	}
+
+	public void setUpdatedAt(String updatedAt){
 		this.updatedAt = updatedAt;
 	}
 
-	public Object getUpdatedAt(){
+	public String getUpdatedAt(){
 		return updatedAt;
 	}
 
-	public void setBannerId(int bannerId){
-		this.bannerId = bannerId;
+	public void setLink(String link){
+		this.link = link;
 	}
 
-	public int getBannerId(){
-		return bannerId;
+	public String getLink(){
+		return link;
 	}
 
-	public void setCreatedAt(Object createdAt){
+	public void setCreatedAt(String createdAt){
 		this.createdAt = createdAt;
 	}
 
-	public Object getCreatedAt(){
+	public String getCreatedAt(){
 		return createdAt;
 	}
 
-	public void setBannerImage(String bannerImage){
-		this.bannerImage = bannerImage;
+	public void setId(int id){
+		this.id = id;
 	}
 
-	public String getBannerImage(){
-		return bannerImage;
+	public int getId(){
+		return id;
+	}
+
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public String getTitle(){
+		return title;
 	}
 
 	@Override
  	public String toString(){
 		return 
-			"BannerData{" +
-			"updated_at = '" + updatedAt + '\'' + 
-			",banner_id = '" + bannerId + '\'' + 
+			"DataItem{" + 
+			"image = '" + image + '\'' + 
+			",updated_at = '" + updatedAt + '\'' + 
+			",link = '" + link + '\'' + 
 			",created_at = '" + createdAt + '\'' + 
-			",banner_image = '" + bannerImage + '\'' + 
+			",id = '" + id + '\'' + 
+			",title = '" + title + '\'' + 
 			"}";
 		}
 }

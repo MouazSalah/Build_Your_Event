@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
 <resources>
     <string name="app_name">Build Your Event</string>
 
@@ -10,12 +13,11 @@
     <string name="title_profile"> الصفحة الشخصية </string>
     <string name="title_Settings"> الاعدادات </string>
 
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="card_holder">Card Name</string>
-    <string name="card_number">Card Number</string>
+    <string name="card_holder"> اسم البطاقة</string>
+    <string name="card_number"> رقم البطاقة </string>
     <string name="valid_thru">Valid Thru</string>
     <string name="mm">شهر</string>
     <string name="YY">سنة</string>
@@ -26,7 +28,6 @@
     <string name="default_card_no">#### #### #### ####</string>
     <string name="autgorized_signature">Authorized signature</string>
     <string name="pay">دفع</string>
-
 
     // app settings values
     <string name="hint_email">البريد الالكتروني</string>
@@ -40,8 +41,6 @@
     <string name="send_password_reset_email">send password reset email</string>
     <string name="title_message">الاشعارات</string>
     <string name="build_your_event">Build your event</string>
-
-
 
     // Auth string values
     <string name="sign_up"> انشاء حساب </string>
@@ -84,6 +83,12 @@
     <string name="enddate_productstate"> غير متاح</string>
     <string name="event_location">مكان طلب المنتج</string>
 
+    <string name="btn_remove"> ازالة الحساب </string>
+    <string name="change_email"> تغيير البريد الالكتروني </string>
+    <string name="remove_user"> حذف مستخدم </string>
+    <string name="btn_sign_out">  تسجيل خروج </string>
+    <string name="title_favorites"> الملفضلة </string>
+
     <string name="language"> اللغة </string>
     <string name="choose_language">اختار اللغة</string>
     <string name="arabic">عربي </string>
@@ -92,7 +97,6 @@
     <string name="manage_account">اعدادا الحساب</string>
     <string name="app_settings">اعدادات التطبيق</string>
 
-    <string name="single_sofa"> SINGLE SOFA </string>
     <string name="city_hint"> المدينة </string>
     <string name="mobile_hint"> الموبايل </string>
     <string name="order_now"> اطلب الان </string>
@@ -104,7 +108,6 @@
     <string name="name">الاسم</string>
     <string name="email">البريد الالكتروني</string>
     <string name="mobile"> الموبايل </string>
-
 
     <string name="old_password_hint"> الرقم السري القديم </string>
     <string name="new_password_hint"> الرقم السري الجديد </string>
@@ -126,23 +129,8 @@
 
     <string name="about_app"> عن التطبيق</string>
 
-    <string name="forgot_password">
-        هل نسيت كلمة السر ؟ انت تحتاج ان تكتب البريد الالكتروني الخاص بك ، ثم نرسل اليك رمزا للاستعادته
+    <string name="forgot_password">     هل نسيت كلمة السر ؟ انت تحتاج ان تكتب البريد الالكتروني الخاص بك ، ثم نرسل اليك رمزا للاستعادته
     </string>
-
-
-    <string name="note_one">
-        before you receive items you should double check if it is ok becouse you should handover same as you receive
-    </string>
-
-    <string name="note_two">
-        whenever you will receive you should have to give money cash orcheck as warranty and when you handover we will return youyour money or check
-    </string>
-
-    <string name="note_three">
-        the price not included the transportation and fixing it is willadd to your bill efore you pay
-    </string>
-
 
     <string name="agree_to_app_conditions">أوافق علي الشروط والاحكام</string>
     <string name="condition_toast"> يجد ان توافق علي الشروط والاحكام</string>
@@ -173,27 +161,65 @@
     جعل عالم الفعاليات اكثر سهولة وفي متناول الجميع.
     </string>
 
-    <string name="conditions">
-         قبل الموافقة على التعامل مع تطبيق build you event يرجى قراءة الشروط والاحكام بعناية والموافقة عليها
-الشروط بالنسبة للمؤجر
-1- تقوم كل شركة بتحميل كافة منتجاتها ضمن التطببق بنفسها.
-2- على كل شركة إدارة منتجاتها خطوة بخطوة والكميات والايام المتاحة لكل منتج، واي تقصير من قبل اي شركة سيتم إيقاف التعامل معها مباشرة، لعدم المتابعة ، وبالتالي سنفقد المصداقية معها ومع الزبون.
-3- لا يسمح بوضع اي شعار او رقم هاتف او موقع إلكتروني او اي شيئ يدل على اسم الشركة المضيفة للمنتج.
-4- تقوم إدارة التطبيق بمراجعة المنتج قبل طرحه في الطبيق والموافقة عليه.
-5- على كل شركة التأكد عند تسليم البضاعة أن تكون بحالة جيدة لانه سيتم تسليمها بنفس الحالة التي تم استلامها، اذا لم يتم التأكد من البضاعة ستكون كل شركة هي المسؤولةعن هذه المشكلة وسيترتب عليها غرامة أو إيقاف التعامل مباشرة.
-6- على كل شركة إرسال موظف او اكثر من قبلها وارتداء لباس يحمل شعار التطببق حتى تسليم البضاعة بالحالة الجيدة وبالتالي سيكون مسؤول عن اي ضرر في حالة التركيب والتحميل.
-7- سيكون هناك مبلغ ضمان لبعض المنتجات من كل زبون سيقوم بإستئجار المنتجات، وستقوم إدارة التطبيق بحجز المبلغ ريثما يتم إرجاع البضاعة بالحالة الجيدة عند انتهاء الفعالية بنفس الحالة التي استلمها بها.
-8- تقوم إدارة التطبيق بخصم نسبة 10% من اجمالي المبلغ كأجور خدمات للتطبيق.
-9- مبلغ الاجار يتم حجزه في التطبيق ريثما تتم عملية التركيب ويوافق العميل على صحة المنتج، وبعدها يتم تحويل نسبة 50% من المبلغ ريثما تتم إرجاع المنتج دون اي مشاكلة أو اضرار وبعدها يتم تحويل المبلغ المتبقي إلى الشركة المؤجرة للمنتج.
-الشروط بالنسبة للمستأجر
-1- قبل استلام البضاعة يجب التأكد من سلامتها لانك يجب تسليمها سليمة كما استلمتها.
-2- عند تقديم الطلب يتوجب عليك دفع مبلغ ضمان في بعض الحالات لحفظ الحقوق، ويتم ارجاع مبلغ الضمان عند الانتهاء من المنتجات وإرجاعها كما استلمتها.
-3- السعر غير شامل التركيب والتوصيل في بعض الحالات، وإن وجد سيتم إضافته إلى الفاتورة قبل إتمام عملية الدفع.
-في حال قراءة الشروط والاحكام جيداً يتوجب عليك الموافقة عليها وستكون انت المسؤول بعد ذلك، وفي حال وقوع اي مشكلة ستكون انت المسؤول وسيتم إتخاذ الإجراء المناسب في ذلك.
+    <string name="no_products"> ليس لديك اي منتجات</string>
+    <string name="rate">تقيمم هذا المنتج</string>
+    <string name="update"> تحديث </string>
+    <string name="about_company">عن الشركة</string>
+    <string name="description"> الوصف </string>
+    <string name="status"> الحالة </string>
+    <string name="price"> السعر </string>
+    <string name="stock"> العدد </string>
+    <string name="category"> القسم </string>
+    <string name="subcategory">الفئة </string>
+    <string name="available">متاح </string>
+    <string name="not_available"> غير متاح </string>
+    <string name="add"> اضافة </string>
 
-    </string>
-    <string name="no_products">You don\'t have any products</string>
-    <string name="rate">Rate This Product</string>
-    <string name="update">Update</string>
+
+    <string name="category_hint"> القسم </string>
+    <string name="sub_category"> الفئة </string>
+    <string name="add_to_my_products"> اضافة </string>
+
+
+    <string name="conditionss"> الشروط والأحكام </string>
+    <string name="condition_welcome"> مرحبا </string>
+    <string name="condition_title"> قبل الموافقة على التعامل مع تطبيق build you event يرجى قراءة الشروط والاحكام بعناية والموافقة عليها </string>
+    <string name="condition_user">الشروط بالنسبة للمؤجر </string>
+    <string name="user_condition1">1-	تقوم كل شركة بتحميل كافة منتجاتها ضمن التطببق بنفسها.</string>
+    <string name="user_condition2"> 2-	على كل شركة إدارة منتجاتها خطوة بخطوة والكميات والايام المتاحة لكل منتج، واي تقصير من قبل اي شركة سيتم إيقاف التعامل معها مباشرة، لعدم المتابعة ، وبالتالي سنفقد المصداقية معها ومع الزبون.</string>
+    <string name="user_condition3"> 3-	لا يسمح بوضع اي شعار او رقم هاتف او موقع إلكتروني او اي شيئ يدل على اسم الشركة المضيفة للمنتج، كما يجب ان تكون خلفية المنتج بيضاء .</string>
+    <string name="user_condition4"> 4-	تقوم إدارة التطبيق بمراجعة المنتج قبل طرحه في الطبيق والموافقة عليه.</string>
+    <string name="user_condition5"> 5-	على كل شركة التأكد عند تسليم البضاعة أن تكون بحالة جيدة لانه سيتم تسليمها بنفس الحالة التي تم استلامها، اذا لم يتم التأكد من البضاعة ستكون كل شركة هي المسؤولة عن هذه المشكلة وسيترتب عليها غرامة أو إيقاف التعامل مباشرة.</string>
+    <string name="user_condition6"> 6-	على كل شركة إرسال موظف او اكثر من قبلها وارتداء لباس يحمل شعار التطببق حتى تسليم البضاعة بالحالة الجيدة وبالتالي سيكون مسؤول عن اي ضرر في حالة التركيب والتحميل.</string>
+    <string name="user_condition7"> 7-	سيكون هناك مبلغ ضمان لبعض المنتجات من كل زبون سيقوم بإستئجار المنتجات، وستقوم إدارة التطبيق بحجز المبلغ ريثما يتم إرجاع البضاعة بالحالة الجيدة عند انتهاء الفعالية بنفس الحالة التي استلمها بها.</string>
+    <string name="user_condition8"> 8-	تقوم إدارة التطبيق بخصم نسبة 10% من اجمالي المبلغ كأجور خدمات للتطبيق.</string>
+    <string name="user_condition9"> 9-	سيتم حجز مبلغ الاجار في التطبيق ريثما تتم عملية التركيب ويوافق العميل على صحة المنتج، وبعدها يتم تحويل نسبة 50% من المبلغ ريثما تتم إرجاع المنتج دون اي مشاكلة أو اضرار وبعدها يتم تحويل المبلغ المتبقي إلى الشركة المؤجرة للمنتج.</string>
+    <string name="user_condition10"> 10-	تحميل صورة على (قسم سلامة المنتج) توضوح سلامة المنتج اثناء التحميل او ما هو العذر في المنتج.</string>
+    <string name="user_condition11"> 11-	اذا وجد مجسم ثلاثي الابعاد للمنتج(3D Model) يروج للمنتج بشكل افضل، ليس ضروريا لكن افضل.</string>
+
+    <string name="condition_admin"> الشروط بالنسبة للمستأجر </string>
+
+    <string name="admin_condition1"> 1-	قبل استلام البضاعة يجب التأكد من سلامتها لانك يجب تسليمها سليمة كما استلمتها.</string>
+    <string name="admin_condition2"> 2-	عند تقديم الطلب يتوجب عليك دفع مبلغ ضمان في بعض الحالات لحفظ الحقوق، ويتم ارجاع مبلغ الضمان عند الانتهاء من المنتجات وإرجاعها كما استلمتها.</string>
+    <string name="admin_condition3"> 3-	السعر غير شامل التركيب والتوصيل في بعض الحالات، وإن وجد سيتم إضافته إلى الفاتورة قبل إتمام عملية الدفع.</string>
+    <string name="admin_condition4"> 4-	تحميل صورة اثناء استلام المنتج في (قسم سلامة المنتج) توضح سلامة او عدم سلامة المنتج</string>
+
+    <string name="condition_warn"> في حال قراءة الشروط والاحكام جيداً يتوجب عليك الموافقة عليها وستكون انت المسؤول بعد ذلك، وفي حال وقوع اي مشكلة ستكون انت المسؤول وسيتم إتخاذ الإجراء المناسب في ذلك.</string>
+
+    <string name="payment_title"> إنتبه قبل إتمام عملية الدفع </string>
+    <string name="payment1"> 1-	قبل استلام البضاعة يجب التأكد من سلامتها لانك يجب تسليمها سليمة كما استلمتها. </string>
+    <string name="payment2"> 2-	عند تقديم الطلب يتوجب عليك دفع مبلغ ضمان في بعض الحالات لحفظ الحقوق، ويتم ارجاع مبلغ الضمان عند الانتهاء من المنتجات وإرجاعها كما استلمتها.</string>
+    <string name="payment3"> 3-	السعر غير شامل التركيب والتوصيل في بعض الحالات، وإن وجد سيتم إضافته إلى الفاتورة قبل إتمام عملية الدفع.</string>
+    <string name="payment4">  4-	تحميل صورة اثناء استلام المنتج في (قسم سلامة المنتج) توضح سلامة او عدم سلامة المنتج.</string>
+    <string name="profile"> الصفحة الشخصية </string>
+    <string name="my_products"> منتجاتي </string>
+    <string name="carts"> السلة </string>
+    <string name="logout"> تسجيل خروج </string>
+    <string name="about_us"> عن التطبيق </string>
+    <string name="setting"> الاعدادات </string>
+    <string name="add_new_product"> اضافة منتج جديد </string>
+    <string name="accept_conditions"> الموافقة علي الشروط والاحكام </string>
+
+    <string name="options"> الخيارات </string>
 
 </resources>

@@ -2,13 +2,16 @@ package com.buildyourevent.buildyourevent.model.auth.login;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UserData {
-
-	@SerializedName("city_name")
-	private String cityName;
+public class UserData
+{
+	@SerializedName("id")
+	private int id;
 
 	@SerializedName("name")
 	private String name;
+
+	@SerializedName("email")
+	private String email;
 
 	@SerializedName("mobile")
 	private int mobile;
@@ -16,20 +19,17 @@ public class UserData {
 	@SerializedName("country_name")
 	private String countryName;
 
-	@SerializedName("id")
-	private int id;
-
-	@SerializedName("email")
-	private String email;
+	@SerializedName("city_name")
+	private String cityName;
 
 	@SerializedName("country_id")
 	private int countryId;
 
-	@SerializedName("token")
-	private String token;
-
 	@SerializedName("city_id")
 	private int cityId;
+
+	@SerializedName("token")
+	private String token;
 
 	public void setCityName(String cityName){
 		this.cityName = cityName;

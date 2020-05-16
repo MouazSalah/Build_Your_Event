@@ -1,35 +1,29 @@
-package com.buildyourevent.buildyourevent.viewmodel;
+package com.buildyourevent.buildyourevent.database;
 
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.buildyourevent.buildyourevent.database.InterfaceApi;
-import com.buildyourevent.buildyourevent.database.RetrofitClient;
+import com.buildyourevent.buildyourevent.model.data.addproduct.AddProductResponse;
+import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
+import com.buildyourevent.buildyourevent.model.data.banner.BannerResponse;
+import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
 import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
-import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
-import com.buildyourevent.buildyourevent.model.data.banner.BannerResponse;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
-import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
-import com.buildyourevent.buildyourevent.model.data.product.ProductData;
 import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
-import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsData;
-import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
-import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.request.RemoveProductRequest;
-import com.buildyourevent.buildyourevent.model.data.userproduct.response.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.RemoveProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductResponse;
 
@@ -48,17 +42,16 @@ public class UserRepository
 {
     InterfaceApi interfaceApi;
 
-    private MutableLiveData<List<CategoryData>> categoryMutableLiveData = new MutableLiveData<>();
-    private ArrayList<CategoryData> categoriesList = new ArrayList<>();
+    private MutableLiveData<CategoryResponse> categoryLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<List<SubCategoryData>> subCategoryMutableLiveData = new MutableLiveData<>();
-    private ArrayList<SubCategoryData> subCategoriesList = new ArrayList<>();
+    private MutableLiveData<SubCategoryResponse> subCategoryLiveData = new MutableLiveData<>();
 
     private MutableLiveData<List<BannerData>> bannersMutableLiveData = new MutableLiveData<>();
     private ArrayList<BannerData> bannersList = new ArrayList<>();
 
-    private MutableLiveData<List<ProductData>> productsMutableLiveData = new MutableLiveData<>();
-    private ArrayList<ProductData> productsList = new ArrayList<>();
+
+    private MutableLiveData<ProductResponse> allProductsLiveData = new MutableLiveData<>();
+
 
     private MutableLiveData<CartResponse> cartsMutableLiveData = new MutableLiveData<>();
 
@@ -68,7 +61,7 @@ public class UserRepository
 
     private MutableLiveData<OrderResponse> confirmOrderMutableLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<ProductDetailsData> productDetailsDataMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ProductDetailsResponse> detailsLiveData = new MutableLiveData<>();
 
     private MutableLiveData<UserOwnProductResponse> userOwnProductsMutableLiveData = new MutableLiveData<>();
 
@@ -83,7 +76,7 @@ public class UserRepository
     public UserRepository()
     {
         interfaceApi = RetrofitClient.getApiClient(Codes.AUTH_BASE_URL).create(InterfaceApi.class);
-        categoryMutableLiveData = new MutableLiveData<>();
+        categoryLiveData = new MutableLiveData<>();
         bannersMutableLiveData = new MutableLiveData<>();
     }
 
@@ -119,8 +112,7 @@ public class UserRepository
         return bannersMutableLiveData;
     }
 
-
-    public MutableLiveData<List<CategoryData>> getCategoryMutableLiveData()
+    public MutableLiveData<CategoryResponse> getCategoryMutableLiveData()
     {
         Call<CategoryResponse> responseCall = interfaceApi.getAllCategories();
         responseCall.enqueue(new Callback<CategoryResponse>()
@@ -128,17 +120,14 @@ public class UserRepository
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response)
             {
-                if (!response.isSuccessful())
+
+                if (response.isSuccessful())
                 {
+                    categoryLiveData.setValue(response.body());
                 }
                 else
                 {
-                    CategoryResponse categoryResponse = response.body();
-                    if (categoryResponse != null && categoryResponse.getData() != null)
-                    {
-                        categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
-                        categoryMutableLiveData.setValue(categoriesList);
-                    }
+
                 }
             }
             @Override
@@ -148,10 +137,10 @@ public class UserRepository
             }
         });
 
-        return categoryMutableLiveData;
+        return categoryLiveData;
     }
 
-    public MutableLiveData<List<SubCategoryData>> getSubCategoryMutableLiveData(int categoryId)
+    public MutableLiveData<SubCategoryResponse> getSubCategoryMutableLiveData(int categoryId)
     {
         Call<SubCategoryResponse> responseCall = interfaceApi.getAllSubCategories(categoryId);
         responseCall.enqueue(new Callback<SubCategoryResponse>()
@@ -159,18 +148,13 @@ public class UserRepository
             @Override
             public void onResponse(Call<SubCategoryResponse> call, Response<SubCategoryResponse> response)
             {
-                if (!response.isSuccessful())
+                if (response.isSuccessful())
                 {
+                    subCategoryLiveData.setValue(response.body());
                 }
                 else
                 {
-                    SubCategoryResponse subCategoryResponse = response.body();
-                    if (subCategoryResponse != null && subCategoryResponse.getData() != null)
-                    {
-                        subCategoriesList = (ArrayList<SubCategoryData>) subCategoryResponse.getData();
-                        subCategoryMutableLiveData.setValue(subCategoriesList);
-                        Log.e(TAG, "" + response.body().getData().toString());
-                    }
+
                 }
             }
             @Override
@@ -180,11 +164,10 @@ public class UserRepository
             }
         });
 
-        return subCategoryMutableLiveData;
+        return subCategoryLiveData;
     }
 
-
-    public MutableLiveData<List<ProductData>> getProductsMutableLiveData(String subCategoryId)
+    public MutableLiveData<ProductResponse> getProductsMutableLiveData(String subCategoryId)
     {
         Call<ProductResponse> responseCall = interfaceApi.getAllProducts(subCategoryId);
         responseCall.enqueue(new Callback<ProductResponse>()
@@ -192,21 +175,14 @@ public class UserRepository
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response)
             {
-                if (!response.isSuccessful())
+                if (response.isSuccessful())
                 {
+                    allProductsLiveData.setValue(response.body());
                     Log.d(Codes.APP_TAGS, "product not success" + response.message());
                 }
-                else {
-                    ProductResponse productResponse = response.body();
+                else
+                {
 
-                    if (productResponse != null && productResponse.getData() != null)
-                    {
-                        if (productResponse.getStatus() == Codes.RESPONSE_SUCCESS) { //you must do this in every response
-                            productsList = (ArrayList<ProductData>) productResponse.getData();
-                            productsMutableLiveData.setValue(productsList);
-                            Log.e("rr", "onResponse: "+productsList.toString());
-                        }
-                    }
                 }
             }
             @Override
@@ -216,11 +192,31 @@ public class UserRepository
             }
         });
 
-        return productsMutableLiveData;
+        return allProductsLiveData;
     }
 
+    public MutableLiveData<ProductResponse> getAllProductsMutableLiveData()
+    {
+        Call<ProductResponse> responseCall = interfaceApi.getProducts();
+        responseCall.enqueue(new Callback<ProductResponse>()
+        {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response)
+            {
+                ProductResponse productResponse = response.body();
+                allProductsLiveData.setValue(productResponse);
+            }
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t)
+            {
+                Log.d(Codes.APP_TAGS, "products failed" + t.getMessage());
+            }
+        });
 
-    public MutableLiveData<ProductDetailsData> getProductDetails(int productId)
+        return allProductsLiveData;
+    }
+
+    public MutableLiveData<ProductDetailsResponse> getProductDetails(int productId)
     {
         Call<ProductDetailsResponse> responseCall = interfaceApi.getProductDetails(productId);
         responseCall.enqueue(new Callback<ProductDetailsResponse>()
@@ -231,12 +227,7 @@ public class UserRepository
                 if (response.isSuccessful())
                 {
                     Log.e(TAG, response.body().toString() );
-                    productDetailsDataMutableLiveData.setValue(response.body().getProductDetailsData());
-                    // line dh kan bydeeny null value
-                   // Log.d(Codes.APP_TAGS, "data of product/// " + response.body().getProductDetailsData().toString());
-//                    ProductDetailsData productDetailsData = response.body().getProductDetailsData();
-//                    productDetailsMutableLiveData.setValue(productDetailsData);
-//                    Log.d(Codes.APP_TAGS, "data details done");
+                    detailsLiveData.setValue(response.body());
                 }
                 else
                 {
@@ -249,7 +240,7 @@ public class UserRepository
                 Log.d(Codes.APP_TAGS, "product details failed" + t.getMessage());
             }
         });
-        return productDetailsDataMutableLiveData;
+        return detailsLiveData;
     }
 
 
@@ -261,10 +252,14 @@ public class UserRepository
             @Override
             public void onResponse(Call<CartResponse> call, Response<CartResponse> response)
             {
+               // cartsMutableLiveData.setValue(response.body());
+
                 Log.d(Codes.APP_TAGS, "carts  success" + response.message());
                 if (!response.isSuccessful())
                 {
                     Log.d(Codes.APP_TAGS, "carts not success" + response.message());
+                    // cartsMutableLiveData.setValue("error");
+                    cartsMutableLiveData.setValue(response.body());
                 }
                 else
                 {
@@ -398,8 +393,7 @@ public class UserRepository
     }
 
 
-    public MutableLiveData<AddProductResponse>
-    getAddNewProductsMutableLiveData(MultipartBody.Part pic, RequestBody string1,
+    public MutableLiveData<AddProductResponse> getAddNewProductsMutableLiveData(MultipartBody.Part pic, RequestBody string1,
                                     RequestBody string2, RequestBody string3,
                                     RequestBody string4, RequestBody string5,
                                     RequestBody string6, RequestBody string7,
@@ -414,7 +408,9 @@ public class UserRepository
             @Override
             public void onResponse(Call<AddProductResponse> call, Response<AddProductResponse> response)
             {
-                Log.d("eventsontime", response.message());
+                Log.d(Codes.APP_TAGS, "add product result // " +  response.message());
+                Log.d(Codes.APP_TAGS, "add product result // " +  response.message());
+
                 if (!response.isSuccessful())
                 {
 
@@ -434,6 +430,8 @@ public class UserRepository
         return addNewProductsMutableLiveData;
     }
 
+
+
     public MutableLiveData<UpdateProductResponse> getUpdateProductsMutableLiveData(MultipartBody.Part pic, RequestBody string1,
                                                                                    RequestBody string2, RequestBody string3,
                                                                                    RequestBody string4, RequestBody string5,
@@ -449,7 +447,7 @@ public class UserRepository
             @Override
             public void onResponse(Call<UpdateProductResponse> call, Response<UpdateProductResponse> response)
             {
-                Log.d("eventsontime", response.message());
+                Log.d(Codes.APP_TAGS, "update product // " + response.message());
                 if (!response.isSuccessful())
                 {
 

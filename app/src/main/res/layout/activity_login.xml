@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/remember_me"
+                android:background="?selectableItemBackground"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -92,6 +93,7 @@
                 android:id="@+id/login_forget_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
                 android:layout_marginStart="20dp"
                 android:text="@string/forget_password"
                 android:textColor="@color/white"
@@ -99,41 +101,43 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/login_continue_button"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/continue_btn"
-            android:text="@string/login"
-            android:textSize="16sp"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:padding="8dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="6dp"
-            />
 
-        <TextView
-            android:id="@+id/loginwithfacebook_button"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/login_with_facebook"
-            android:background="@drawable/fb_login_btn"
-            android:textSize="16sp"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:padding="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="6dp"/>
+            <TextView
+                android:id="@+id/login_continue_button"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/next_btn"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:text="@string/login"
+                android:textSize="16sp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:padding="8dp"
+                />
+
+            <TextView
+                android:id="@+id/loginwithfacebook_button"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:text="@string/login_with_facebook"
+                android:background="@drawable/facebook_button"
+                android:textSize="16sp"
+                android:onClick="loginWithFacebook"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:padding="8dp"/>
 
 
         <LinearLayout
             android:id="@+id/linear3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="16dp"
@@ -150,6 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/create_one"
+                android:background="?selectableItemBackground"
                 android:id="@+id/login_create_account_textview"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -160,20 +165,28 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/login_skip_login"
+        <com.balysv.materialripple.MaterialRippleLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/auth_buttons"
-            android:text="@string/skip"
-            android:textSize="16sp"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:padding="8dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="6dp"
-            android:drawableStart="@color/LightGrey" />
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp">
+
+            <TextView
+                android:id="@+id/login_skip_login"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_btn_bg_rounded"
+                android:text="@string/skip"
+                android:textSize="16sp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:padding="8dp"
+                android:drawableStart="@color/LightGrey" />
+
+        </com.balysv.materialripple.MaterialRippleLayout>
+
 
     </LinearLayout>
 

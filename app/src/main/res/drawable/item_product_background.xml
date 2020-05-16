@@ -2,22 +2,35 @@
     version="1.0"
     encoding="utf-8"?>
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorEdgeEffect">
 
-    <solid
-        android:color="@android:color/white"
-        >
-    </solid>
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@android:color/white"/>
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
 
-    <!-- View border color and width -->
-    <stroke
-        android:width="2dp"
-        android:color="#37BFB6" >
-    </stroke>
+    <item android:id="@android:id/background">
 
-    <!-- The radius makes the corners rounded -->
-    <corners
-        android:radius="10dp"   >
-    </corners>
+        <shape android:shape="rectangle">
+            <padding
+                android:bottom="8dp"
+                android:left="8dp"
+                android:right="8dp"
+                android:top="8dp"/>
+            <stroke android:width="2dp"
+                android:color="#37BFB6"/>
+            <gradient
+                android:angle="180"
+                android:endColor="@color/white"
+                android:startColor="@color/white" />
+            <corners android:radius="32dp" />
+        </shape>
 
-</shape>
+    </item>
+</ripple>
+

@@ -63,13 +63,13 @@
                     style="@style/edittext_style"
                     android:layout_height="70dp"
                     android:hint="description"
-                    android:visibility="gone"
                     android:singleLine="false" />
 
                 <EditText
                     android:id="@+id/editproductstatus_textview"
                     style="@style/edittext_style"
                     android:hint="status" />
+
 
                 <EditText
                     android:id="@+id/editproductprice_textview"
@@ -386,6 +386,7 @@
                     android:layout_height="300dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="24dp"
                     android:layout_marginEnd="10dp"
                     tools:context=".MapsActivity" />
 
@@ -396,13 +397,14 @@
 
                     <Button
                         android:id="@+id/editproduct_button"
-                        android:layout_width="wrap_content"
+                        android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="20dp"
                         android:background="@drawable/auth_buttons"
                         android:gravity="center"
+                        android:layout_marginBottom="24dp"
                         android:padding="5dp"
                         android:paddingStart="30dp"
                         android:paddingEnd="30dp"

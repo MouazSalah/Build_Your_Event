@@ -71,7 +71,7 @@
             android:id="@+id/btn_confirm"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/continue_btn"
+            android:background="@drawable/next_btn"
             android:text="@string/confirm"
             android:textSize="16sp"
             android:textColor="#fff"
@@ -89,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resend"
+            android:background="?selectableItemBackground"
             android:textColor="@color/white"
             android:textSize="15sp" />
 

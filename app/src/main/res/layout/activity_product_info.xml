@@ -611,7 +611,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Notes"
+                android:text="@string/payment_title"
                 android:textColor="#E83E3E"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -622,7 +622,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:maxLines="4"
-                android:text="@string/note_one"
+                android:text="@string/payment1"
                 android:textColor="#51A7A1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -634,7 +634,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:maxLines="4"
-                android:text="@string/note_two"
+                android:text="@string/payment2"
                 android:textColor="#51A7A1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -647,7 +647,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:maxLines="4"
-                android:text="@string/note_three"
+                android:text="@string/payment3"
                 android:textColor="#51A7A1"
                 android:textSize="16sp"
                 android:textStyle="bold" />

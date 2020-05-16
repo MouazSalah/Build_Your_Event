@@ -1,19 +1,17 @@
 package com.buildyourevent.buildyourevent.model.data.subcategory;
 
-
 import com.google.gson.annotations.SerializedName;
 
-
-public class SubCategoryData {
+public class SubCategoryData{
 
 	@SerializedName("category_id")
 	private int categoryId;
 
 	@SerializedName("updated_at")
-	private Object updatedAt;
+	private String updatedAt;
 
-	@SerializedName("id")
-	private int subCatId;
+	@SerializedName("subcategory_name_ar")
+	private String subcategoryNameAr;
 
 	@SerializedName("subcategory_name")
 	private String subcategoryName;
@@ -22,10 +20,23 @@ public class SubCategoryData {
 	private String subcategoryImage;
 
 	@SerializedName("created_at")
-	private Object createdAt;
+	private String createdAt;
 
+	@SerializedName("id")
+	private int id;
 
-	boolean isSelect = false;
+	public SubCategoryData() {
+	}
+
+	public SubCategoryData(int categoryId, String updatedAt, String subcategoryNameAr, String subcategoryName, String subcategoryImage, String createdAt, int id) {
+		this.categoryId = categoryId;
+		this.updatedAt = updatedAt;
+		this.subcategoryNameAr = subcategoryNameAr;
+		this.subcategoryName = subcategoryName;
+		this.subcategoryImage = subcategoryImage;
+		this.createdAt = createdAt;
+		this.id = id;
+	}
 
 	public void setCategoryId(int categoryId){
 		this.categoryId = categoryId;
@@ -35,20 +46,20 @@ public class SubCategoryData {
 		return categoryId;
 	}
 
-	public void setUpdatedAt(Object updatedAt){
+	public void setUpdatedAt(String updatedAt){
 		this.updatedAt = updatedAt;
 	}
 
-	public Object getUpdatedAt(){
+	public String getUpdatedAt(){
 		return updatedAt;
 	}
 
-	public void setSubCatId(int subCatId){
-		this.subCatId = subCatId;
+	public void setSubcategoryNameAr(String subcategoryNameAr){
+		this.subcategoryNameAr = subcategoryNameAr;
 	}
 
-	public int getSubCatId(){
-		return subCatId;
+	public Object getSubcategoryNameAr(){
+		return subcategoryNameAr;
 	}
 
 	public void setSubcategoryName(String subcategoryName){
@@ -67,14 +78,23 @@ public class SubCategoryData {
 		return subcategoryImage;
 	}
 
-	public void setCreatedAt(Object createdAt){
+	public void setCreatedAt(String createdAt){
 		this.createdAt = createdAt;
 	}
 
-	public Object getCreatedAt(){
+	public String getCreatedAt(){
 		return createdAt;
 	}
 
+	public void setId(int id){
+		this.id = id;
+	}
+
+	public int getId(){
+		return id;
+	}
+
+	boolean isSelect = false;
 
 	public boolean isSelect() {
 		return isSelect;
@@ -88,15 +108,14 @@ public class SubCategoryData {
 	@Override
  	public String toString(){
 		return 
-			"SubCategoryData{" +
+			"DataItem{" + 
 			"category_id = '" + categoryId + '\'' + 
 			",updated_at = '" + updatedAt + '\'' + 
-			",sub_cat_id = '" + subCatId + '\'' + 
+			",subcategory_name_ar = '" + subcategoryNameAr + '\'' + 
 			",subcategory_name = '" + subcategoryName + '\'' + 
 			",subcategory_image = '" + subcategoryImage + '\'' + 
-			",created_at = '" + createdAt + '\'' +
-					",is_selected = '" + isSelect + '\'' +
-
-					"}";
+			",created_at = '" + createdAt + '\'' + 
+			",id = '" + id + '\'' + 
+			"}";
 		}
 }

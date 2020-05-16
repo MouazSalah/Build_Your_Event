@@ -40,11 +40,13 @@ public class ChooseCountryActivity extends AppCompatActivity
 
     List<CountryData> countriesList = new ArrayList<>();
     List<CityData> citiesList = new ArrayList<>();
+    SharedPrefMethods prefMethods;
+    int countryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        SharedPrefMethods prefMethods = new SharedPrefMethods(this);
+         prefMethods = new SharedPrefMethods(this);
         Locale locale = new Locale(prefMethods.getUserLanguage());
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -76,6 +78,7 @@ public class ChooseCountryActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
             {
                 Log.e(TAG, "onItemSelected: " + countriesList.get(pos).getId());
+                countryId = countriesList.get(pos).getId();
                 getCities(countriesList.get(pos).getId());
                 Log.d(Codes.APP_TAGS, "countries size: " +  countriesList.size());
             }
@@ -128,6 +131,7 @@ public class ChooseCountryActivity extends AppCompatActivity
     @OnClick(R.id.skip_choosecountry_skibbtn)
     void enterApp(View v)
     {
+        prefMethods.saveCountryId(countryId);
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
     }

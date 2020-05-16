@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/categry_layout"
     android:layout_width="70dp"
+    android:background="?selectableItemBackground"
     android:layout_height="115dp"
     android:layout_marginBottom="5dp"
     android:gravity="center"
@@ -30,7 +31,6 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,12 +46,11 @@
             android:gravity="center_horizontal"
             android:textAllCaps="true"
             android:textColor="#FFF"
-            android:textSize="10sp"
+            android:textSize="9sp"
             android:singleLine="false"
             android:text="Laptops" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

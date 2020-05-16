@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.product.ProductData;
+import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
@@ -44,6 +46,10 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     @BindView(R.id.subproduct_progressBar) ProgressBar productsProgressBar;
     @BindView(R.id.sub_layout)
     RelativeLayout subCategoryLayout;
+    @BindView(R.id.empty_subCategory)
+    LinearLayout emptySubCategoryLayout;
+    @BindView(R.id.empty_products)
+    LinearLayout emptyProductsLayout;
 
     private int categoryId;
     UserViewModel viewModel;
@@ -78,39 +84,35 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
         subCategoryprogressBar.setVisibility(View.VISIBLE);
         subCategoryRecyclerView.setVisibility(View.GONE);
 
-        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<List<SubCategoryData>>()
+        viewModel.getAllSubCategories(categoryId).observe(this, new Observer<SubCategoryResponse>()
         {
             @Override
-            public void onChanged(List<SubCategoryData> subCategoryData)
+            public void onChanged(SubCategoryResponse response)
             {
-                subCategoryList = (ArrayList<SubCategoryData>) subCategoryData;
+                subCategoryList = (ArrayList<SubCategoryData>) response.getData();
                 if (subCategoryList != null)
                 {
                     setSubCategoryToRecycler();
                 }
+                else
+                {
+                    subCategoryprogressBar.setVisibility(View.GONE);
+                    subCategoryRecyclerView.setVisibility(View.GONE);
+                    emptySubCategoryLayout.setVisibility(View.VISIBLE);
+                    Toast.makeText(SubCategoryActivity.this, "لا يوجد فئات لها القسم", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        viewModel.getAllProducts("0").observe(this, new Observer<List<ProductData>>()
-        {
-            @Override
-            public void onChanged(List<ProductData> productData)
-            {
-                productsList = (ArrayList<ProductData>) productData;
-                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
-                productsRecyclerView.setLayoutManager(manager);
-                productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
-                productsRecyclerView.setAdapter(productsAdapter);
-                productsProgressBar.setVisibility(View.GONE);
-                productsRecyclerView.setVisibility(View.VISIBLE);
-            }
-        });
+        getAllProducts();
+
     }
 
 
     private void setSubCategoryToRecycler()
     {
+        SubCategoryData item = new SubCategoryData(1, "", "0" , "ALL" , "null", "null", 1);
+        subCategoryList.add(0, item);
         subCategoryAdapter = new SubCategoryAdapter(this.getApplicationContext(), subCategoryList, this);
         RecyclerView.LayoutManager manager2 = new GridLayoutManager(this, 4);
         subCategoryRecyclerView.setLayoutManager(manager2);
@@ -130,7 +132,6 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
             prefMethods.setSmall(false);
             subCategoryLayout.setVisibility(View.GONE);
             subCategorycontrolBtn.setImageResource(R.drawable.arrow_down);
-
         }
         else
         {
@@ -148,36 +149,33 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     public void onSubCategoryClick(int position, SubCategoryData data)
     {
         Toast.makeText(this, "filter work" , Toast.LENGTH_SHORT).show();
-
         Log.d(Codes.APP_TAGS, "onsubcategory clicked");
 
         prefMethods.saveSubCategoryData(subCategoryList.get(position));
         productsProgressBar.setVisibility(View.VISIBLE);
         productsRecyclerView.setVisibility(View.GONE);
 
-        viewModel.getAllProducts( "" + subCategoryList.get(position).getSubCatId()).observe(this, new Observer<List<ProductData>>()
-        {
-            @Override
-            public void onChanged(List<ProductData> productData)
-            {
-                productsList = (ArrayList<ProductData>) productData;
-                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
-                productsRecyclerView.setLayoutManager(manager);
-                productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
-                productsRecyclerView.setAdapter(productsAdapter);
-                productsProgressBar.setVisibility(View.GONE);
-                productsRecyclerView.setVisibility(View.VISIBLE);
-            }
-        });
+        Log.d(Codes.APP_TAGS, "size of list // " + subCategoryList.size());
+
+        getAllProducts();
     }
 
     @Override
     public void onSelected(int itemId)
     {
+        Log.d(Codes.APP_TAGS, "item clicked // " + itemId);
         Log.e("ff", itemId+"" );
         idsList.add(itemId);
-        getProducts();
+
+        if (itemId == 0)
+        {
+            getAllProducts();
+        }
+        else
+        {
+            getProducts();
+        }
+
         productsProgressBar.setVisibility(View.VISIBLE);
         productsRecyclerView.setVisibility(View.GONE);
     }
@@ -197,24 +195,91 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
 
         if (idsList.size() == 0 )
         {
+            getAllProducts();
             allIds = "0" ;
+        }
+        else
+        {
+            getSelectedProducts(allIds);
         }
 
         Log.d(Codes.APP_TAGS, "ids list // " + allIds);
         Log.d(Codes.APP_TAGS, "subCategories is // " + subCategoryList.toString());
+    }
 
-        viewModel.getAllProducts(allIds).observe(this, new Observer<List<ProductData>>() {
+    private void getSelectedProducts(String allIds)
+    {
+        viewModel.getAllProducts(allIds).observe(this, new Observer<ProductResponse>()
+        {
             @Override
-            public void onChanged(List<ProductData> productData) {
+            public void onChanged(ProductResponse response)
+            {
+                if (response.getStatus() == 200)
+                {
+                    if (response.getData().size() != 0)
+                    {
+                        productsList = (ArrayList<ProductData>) response.getData();
+                        RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+                        productsRecyclerView.setLayoutManager(manager);
+                        productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                        productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
+                        productsRecyclerView.setAdapter(productsAdapter);
+                        productsProgressBar.setVisibility(View.GONE);
+                        productsRecyclerView.setVisibility(View.VISIBLE);
+                        emptyProductsLayout.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        Toast.makeText(SubCategoryActivity.this, "" + response.getMessage(), Toast.LENGTH_SHORT).show();
+                        emptyProductsLayout.setVisibility(View.VISIBLE);
+                        productsProgressBar.setVisibility(View.GONE);
+                        productsRecyclerView.setVisibility(View.GONE);
+                    }
+                }
+                else
+                {
+                    emptyProductsLayout.setVisibility(View.VISIBLE);
+                    productsProgressBar.setVisibility(View.GONE);
+                    productsRecyclerView.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
 
-                productsList = (ArrayList<ProductData>) productData;
-                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
-                productsRecyclerView.setLayoutManager(manager);
-                productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
-                productsRecyclerView.setAdapter(productsAdapter);
-                productsProgressBar.setVisibility(View.GONE);
-                productsRecyclerView.setVisibility(View.VISIBLE);
+    public void getAllProducts()
+    {
+        viewModel.getProducts().observe(this, new Observer<ProductResponse>()
+        {
+            @Override
+            public void onChanged(ProductResponse productResponse)
+            {
+                if (productResponse.getStatus() == 200)
+                {
+                    if (productResponse.getData().size() != 0)
+                    {
+                        productsList = (ArrayList<ProductData>) productResponse.getData();
+                        RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+                        productsRecyclerView.setLayoutManager(manager);
+                        productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                        productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
+                        productsRecyclerView.setAdapter(productsAdapter);
+                        productsProgressBar.setVisibility(View.GONE);
+                        productsRecyclerView.setVisibility(View.VISIBLE);
+                        emptyProductsLayout.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        emptyProductsLayout.setVisibility(View.VISIBLE);
+                        productsProgressBar.setVisibility(View.GONE);
+                        productsRecyclerView.setVisibility(View.GONE);
+                    }
+                }
+                else
+                {
+                    emptyProductsLayout.setVisibility(View.VISIBLE);
+                    productsProgressBar.setVisibility(View.GONE);
+                    productsRecyclerView.setVisibility(View.GONE);
+                }
             }
         });
     }

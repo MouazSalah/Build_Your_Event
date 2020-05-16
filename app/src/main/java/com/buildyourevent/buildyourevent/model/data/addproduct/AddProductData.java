@@ -1,8 +1,8 @@
-package com.buildyourevent.buildyourevent.model.data.userproduct.response;
+package com.buildyourevent.buildyourevent.model.data.addproduct;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AddPRoductData {
+public class AddProductData {
 
 	@SerializedName("image")
 	private String image;
