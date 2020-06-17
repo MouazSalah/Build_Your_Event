@@ -112,8 +112,6 @@ public class SharedPrefMethods
         return pref.getInt(Codes.COUNTRY_ID, 1);
     }
 
-
-
     public void saveProductId(int id)
     {
         editor.putInt(Codes.PRODUCT_ID, id);
@@ -172,4 +170,17 @@ public class SharedPrefMethods
 
         return productFromShared;
     }
+
+
+    public void saveCartsCount(int count)
+    {
+        editor.putInt(Codes.CARTS_COUNT, count);
+        editor.commit();
+    }
+
+    public int getCartsCount()
+    {
+        return pref.getInt(Codes.CARTS_COUNT, 1);
+    }
+
 }

@@ -52,6 +52,7 @@ import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetail
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
+import com.buildyourevent.buildyourevent.ui.location.LocationActivity;
 import com.buildyourevent.buildyourevent.ui.location.MapsActivity;
 import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
 import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
@@ -648,6 +649,8 @@ public class ProductInfoActivity extends AppCompatActivity implements OnMapReady
                 Log.d(Codes.APP_TAGS, "carts activity // " + addToCartResponse.toString());
                 if (addToCartResponse.getStatus() == 200)
                 {
+                    int count = prefMethods.getCartsCount();
+                    prefMethods.saveCartsCount(count + 1);
                     Intent intent = new Intent(getApplicationContext(), CartsActivity.class);
                     startActivity(intent);
                     detailsProgressBar.setVisibility(View.GONE);

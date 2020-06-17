@@ -43,19 +43,6 @@
             android:theme="@style/checkBoxStyle"
             />
 
-       <!-- <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/itemfilter_selected_imageview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/filter_background"
-            android:theme="@style/checkBoxStyle"
-            android:duplicateParentState="false"
-            android:clickable="false"
-            android:focusable="false"
-            />-->
-
     </RelativeLayout>
 
     <LinearLayout

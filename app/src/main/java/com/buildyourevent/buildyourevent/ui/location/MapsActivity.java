@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.patloew.rxlocation.RxLocation;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +50,7 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -91,6 +93,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        RxLocation rxLocation = new RxLocation(this);
+        rxLocation.location().lastLocation().doOnSuccess(new Consumer<Location>()
+        {
+            @Override
+            public void accept(Location location) throws Exception
+            {
+                lat = location.getLatitude();
+                log = location.getLongitude();
+                Toast.makeText(MapsActivity.this, "location get", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -170,7 +184,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @OnClick(R.id.select_location_button)
     void selectLocation(View v)
     {
-        Intent intent = new Intent(getApplicationContext(), UpdateProductActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProductInfoActivity.class);
         startActivity(intent);
         finish();
     }
@@ -180,7 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(), UpdateProductActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProductInfoActivity.class);
         startActivity(intent);
         finish();
     }

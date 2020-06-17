@@ -30,4 +30,5 @@ public abstract class Codes
     public static final String PREF_SMALL = "PREF_SMALL";
     public static final String SHARED_PREF_USER_LATLNG = "user_candidates";
     public static final String COUNTRY_ID = "country_id";
+    public static final String CARTS_COUNT = "carts_count";
 }

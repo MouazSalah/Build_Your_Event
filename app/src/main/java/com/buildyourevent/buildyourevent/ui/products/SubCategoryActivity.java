@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +16,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
+import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
+import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
 import com.buildyourevent.buildyourevent.model.data.product.ProductData;
 import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
+import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
@@ -50,6 +55,8 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     LinearLayout emptySubCategoryLayout;
     @BindView(R.id.empty_products)
     LinearLayout emptyProductsLayout;
+    @BindView(R.id.subcategory_cartscount) TextView cartsCount;
+
 
     private int categoryId;
     UserViewModel viewModel;
@@ -106,6 +113,22 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
 
         getAllProducts();
 
+
+        UserData userData = prefMethods.getUserData();
+        if (userData != null)
+        {
+            cartsCount.setText("" + prefMethods.getCartsCount());
+        }
+        else
+        {
+            cartsCount.setText("0");
+        }
+    }
+
+    @OnClick(R.id.subcategory_cartlayout)
+    void openCarts()
+    {
+        startActivity(new Intent(getApplicationContext(), CartsActivity.class));
     }
 
 

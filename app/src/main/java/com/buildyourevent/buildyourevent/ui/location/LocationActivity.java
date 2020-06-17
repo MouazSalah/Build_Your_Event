@@ -30,20 +30,24 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.patloew.rxlocation.RxLocation;
 
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
-public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
+public class LocationActivity extends FragmentActivity implements OnMapReadyCallback, LocationSource.OnLocationChangedListener {
 
     private GoogleMap mMap;
     double lat, log;
@@ -51,6 +55,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     LocationManager mLocationManager;
     SharedPrefMethods prefMethods;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    Location myLocation;
 
 
     @Override
@@ -74,6 +79,18 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
 
         getLocation();
+
+        RxLocation rxLocation = new RxLocation(this);
+        rxLocation.location().lastLocation().doOnSuccess(new Consumer<Location>()
+        {
+            @Override
+            public void accept(Location location) throws Exception
+            {
+                lat = location.getLatitude();
+                log = location.getLongitude();
+                Toast.makeText(LocationActivity.this, "location get", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -111,8 +128,6 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
             }
         });
-
-
     }
 
 
@@ -188,6 +203,10 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         finish();
     }
 
-
-
+    @Override
+    public void onLocationChanged(Location location)
+    {
+        lat = location.getLatitude();
+        log = location.getLongitude();
+    }
 }
