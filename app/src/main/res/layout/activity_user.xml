@@ -1,0 +1,203 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/user_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start"
+        tools:context=".user.home.UserActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="#10403D"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/home_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:title="@null">
+
+                    <!--            customize ur toolbar here-->
+                    <RelativeLayout
+                        android:id="@+id/rl_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/toolbar_search"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:tint="#FFF"
+                            android:layout_gravity="center"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/srach_icon" />
+
+                        <ImageView
+                            android:id="@+id/toolbar_logo"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_toEndOf="@id/toolbar_search"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_gravity="center"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/app_logo" />
+
+
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/build_your_event"
+                            android:textAllCaps="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:paddingStart="16dp"
+                            android:layout_toEndOf="@+id/toolbar_logo"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <!--<ImageView
+                            android:id="@+id/toolbar_search_icon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:layout_toLeftOf="@+id/toolbar_menu_icon"
+                            android:layout_marginRight="5dp"
+                            app:srcCompat="@drawable/srach_icon" />-->
+
+                        <EditText
+                            android:id="@+id/toolbar_search_edittext"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:hint="search..."
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
+                            android:visibility="gone"
+                            android:layout_toLeftOf="@+id/toolbar_menu_icon"
+                            android:layout_marginRight="5dp"
+                            app:srcCompat="@drawable/srach_icon" />
+
+                        <include
+                            layout="@layout/cart_icon_layout"
+                            android:id="@+id/toolbar_menu_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="end"
+                            android:layout_alignParentEnd="true"
+                            android:tint="@color/white"
+                            />
+                        <!--<ImageView
+                            android:id="@+id/toolbar_menu_icon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="5dp"
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/favorites_icon" />-->
+
+                        <ImageView
+                            android:id="@+id/toolbar_startsearch_icon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="5dp"
+                            android:tint="@color/white"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/startsearch_icon" />
+
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--<include
+                android:id="@+id/toolbar"
+                layout="@layout/main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:itemIconTint="@color/white"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="#53A8A2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:menu="@menu/bottom_nav_menu" />
+
+            <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toTopOf="@id/nav_view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:navGraph="@navigation/mobile_navigation" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/user_side_nav"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            app:itemTextColor="@color/white"
+            app:itemIconTint="@color/white"
+            android:layout_gravity="start"
+            android:background="#165854"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/drawer_menu" />
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

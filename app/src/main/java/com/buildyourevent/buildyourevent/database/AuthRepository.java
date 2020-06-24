@@ -122,7 +122,6 @@ public class AuthRepository
         return registerResponseMutableLiveData;
     }
 
-
     public MutableLiveData<List<CountryData>> getCountriesMutableLiveData()
     {
         Call<CountryResponse> responseCall = interfaceApi.getAllCountries();
@@ -157,7 +156,6 @@ public class AuthRepository
         return countriesMutableLiveData;
     }
 
-
     public MutableLiveData<List<CityData>> getCitiesMutableLiveData(int countryId)
     {
         Call<CityResponse> responseCall = interfaceApi.getAllCities(countryId);
@@ -191,7 +189,6 @@ public class AuthRepository
 
         return citiesMutableLiveData;
     }
-
 
     public MutableLiveData<SendCodeResponse> getSendCodeMutableLiveData(String email)
     {
@@ -280,7 +277,6 @@ public class AuthRepository
         return verifyCodeResponseMutableLiveData;
     }
 
-
     public MutableLiveData<ChangePasswordResponse> getChangePasswordMutableLiveData(ChangePasswordRequest changePasswordRequest)
     {
         Call<ChangePasswordResponse> responseCall = interfaceApi.changePassword(changePasswordRequest);
@@ -307,8 +303,6 @@ public class AuthRepository
 
         return changePasswordResponseMutableLiveData;
     }
-
-
 
     public MutableLiveData<LogoutResponse> logoutUser(LogoutRequest logoutRequest)
     {

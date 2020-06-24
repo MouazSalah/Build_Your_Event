@@ -1,0 +1,129 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.buildyourevent.buildyourevent.user.auth.viewmodel.SkipViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingBottom="@dimen/_36sdp"
+        android:background="@drawable/back_ground"
+        android:animateLayoutChanges="true">
+
+        <ImageView
+            android:id="@+id/textView"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:src="@drawable/app_logo"
+            android:layout_marginTop="@dimen/_50sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_36sdp"
+            android:layout_marginEnd="@dimen/_36sdp"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/country_hint"
+            android:inputType="text"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:orientation="horizontal"
+            android:paddingStart="25dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="15dp"
+            android:textSize="@dimen/_12ssp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/country"
+                android:textStyle="bold"
+                android:textColor="@color/greenbeautiful" />
+
+            <Spinner
+                android:id="@+id/spin_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                app:getData="@{model.getData}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_36sdp"
+            android:layout_marginEnd="@dimen/_36sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/country_hint"
+            android:inputType="text"
+            android:orientation="horizontal"
+            android:paddingStart="25dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="15dp"
+            android:textColorHint="@color/greenbeautiful"
+            android:textSize="14sp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/city"
+                android:textStyle="bold"
+                android:textColor="@color/greenbeautiful" />
+
+            <Spinner
+                android:id="@+id/spin_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="@dimen/_150sdp"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_skip"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/colorPrimaryDark"
+            app:rippleColor="@color/colorAccent"
+            app:cornerRadius="@dimen/_16sdp"
+            android:textSize="@dimen/_14ssp"
+            android:gravity="center"
+            android:textColor="#fff"
+            />
+
+    </LinearLayout>
+</layout>

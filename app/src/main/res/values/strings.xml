@@ -65,7 +65,6 @@
 
 
     <string name="forgot_your_password">Forgot Your Password?</string>
-    <string name="send_verification_code">Send verification code</string>
     <string name="enter_verification_code">Enter verification code</string>
     <string name="please_enter_the_verification_code_you_are_received_from">Please enter the verification code you are received from</string>
     <string name="verification_code">verification code</string>
@@ -207,6 +206,8 @@ Visual reality event technology
     <string name="add_new_product">Add New Product</string>
     <string name="accept_conditions">Accept Terms and Conditions</string>
     <string name="options">Options</string>
-
+    <string name="no_subcategory"> No subCategory founded ere </string>
+    <string name="log_in">Log in</string>
+    <string name="save">Save</string>
 
 </resources>

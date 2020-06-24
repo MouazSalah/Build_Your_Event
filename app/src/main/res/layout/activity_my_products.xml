@@ -46,7 +46,6 @@
 
     </RelativeLayout>
 
-
     <!-- empty carts layout -->
     <LinearLayout
         android:id="@+id/emptymyproducts_layout"

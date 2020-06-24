@@ -2,42 +2,48 @@
     version="1.0"
     encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?selectableItemBackground"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+    <data>
 
-        <ImageView
-            android:id="@+id/icon_badge"
-            android:layout_width="35dp"
-            android:layout_height="40dp"
-            android:tint="@color/white"
-            app:srcCompat="@drawable/cart_icon" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?selectableItemBackground">
 
         <FrameLayout
-            android:id="@+id/counterValuePanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|bottom">
+            android:padding="5dp">
 
-            <TextView
-                android:id="@+id/cartscount_textview"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/cart_count"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/icon_badge"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/cart_icon" />
 
+            <FrameLayout
+                android:id="@+id/counterValuePanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom">
+
+                <TextView
+                    android:id="@+id/cartscount_textview"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/cart_count"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
         </FrameLayout>
-    </FrameLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

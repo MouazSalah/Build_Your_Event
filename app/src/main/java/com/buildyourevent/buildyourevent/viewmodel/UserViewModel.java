@@ -48,7 +48,6 @@ public class UserViewModel extends ViewModel
 {
     private AuthRepository authRepository;
     private UserRepository userRepository;
-
     private MutableLiveData<Object> viewModelLiveData = new MutableLiveData<>();
 
 

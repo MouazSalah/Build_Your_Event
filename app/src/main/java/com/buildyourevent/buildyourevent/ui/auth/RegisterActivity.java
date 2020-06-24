@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity
             @Override
             public void onChanged(List<CountryData> countryData) {
                 countriesList = countryData;
-                buildCountriesSpinner();
+              //  buildCountriesSpinner();
             }
         });
     }
@@ -207,6 +207,7 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
     }
+/*
 
     private void buildCountriesSpinner()
     {
@@ -261,6 +262,7 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
     }
+*/
 
     @OnClick(R.id.register_login_button)
     void startLoginIntent() {

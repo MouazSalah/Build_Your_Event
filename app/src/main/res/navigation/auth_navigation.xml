@@ -1,0 +1,100 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/navigation_language"
+    >
+
+    <fragment
+        android:id="@+id/navigation_language"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.LanguageFragment"
+        tools:layout="@layout/auth_fragment_language" >
+        <action
+            android:id="@+id/language_to_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_counry"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.ChooseCountryFragment"
+        tools:layout="@layout/auth_fragment_country" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.LoginFragment"
+        tools:layout="@layout/auth_fragment_login" >
+        <action
+            android:id="@+id/login_to_register"
+            app:destination="@id/navigation_register" />
+        <action
+            android:id="@+id/login_to_skip"
+            app:destination="@id/navigation_counry" />
+        <action
+            android:id="@+id/login_to_password"
+            app:destination="@id/navigation_forgot_password" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.RegisterFragment"
+        tools:layout="@layout/auth_fragment_register" >
+        <action
+            android:id="@+id/register_to_activation"
+            app:destination="@id/navigation_activation" />
+        <action
+            android:id="@+id/register_to_conditions"
+            app:destination="@id/navigation_conditions" />
+        <action
+            android:id="@+id/register_to_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_conditions"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.ConditionFragment"
+        tools:layout="@layout/auth_fragment_conditions" >
+        <action
+            android:id="@+id/conditions_to_register"
+            app:destination="@id/navigation_register" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_forgot_password"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.ForgotPassFragment"
+        tools:layout="@layout/auth_fragment_forgot_password" >
+        <action
+            android:id="@+id/forgot_to_verify"
+            app:destination="@id/navigation_verify_password" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_verify_password"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.VerifyPassFragment"
+        tools:layout="@layout/auth_fragment_verify_password" >
+        <action
+            android:id="@+id/verify_to_reset"
+            app:destination="@id/navigation_reset_password" />
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue="default" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_reset_password"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.ResetPasswordFragment"
+        tools:layout="@layout/auth_fragment_reset_password" />
+
+    <fragment
+        android:id="@+id/navigation_activation"
+        android:name="com.buildyourevent.buildyourevent.user.auth.fragment.VerifyRegisterFragment"
+        tools:layout="@layout/auth_fragment_verify_register" />
+
+
+
+</navigation>

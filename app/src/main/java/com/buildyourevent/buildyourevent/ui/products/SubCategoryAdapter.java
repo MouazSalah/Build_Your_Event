@@ -29,13 +29,14 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.MyViewHolder>
 {
     private Context mContext;
-    private static List<SubCategoryData> subCategoryList;
+    private List<SubCategoryData> subCategoryList;
 
     private onSubCategoryListener onSubCategoryListener;
     private SharedPrefMethods prefMethods;
     public MutableLiveData<Object> mutableLiveData = new MutableLiveData<>();
 
-    public SubCategoryAdapter(Context mContext, List<SubCategoryData> subCategoryList, onSubCategoryListener onSubCategoryListener) {
+    public SubCategoryAdapter(Context mContext, List<SubCategoryData> subCategoryList, onSubCategoryListener onSubCategoryListener)
+    {
         this.mContext = mContext;
         prefMethods = new SharedPrefMethods(mContext);
         this.subCategoryList = subCategoryList;
@@ -49,7 +50,6 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
         return new SubCategoryAdapter.MyViewHolder(itemView, onSubCategoryListener);
     }
-
     @Override
     public void onBindViewHolder(final SubCategoryAdapter.MyViewHolder holder, final int position) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -78,13 +78,6 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         holder.setAnimation();
         holder.setData(getCurrentItem(position));
     }
-
-    @Override
-    public int getItemCount() {
-        return subCategoryList.size();
-    }
-
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvName;
         public ImageView itemImage, selectImage;
@@ -150,9 +143,16 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         }
     }
 
+
+
     private SubCategoryData getCurrentItem(int pos) {
         return subCategoryList.get(pos);
     }
+    @Override
+    public int getItemCount() {
+        return subCategoryList.size();
+    }
+
 
     public interface onSubCategoryListener {
         void onSubCategoryClick(int position, SubCategoryData subCategoryData);

@@ -1,0 +1,61 @@
+<?xml
+    version="1.0"
+    encoding="utf-8"?>
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_navigation"
+    app:startDestination="@id/subDataFragment">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.buildyourevent.buildyourevent.ui.CategoriesFragment.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_subDataFragment"
+            app:destination="@id/subDataFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_categories"
+        android:name="com.buildyourevent.buildyourevent.ui.user.DataFragment"
+        tools:layout="@layout/data_fragment" />
+
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.buildyourevent.buildyourevent.ui.home.SettingFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.buildyourevent.buildyourevent.ui.notification.NotificationFragment"
+        android:label="@string/title_favorites"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/navigation_Setting"
+        android:name="com.buildyourevent.buildyourevent.ui.home.SettingFragment"
+        android:label="@string/title_Settings"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.buildyourevent.buildyourevent.ui.home.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/subDataFragment"
+        android:name="com.buildyourevent.buildyourevent.ui.user.subcategory.SubDataFragment"
+        android:label="sub_data_fragment"
+        tools:layout="@layout/fragment_sub_data" >
+        <action
+            android:id="@+id/action_subDataFragment_to_navigation_categories"
+            app:destination="@id/navigation_categories" />
+    </fragment>
+
+</navigation>

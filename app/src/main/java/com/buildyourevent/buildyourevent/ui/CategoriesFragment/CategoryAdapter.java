@@ -82,6 +82,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                 prefMethods.saveCategoryId(categoryItem.getId());
 
                 Intent intent = new Intent(mContext, SubCategoryActivity.class);
+
                 mContext.startActivity(intent);
             }
         });

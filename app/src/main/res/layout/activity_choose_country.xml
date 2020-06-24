@@ -87,8 +87,7 @@
 
     </LinearLayout>
 
-
-        <TextView
+   <TextView
             android:id="@+id/skip_choosecountry_skibbtn"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

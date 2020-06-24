@@ -1,5 +1,7 @@
 package com.buildyourevent.buildyourevent.model.auth.login;
 
+import android.util.Patterns;
+
 import androidx.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
@@ -36,6 +38,15 @@ public class LoginRequest {
         this.password = password;
     }
 
+    public boolean isEmailValid()
+    {
+        return Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches();
+    }
+
+
+    public boolean isPasswordLengthGreaterThan5() {
+        return getPassword().length() > 5;
+    }
 
     @NonNull
     @Override

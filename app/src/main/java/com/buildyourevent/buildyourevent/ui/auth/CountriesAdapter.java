@@ -8,22 +8,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.buildyourevent.buildyourevent.model.auth.countries.CountryData;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CountriesAdapter extends ArrayAdapter<CountryData> {
-
+public class CountriesAdapter extends ArrayAdapter<CountryData>
+{
 
     private LayoutInflater flater;
 
-    public CountriesAdapter(Activity context, int resouceId, int textviewId, List<CountryData> list) {
 
-        super(context, resouceId, textviewId, list);
-        flater = context.getLayoutInflater();
+    public CountriesAdapter(@NonNull Context context, List<CountryData> list) {
+        super(context, android.R.layout.simple_spinner_dropdown_item,
+                android.R.id.text1,list);
     }
+
+
 
     @NotNull
     @Override

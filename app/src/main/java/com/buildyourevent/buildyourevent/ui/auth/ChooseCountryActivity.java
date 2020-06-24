@@ -63,11 +63,12 @@ public class ChooseCountryActivity extends AppCompatActivity
             @Override
             public void onChanged(List<CountryData> countryData) {
                 countriesList = countryData;
-                buildCountriesSpinner();
+            //    buildCountriesSpinner();
             }
         });
     }
 
+/*
     private void buildCountriesSpinner()
     {
         CountriesAdapter countriesAdapter = new CountriesAdapter(this, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, countriesList);
@@ -126,6 +127,7 @@ public class ChooseCountryActivity extends AppCompatActivity
             }
         });
     }
+*/
 
 
     @OnClick(R.id.skip_choosecountry_skibbtn)

@@ -130,7 +130,6 @@
             android:orientation="vertical"
             tools:context=".ui.products.SubCategoryActivity">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,7 +182,6 @@
 
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp">
@@ -201,16 +199,16 @@
                     android:background="#37BFB6" />
 
 
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                <ImageButton
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:id="@+id/sub_control"
+                    android:scaleType="fitCenter"
                     app:srcCompat="@drawable/arrow_up"
                     android:layout_centerInParent="true"
                     android:background="@drawable/filter_icon_btn"
                     />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -250,7 +248,6 @@
                         />
 
                 </LinearLayout>
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/subproduct_recyclerview"

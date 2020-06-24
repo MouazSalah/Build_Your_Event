@@ -59,8 +59,6 @@
     <string name="country_hint"> الدولة </string>
 
     <string name="forgot_your_password">هل نسيت كلمة السر ؟</string>
-    <string name="send_verification_code">ارسال كود التحقق</string>
-    <string name="enter_verification_code">ادخل الكود</string>
     <string name="please_enter_the_verification_code_you_are_received_from">من فضلك ادخل الكود المستلم عبر بريدك الالكتروني</string>
     <string name="verification_code">الكود</string>
     <string name="confirm">تاكيد</string>
@@ -221,5 +219,8 @@
     <string name="accept_conditions"> الموافقة علي الشروط والاحكام </string>
 
     <string name="options"> الخيارات </string>
+    <string name="no_subcategory">لا يوجد اقسام لهذه الفئة</string>
+    <string name="log_in"> تسجيل الدخول </string>
+    <string name="save"> حفظ </string>
 
 </resources>

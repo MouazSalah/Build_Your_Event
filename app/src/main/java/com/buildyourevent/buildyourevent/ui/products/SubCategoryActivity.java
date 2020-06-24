@@ -86,7 +86,7 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        categoryId = prefMethods.getCategoryId();
+//        categoryId = (from bundle)
 
         subCategoryprogressBar.setVisibility(View.VISIBLE);
         subCategoryRecyclerView.setVisibility(View.GONE);

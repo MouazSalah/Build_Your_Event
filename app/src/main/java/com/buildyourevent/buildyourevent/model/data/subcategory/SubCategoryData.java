@@ -1,5 +1,10 @@
 package com.buildyourevent.buildyourevent.model.data.subcategory;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
 public class SubCategoryData{
@@ -118,4 +123,12 @@ public class SubCategoryData{
 			",id = '" + id + '\'' + 
 			"}";
 		}
+
+	@BindingAdapter({"subImage"})
+	public static void subImage(ImageView view, String image)
+	{
+		Glide.with(view.getContext())
+				.load(image)
+				.into(view);
+	}
 }
