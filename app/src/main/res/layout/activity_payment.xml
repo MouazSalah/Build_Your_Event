@@ -10,7 +10,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/back_ground"
     android:layout_gravity="center"
-    tools:context=".ui.cardactivity.PaymentActivity">
+    tools:context=".ui.userproducts.PaymentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

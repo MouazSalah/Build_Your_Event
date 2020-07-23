@@ -24,7 +24,7 @@
                 android:layout_width="35dp"
                 android:layout_height="40dp"
                 android:tint="@color/white"
-                app:srcCompat="@drawable/cart_icon" />
+                app:srcCompat="@drawable/ic_cart" />
 
             <FrameLayout
                 android:id="@+id/counterValuePanel"

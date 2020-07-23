@@ -11,11 +11,9 @@ import android.widget.TextView;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
-import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
 import com.buildyourevent.buildyourevent.ui.auth.LoginActivity;
-import com.buildyourevent.buildyourevent.ui.cardactivity.CartsActivity;
-import com.buildyourevent.buildyourevent.ui.CategoriesFragment.HomeFragment;
-import com.buildyourevent.buildyourevent.ui.notification.NotificationFragment;
+import com.buildyourevent.buildyourevent.ui.order.CategoryFragment;
+import com.buildyourevent.buildyourevent.ui.userproducts.CartsActivity;
 import com.buildyourevent.buildyourevent.ui.userproducts.MyProductsActivity;
 import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
@@ -27,9 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -91,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             mEmailTextView.setText(userData.getEmail());
             mUserImageView.setImageResource(R.drawable.white);
 
-            userViewModel.getAllCarts(userData.getId(), userData.getToken()).observe(this, new Observer<CartResponse>() {
+            /*userViewModel.getAllCarts(userData.getId(), userData.getToken()).observe(this, new Observer<CartResponse>() {
                 @Override
                 public void onChanged(CartResponse cartResponse)
                 {
@@ -104,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         cartsCounTextView.setText("0");
                     }
                 }
-            });
+            });*/
 
         } else {
             cartsCounTextView.setText("0");
@@ -128,7 +124,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     MovementManager.replaceFragment(this, new ProfileFragment(), R.id.nav_host_fragment,"ProfileFragment");
                     return true;
                 case R.id.navigation_home:
-                    MovementManager.replaceFragment(this, new HomeFragment(), R.id.nav_host_fragment,"");
+                    MovementManager.replaceFragment(this, new CategoryFragment(), R.id.nav_host_fragment,"");
 
                     return true;
 

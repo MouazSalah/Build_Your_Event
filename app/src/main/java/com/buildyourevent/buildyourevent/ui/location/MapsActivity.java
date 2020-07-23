@@ -26,8 +26,7 @@ import android.widget.Toast;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.ui.products.ProductInfoActivity;
-import com.buildyourevent.buildyourevent.ui.userproducts.UpdateProductActivity;
+import com.buildyourevent.buildyourevent.ui.order.ProductInfoActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -50,7 +49,6 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -80,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
-           // checkLocationPermission();
+            checkLocationPermission();
 
              getLocation();
             Log.d(Codes.APP_TAGS, "GPS is Enabled in your devide");
@@ -94,7 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        RxLocation rxLocation = new RxLocation(this);
+        /*RxLocation rxLocation = new RxLocation(this);
         rxLocation.location().lastLocation().doOnSuccess(new Consumer<Location>()
         {
             @Override
@@ -104,7 +102,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 log = location.getLongitude();
                 Toast.makeText(MapsActivity.this, "location get", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
+
+        RxLocation rxLocation1 = new RxLocation(this);
+
+        LocationRequest locationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(5000);
+
+        rxLocation1.location().updates(locationRequest)
+                .flatMap(location -> rxLocation1.geocoding().fromLocation(location).toObservable())
+                .subscribe(address ->
+                {
+                    address.getLatitude();
+                    address.getLongitude();
+                    /* do something */
+                });
+
     }
 
     @Override

@@ -14,7 +14,6 @@
     android:background="@drawable/back_ground"
     tools:context=".ui.auth.LoginActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,10 +21,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_120sdp"
         android:hint="@string/email_hint"
+        android:src="@drawable/app_logo"
         android:textColorHint="@color/Green"
         android:paddingTop="15dp"
         android:textSize="16sp"
@@ -115,7 +115,7 @@
                 android:textSize="16sp"
                 android:textColor="#fff"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="12dp"
                 />
 
             <TextView
@@ -128,11 +128,13 @@
                 android:onClick="loginWithFacebook"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="6dp"
+                android:visibility="gone"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
                 android:textColor="#fff"
                 android:gravity="center"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                />
 
 
         <LinearLayout
@@ -141,7 +143,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="24dp"
             android:gravity="center">
 
             <TextView

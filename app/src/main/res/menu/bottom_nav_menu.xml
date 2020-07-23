@@ -22,21 +22,20 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/build_icon"
+        android:icon="@drawable/ic_internet"
         android:tint="@color/white"
         android:title=""
         />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/user_icon"
+        android:icon="@drawable/ic_user"
         android:tint="@color/white"
         android:title=""/>
 
-
     <item
         android:id="@+id/navigation_Setting"
-        android:icon="@drawable/settingss_icon"
+        android:icon="@drawable/ic_gear"
         android:iconTint="@color/white"
         android:title="" />
 

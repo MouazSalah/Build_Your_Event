@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".utils.MyApplication"
+        android:name=".utils.BaseApp"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
@@ -24,9 +24,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
-        <activity android:name=".user.auth.activity.AuthenticateActivity"></activity>
-        <activity android:name=".user.home.UserActivity" />
-        <activity android:name=".ui.products.SubCategoryActivity" />
+
+        <activity android:name=".ui.order.SubCategoryActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,7 +41,6 @@
         <activity
             android:name=".ui.location.LocationActivity"
             android:label="@string/title_activity_location" />
-        <activity android:name=".ui.products.ProductInfoActivity" />
         <activity android:name=".ui.auth.RegisterVerifyCodeActivity" />
         <activity
             android:name=".ui.userproducts.MyProductsActivity"
@@ -69,14 +67,23 @@
             android:name=".ui.auth.NewPasswordActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.cardactivity.CartsActivity"
+            android:name=".ui.userproducts.CartsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.cardactivity.PaymentActivity"
+            android:name=".ui.userproducts.PaymentActivity"
             android:theme="@style/AppTheme" />
+
+        <activity android:name=".ui.order.ProductInfoActivity"
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ui.location.AddressActivity"
+            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".ui.auth.PasswordVerifyCodeActivity"
             android:parentActivityName=".ui.auth.ForgetPasswordActivity"

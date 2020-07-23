@@ -254,10 +254,10 @@ public class UserRepository
             {
                // cartsMutableLiveData.setValue(response.body());
 
-                Log.d(Codes.APP_TAGS, "carts  success" + response.message());
+               // Log.d(Codes.APP_TAGS, "carts  success" + response.message());
                 if (!response.isSuccessful())
                 {
-                    Log.d(Codes.APP_TAGS, "carts not success" + response.message());
+                   Log.d(Codes.APP_TAGS, "carts not success" + response.message());
                     // cartsMutableLiveData.setValue("error");
                     cartsMutableLiveData.setValue(response.body());
                 }

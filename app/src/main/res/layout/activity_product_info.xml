@@ -10,7 +10,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/white"
-    tools:context=".ui.products.ProductInfoActivity">
+    tools:context=".ui.order.ProductInfoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

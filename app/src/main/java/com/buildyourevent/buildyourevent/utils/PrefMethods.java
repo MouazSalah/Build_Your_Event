@@ -15,61 +15,36 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrefMethods implements Serializable
+public class PrefMethods
 {
-    private static volatile PrefMethods sSoleInstance;
-    static SharedPreferences pref;
-    static SharedPreferences.Editor editor;
+    public static SharedPreferences pref;
+    public static SharedPreferences.Editor editor;
 
-    //private constructor.
-    public PrefMethods(){
-
-        //Prevent form the reflection api.
-        if (sSoleInstance != null){
-            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
-        }
-    }
-
-    public static PrefMethods getInstance()
+    public PrefMethods()
     {
-        if (sSoleInstance == null)
-        {
-            //if there is no instance available... create new one
-            synchronized (PrefMethods.class)
-            {
-                pref = MyApp.getInstance().getSharedPreferences(Codes.SHARED_PREF_FILE_NAME, Context.MODE_PRIVATE);
-                editor = pref.edit();
-                if (sSoleInstance == null) sSoleInstance = new PrefMethods();
-            }
-        }
-
-        return sSoleInstance;
+        pref = BaseApp.getInstance().getSharedPreferences(Codes.SHARED_PREF_FILE_NAME, Context.MODE_PRIVATE);
+        editor = pref.edit();
     }
 
-    //Make singleton from serialize and deserialize operation.
-    protected PrefMethods readResolve() {
-        return getInstance();
-    }
-
-    public void saveUserLanguage(String lang)
+    public static void saveUserLanguage(String lang)
     {
         editor.putString(Codes.SHARED_PREF_LANGUAGE, lang);
         editor.commit();
         Log.d(Codes.APP_TAGS, "shared language: " + lang);
     }
 
-    public String getUserLanguage()
+    public static String getUserLanguage()
     {
         return pref.getString(Codes.SHARED_PREF_LANGUAGE, null);
     }
 
-    public void deleteUserLanguage()
+    public static void deleteUserLanguage()
     {
         editor.remove(Codes.SHARED_PREF_LANGUAGE);
         editor.commit();
     }
 
-    public void SaveUserData(UserData userData)
+    public static void SaveUserData(UserData userData)
     {
         Gson gson = new Gson();
         String json = gson.toJson(userData); // myObject - instance of MyObject
@@ -77,7 +52,7 @@ public class PrefMethods implements Serializable
         editor.commit();
     }
 
-    public UserData getUserData()
+    public static UserData getUserData()
     {
         UserData userData = new UserData();
 
@@ -88,13 +63,13 @@ public class PrefMethods implements Serializable
         return userData;
     }
 
-    public void deleteUserData()
+    public static void deleteUserData()
     {
         editor.remove(Codes.SHARED_PREF_USER_DATA);
         editor.commit();
     }
 
-    public void saveSubCategoryData(SubCategoryData subCategoryData)
+    public static void saveSubCategoryData(SubCategoryData subCategoryData)
     {
         Gson gson = new Gson();
         String json = gson.toJson(subCategoryData); // myObject - instance of MyObject
@@ -102,7 +77,7 @@ public class PrefMethods implements Serializable
         editor.commit();
     }
 
-    public SubCategoryData getSubCategoryData()
+    public static SubCategoryData getSubCategoryData()
     {
         SubCategoryData subCategoryData = new SubCategoryData();
 
@@ -113,67 +88,69 @@ public class PrefMethods implements Serializable
         return subCategoryData;
     }
 
-    public void saveCategoryId(int id)
+/*
+    public static void saveCategoryId(int id)
     {
         editor.putInt(Codes.CATEGORY_ID, id);
         editor.commit();
     }
 
-    public int getCategoryId()
+    public static int getCategoryId()
     {
         return pref.getInt(Codes.CATEGORY_ID, 1);
     }
+*/
 
 
-    public void saveCountryId(int id)
+    public static void saveCountryId(int id)
     {
         editor.putInt(Codes.COUNTRY_ID, id);
         editor.commit();
     }
 
-    public int getCountryId()
+    public static int getCountryId()
     {
         return pref.getInt(Codes.COUNTRY_ID, 1);
     }
 
-    public void saveProductId(int id)
+    public static void saveProductId(int id)
     {
         editor.putInt(Codes.PRODUCT_ID, id);
         editor.commit();
     }
 
-    public int getProductId()
+    public static int getProductId()
     {
         return pref.getInt(Codes.PRODUCT_ID, 1);
     }
 
 
 
-    public void setSmall(boolean isSmall)
+    public static void setSmall(boolean isSmall)
     {
         editor.putBoolean(Codes.PREF_SMALL, isSmall);
         editor.commit();
     }
 
-    public boolean isSmall()
+    public static boolean isSmall()
     {
         return pref.getBoolean(Codes.PREF_SMALL, true);
     }
 
 
-    public void setSelected(boolean isSelected)
+    public static void setSelected(boolean isSelected)
     {
         editor.putBoolean(Codes.SHARED_PREF_IS_SELECTED, isSelected);
         editor.commit();
     }
 
-    public boolean isSelected()
+    public static boolean isSelected()
     {
         return pref.getBoolean("s", false);
     }
 
 
-    public  void saveUserCandidates(List<Double> list)
+    public static void saveUserCandidates(List<Double> list)
     {
         Gson gson = new Gson();
         String json = gson.toJson(list);
@@ -182,7 +159,7 @@ public class PrefMethods implements Serializable
         editor.commit();
     }
 
-    public List<Double> getUserCandidates()
+    public static List<Double> getUserCandidates()
     {
         Gson gson = new Gson();
         List<Double> productFromShared = new ArrayList<>();
@@ -195,14 +172,13 @@ public class PrefMethods implements Serializable
         return productFromShared;
     }
 
-
-    public void saveCartsCount(int count)
+    public static void saveCartsCount(int count)
     {
         editor.putInt(Codes.CARTS_COUNT, count);
         editor.commit();
     }
 
-    public int getCartsCount()
+    public static int getCartsCount()
     {
         return pref.getInt(Codes.CARTS_COUNT, 1);
     }

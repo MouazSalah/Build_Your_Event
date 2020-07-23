@@ -2,14 +2,14 @@ package com.buildyourevent.buildyourevent.ui.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,6 +28,8 @@ import com.buildyourevent.buildyourevent.model.auth.register.RegisterRequest;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
+import com.buildyourevent.buildyourevent.ui.Adapter.CitiesAdapter;
+import com.buildyourevent.buildyourevent.ui.Adapter.CountriesAdapter;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
 
@@ -47,8 +49,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RegisterActivity extends AppCompatActivity
 {
@@ -102,13 +102,13 @@ public class RegisterActivity extends AppCompatActivity
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
 
-        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        viewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         viewModel.getAllCountries().observe(this, new Observer<List<CountryData>>() {
             @Override
             public void onChanged(List<CountryData> countryData) {
                 countriesList = countryData;
-              //  buildCountriesSpinner();
+                buildCountriesSpinner();
             }
         });
     }
@@ -154,8 +154,6 @@ public class RegisterActivity extends AppCompatActivity
         RequestBody user_mobile = RequestBody.create(MediaType.parse("text/plain"), etMobile.getText().toString());
         RequestBody user_countryId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryId));
         RequestBody user_cityId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(cityId));
-
-        Log.d(Codes.APP_TAGS, "request format: // " + userRequest);
 
         viewModel.registerUser(pic, user_name, user_email, user_password,
                 user_mobile, user_countryId , user_cityId).observe(this, new Observer<RegisterResponse>()
@@ -207,7 +205,7 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
     }
-/*
+
 
     private void buildCountriesSpinner()
     {
@@ -262,7 +260,6 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
     }
-*/
 
     @OnClick(R.id.register_login_button)
     void startLoginIntent() {

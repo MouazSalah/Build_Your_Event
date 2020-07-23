@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.databinding.ActivitySplashBinding;
-import com.buildyourevent.buildyourevent.user.auth.activity.AuthenticateActivity;
+import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 
 public class SplashActivity extends AppCompatActivity
@@ -39,18 +39,15 @@ public class SplashActivity extends AppCompatActivity
             @Override
             public void run()
             {
-                startActivity(new Intent(getApplicationContext(), AuthenticateActivity.class));
-/*
-
                 if (prefMethods.getUserLanguage() == null)
                 {
-                    startActivity(new Intent(getApplicationContext(), AuthenticateActivity.class));
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 }
                 else
                 {
-                    startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 }
-*/
+
             }
         }, 3000);
     }

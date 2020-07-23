@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.buildyourevent.buildyourevent.ui.CategoriesFragment.HomeFragment"
+        android:name="com.buildyourevent.buildyourevent.ui.order.CategoryFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.buildyourevent.buildyourevent.ui.notification.NotificationFragment"
+        android:name="com.buildyourevent.buildyourevent.ui.home.NotificationFragment"
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_notification" />
 
@@ -50,7 +50,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/subDataFragment"
-        android:name="com.buildyourevent.buildyourevent.ui.user.subcategory.SubDataFragment"
+        android:name="com.buildyourevent.buildyourevent.ui.order.SubDataFragment"
         android:label="sub_data_fragment"
         tools:layout="@layout/fragment_sub_data" >
         <action

@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.buildyourevent.buildyourevent.ui.CategoriesFragment.HomeFragment"
+        android:name="com.buildyourevent.buildyourevent.ui.order.CategoryFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.buildyourevent.buildyourevent.ui.notification.NotificationFragment"
+        android:name="com.buildyourevent.buildyourevent.ui.home.NotificationFragment"
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_notification" />
 

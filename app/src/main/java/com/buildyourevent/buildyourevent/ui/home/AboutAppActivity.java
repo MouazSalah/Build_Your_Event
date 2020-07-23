@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.buildyourevent.buildyourevent.R;
+import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
@@ -35,13 +36,15 @@ public class AboutAppActivity extends AppCompatActivity
         setContentView(R.layout.activity_about_app);
 
         viewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        viewModel.getAboutUs().observe(this, new Observer<AboutUsResponse>() {
+
+
+       /* viewModel.getAboutUs().observe(this, new Observer<AboutUsResponse>() {
             @Override
             public void onChanged(AboutUsResponse response )
             {
-                    aboutUsText.setText("" + response.getData().get(0).getText());
-                    aboutUsTitle.setText("" + response.getData().get(0).getName());
+                    aboutUsText.setText("" + response.getData().get(1).getText());
+                    aboutUsTitle.setText("" + response.getData().get(1).getName());
             }
-        });
+        });*/
     }
 }

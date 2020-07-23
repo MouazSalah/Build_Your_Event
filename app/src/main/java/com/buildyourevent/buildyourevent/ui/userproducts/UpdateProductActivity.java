@@ -8,7 +8,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -51,8 +50,10 @@ import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.updateproduct.UpdateProductResponse;
 import com.buildyourevent.buildyourevent.model.data.userproduct.response.UserOwnProductData;
+import com.buildyourevent.buildyourevent.ui.Adapter.CategorySpinnerAdapter;
+import com.buildyourevent.buildyourevent.ui.Adapter.SubCategorySpinnerAdapter;
 import com.buildyourevent.buildyourevent.ui.location.MapsActivity;
-import com.buildyourevent.buildyourevent.ui.auth.CitiesAdapter;
+import com.buildyourevent.buildyourevent.ui.Adapter.CitiesAdapter;
 import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.buildyourevent.buildyourevent.viewmodel.UserViewModel;
@@ -69,7 +70,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

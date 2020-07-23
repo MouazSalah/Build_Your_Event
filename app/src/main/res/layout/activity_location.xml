@@ -18,9 +18,10 @@
 
     <Button
         android:id="@+id/button_selectLocation"
-        android:layout_width="fill_parent"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:layout_margin="8dp"
         android:background="@drawable/next_btn"
         android:text="@string/select_a_location"

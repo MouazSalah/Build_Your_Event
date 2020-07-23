@@ -59,8 +59,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         SharedPrefMethods prefMethods = new SharedPrefMethods(this);
         Locale locale = new Locale(prefMethods.getUserLanguage());
         Locale.setDefault(locale);
@@ -81,11 +80,19 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         getLocation();
 
         RxLocation rxLocation = new RxLocation(this);
-        rxLocation.location().lastLocation().doOnSuccess(new Consumer<Location>()
-        {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        rxLocation.location().lastLocation().doOnSuccess(new Consumer<Location>() {
             @Override
-            public void accept(Location location) throws Exception
-            {
+            public void accept(Location location) throws Exception {
                 lat = location.getLatitude();
                 log = location.getLongitude();
                 Toast.makeText(LocationActivity.this, "location get", Toast.LENGTH_SHORT).show();
@@ -95,8 +102,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
 
     @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
+    public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         mMap.clear();
@@ -114,10 +120,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
         getLocation();
 
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
-        {
-            public void onMapClick(LatLng point)
-            {
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            public void onMapClick(LatLng point) {
                 Toast.makeText(getApplicationContext(), point.latitude + ", " + point.longitude,
                         Toast.LENGTH_SHORT).show();
 
@@ -131,14 +135,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     }
 
 
-    public void  getLocation()
-    {
+    public void getLocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
-        if(!provider.contains("gps"))
-        { //if gps is disabled
+        if (!provider.contains("gps")) { //if gps is disabled
             final Intent poke = new Intent();
             poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
             poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
@@ -146,30 +148,39 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             sendBroadcast(poke);
         }
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mFusedLocationClient.getLastLocation().
-                addOnCompleteListener(new OnCompleteListener<Location>()
-                          {
-                              @Override
-                              public void onComplete(@NonNull Task<Location> task) {
-                                  Location location = task.getResult();
-                                  if (location == null) {
-                                      LocationRequest mLocationRequest = new LocationRequest();
-                                      mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                                      mLocationRequest.setInterval(0);
-                                      mLocationRequest.setFastestInterval(0);
-                                      mLocationRequest.setNumUpdates(1);
+                addOnCompleteListener(new OnCompleteListener<Location>() {
+                                          @Override
+                                          public void onComplete(@NonNull Task<Location> task) {
+                                              Location location = task.getResult();
+                                              if (location == null) {
+                                                  LocationRequest mLocationRequest = new LocationRequest();
+                                                  mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                                                  mLocationRequest.setInterval(0);
+                                                  mLocationRequest.setFastestInterval(0);
+                                                  mLocationRequest.setNumUpdates(1);
 
-                                      mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
-                                      mFusedLocationClient.requestLocationUpdates(
-                                              mLocationRequest, mLocationCallback,
-                                              Looper.myLooper()
-                                      );
-                                  } else {
-                                      lat = location.getLatitude();
-                                      log = location.getLongitude();
-                                  }
-                              }
-                          }
+                                                  mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+                                                  mFusedLocationClient.requestLocationUpdates(
+                                                          mLocationRequest, mLocationCallback,
+                                                          Looper.myLooper()
+                                                  );
+                                              } else {
+                                                  lat = location.getLatitude();
+                                                  log = location.getLongitude();
+                                              }
+                                          }
+                                      }
                 );
     }
 

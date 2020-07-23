@@ -23,15 +23,17 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:id="@+id/data_layout"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/nav_userimage"
-                android:layout_width="64dp"
+                android:layout_width="@dimen/_64sdp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:src="@mipmap/logo"
-                android:layout_height="64dp"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/person_icon" />
 
@@ -41,23 +43,22 @@
                 android:id="@+id/nav_username"
                 android:text="Mouaz Salah"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="italic|bold"/>
+                android:textColor="#FFF"
+                android:textSize="@dimen/_16ssp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="mouaz.salah55@yahoo.com"
                 android:id="@+id/nav_useremail"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp" />
+                android:textColor="#FFF"
+                android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_3sdp"
+            android:layout_height="@dimen/_1sdp"
             android:background="#37BFB6"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_alignParentBottom="true"
@@ -73,70 +74,6 @@
             app:srcCompat="@drawable/backarrow_icon"
             android:background="@drawable/filter_icon_btn"
             android:tint="@color/black" />
-
-
-        <!--
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/nav_userimage"
-                        android:layout_width="64dp"
-                        android:src="@mipmap/logo"
-                        android:layout_height="64dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16sp"
-                        app:srcCompat="@drawable/person_icon" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="15sp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/nav_username"
-                            android:text="Mouaz Salah"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="mouaz.salah55@yahoo.com"
-                            android:id="@+id/nav_useremail"
-                            android:textColor="@color/white"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
-
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/hide_navbarimage"
-                        android:layout_marginEnd="20dp"
-                        app:srcCompat="@drawable/backarrow_icon"
-                        android:background="@drawable/filter_icon_btn"
-                        android:tint="@color/black" />
-
-                </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="#37BFB6"
-            android:layout_alignParentBottom="true"
-            />
-        -->
 
     </LinearLayout>
 </layout>

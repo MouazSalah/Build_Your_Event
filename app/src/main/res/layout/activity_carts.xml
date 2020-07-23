@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.cardactivity.CartsActivity">
+    tools:context=".ui.userproducts.CartsActivity">
 
     <include layout="@layout/main_toolbar" />
 
@@ -53,6 +53,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:visibility="gone"
         android:background="@color/white"
         >
 

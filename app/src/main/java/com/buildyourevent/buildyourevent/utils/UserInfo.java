@@ -27,7 +27,7 @@ public class UserInfo implements Serializable
             {
                 if (sSoleInstance == null)
                     sSoleInstance = new UserInfo();
-                    userData = PrefMethods.getInstance().getUserData() ;
+                    userData = PrefMethods.getUserData() ;
             }
         }
 

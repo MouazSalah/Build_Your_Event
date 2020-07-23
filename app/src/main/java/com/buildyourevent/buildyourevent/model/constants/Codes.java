@@ -7,9 +7,12 @@ public abstract class Codes
     public static final String AUTH_BASE_URL = "http://www.vretech.com/api/";
 
     public static final String CATEGORY_ID =  "category_id";
+    public static final Integer ADDRESS_REQ_CODE = 11;
+    public static final Integer ADDRESS_SAVED = 12;
+    public static final int GPS_SETTINGS_REQ_CODE = 555;
+    public static  String USER_ADDRESS = "";
 
-    public static final int RESPONSE_SUCCESS = 200;
-    public static final int RESPONSE_FAILED = 401;
+    public static int categoryId =  1;
 
     public static final String VERIFY_CODE_INTENT = "verify_code_intent";
     public static final String RECOVERY_EMAIL = "recovery_email";
@@ -31,4 +34,5 @@ public abstract class Codes
     public static final String SHARED_PREF_USER_LATLNG = "user_candidates";
     public static final String COUNTRY_ID = "country_id";
     public static final String CARTS_COUNT = "carts_count";
+
 }

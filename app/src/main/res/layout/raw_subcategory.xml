@@ -6,18 +6,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="model"
-            type="com.buildyourevent.buildyourevent.user.home.subcategory.ItemSubCatViewModel" />
-    </data>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="65dp"
         android:layout_height="90dp"
         android:layout_margin="8dp"
-        android:onClick="@{ () -> model.onFilterButtonClicked()}"
         android:id="@+id/subcategoryitem_layout">
 
         <RelativeLayout
@@ -38,7 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    app:subImage="@{model.subCategoryData.subcategoryImage}"
                     app:srcCompat="@drawable/user_icon" />
 
             </RelativeLayout>
@@ -69,8 +62,7 @@
                 android:gravity="center_horizontal"
                 android:textAllCaps="true"
                 android:textColor="#FFF"
-                android:textSize="12sp"
-                android:text="@{model.subCategoryData.subcategoryName}" />
+                android:textSize="12sp" />
 
         </LinearLayout>
     </LinearLayout>
