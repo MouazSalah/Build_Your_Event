@@ -68,21 +68,16 @@ public class CategoryFragment extends Fragment
             }
         });
 
-        viewModel.getAllCategories().observe(getActivity(), new Observer<CategoryResponse>()
-        {
-            @Override
-            public void onChanged(CategoryResponse categoryResponse)
+        viewModel.getAllCategories().observe(getActivity(), categoryResponse -> {
+            categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
+            if (categoriesList.size() != 0)
             {
-                categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
-                if (categoriesList.size() != 0)
-                {
-                    setRecyclerView();
-                }
-                else
-                {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "لا يوجد اقسام", Toast.LENGTH_SHORT).show();
-                }
+                setRecyclerView();
+            }
+            else
+            {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "لا يوجد اقسام", Toast.LENGTH_SHORT).show();
             }
         });
         return root;

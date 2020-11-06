@@ -87,7 +87,7 @@ public class ForgetPasswordActivity extends AppCompatActivity
                     Intent intent = new Intent(getApplicationContext(), PasswordVerifyCodeActivity.class);
                     intent.putExtra(Codes.RECOVERY_EMAIL, etEmail.getText().toString());
                     startActivity(intent);
-                    customType(ForgetPasswordActivity.this,"left-to-right");
+                   // customType(ForgetPasswordActivity.this,"left-to-right");
                     verifyCodeProgressBar.setVisibility(View.GONE);
                 }
                 else

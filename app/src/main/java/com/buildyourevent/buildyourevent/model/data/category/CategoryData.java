@@ -11,10 +11,10 @@ public class CategoryData {
 	private String categoryName;
 
 	@SerializedName("updated_at")
-	private Object updatedAt;
+	private String updatedAt;
 
 	@SerializedName("created_at")
-	private Object createdAt;
+	private String createdAt;
 
 	@SerializedName("id")
 	private int id;
@@ -35,19 +35,19 @@ public class CategoryData {
 		return categoryName;
 	}
 
-	public void setUpdatedAt(Object updatedAt){
+	public void setUpdatedAt(String updatedAt){
 		this.updatedAt = updatedAt;
 	}
 
-	public Object getUpdatedAt(){
+	public String getUpdatedAt(){
 		return updatedAt;
 	}
 
-	public void setCreatedAt(Object createdAt){
+	public void setCreatedAt(String createdAt){
 		this.createdAt = createdAt;
 	}
 
-	public Object getCreatedAt(){
+	public String getCreatedAt(){
 		return createdAt;
 	}
 
@@ -60,14 +60,14 @@ public class CategoryData {
 	}
 
 	@Override
- 	public String toString(){
-		return 
-			"CategoryData{" +
-			"category_image = '" + categoryImage + '\'' + 
-			",category_name = '" + categoryName + '\'' + 
-			",updated_at = '" + updatedAt + '\'' + 
-			",created_at = '" + createdAt + '\'' + 
-			",id = '" + id + '\'' + 
-			"}";
-		}
+	public String toString(){
+		return
+				"DataItem{" +
+						"category_image = '" + categoryImage + '\'' +
+						",category_name = '" + categoryName + '\'' +
+						",updated_at = '" + updatedAt + '\'' +
+						",created_at = '" + createdAt + '\'' +
+						",id = '" + id + '\'' +
+						"}";
+	}
 }

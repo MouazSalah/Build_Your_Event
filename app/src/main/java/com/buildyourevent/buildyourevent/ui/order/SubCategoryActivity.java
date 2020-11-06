@@ -22,8 +22,8 @@ import android.widget.Toast;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
-import com.buildyourevent.buildyourevent.model.data.product.ProductData;
-import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
+import com.buildyourevent.buildyourevent.model.data.product.ProductsData;
+import com.buildyourevent.buildyourevent.model.data.product.ProductsResponse;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryData;
 import com.buildyourevent.buildyourevent.model.data.subcategory.SubCategoryResponse;
 import com.buildyourevent.buildyourevent.ui.Adapter.ProductsAdapter;
@@ -60,7 +60,7 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     public ArrayList<Integer> idsList = new ArrayList<>();
 
     private ArrayList<SubCategoryData> subCategoryList;
-    private ArrayList<ProductData> productsList = new ArrayList<>();
+    private ArrayList<ProductsData> productsList = new ArrayList<>();
 
     private SubCategoryAdapter subCategoryAdapter;
     private ProductsAdapter productsAdapter;
@@ -222,23 +222,25 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
 
     private void getSelectedProducts(String allIds)
     {
-        viewModel.getAllProducts(allIds).observe(this, new Observer<ProductResponse>()
+        viewModel.getSelectedProducts(allIds).observe(this, new Observer<ProductsResponse>()
         {
             @Override
-            public void onChanged(ProductResponse response)
+            public void onChanged(ProductsResponse response)
             {
                 Log.d(Codes.APP_TAGS , "selected products / " + response.getStatus() + "size :  " + response.getData().size());
                 productsProgressBar.setVisibility(View.GONE);
 
-                if (response.getStatus() == 200)
+                if (response.getStatus().equals("200"))
                 {
                     if (response.getData().size() != 0)
                     {
-                        productsList = (ArrayList<ProductData>) response.getData();
+                        productsList = (ArrayList<ProductsData>) response.getData();
                         RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
                         productsRecyclerView.setLayoutManager(manager);
                         productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
+                        productsAdapter = new ProductsAdapter(getApplicationContext());
+                        productsAdapter.updateDataList(productsList);
+                        productsAdapter.setOldListData(productsList);
                         productsRecyclerView.setAdapter(productsAdapter);
                         productsRecyclerView.setVisibility(View.VISIBLE);
                         emptyProductsLayout.setVisibility(View.GONE);
@@ -261,21 +263,23 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
 
     public void getAllProducts()
     {
-        viewModel.getProducts().observe(this, new Observer<ProductResponse>()
+        viewModel.getAllProducts().observe(this, new Observer<ProductsResponse>()
         {
             @Override
-            public void onChanged(ProductResponse productResponse)
+            public void onChanged(ProductsResponse productResponse)
             {
                 Log.d(Codes.APP_TAGS , "all products / " + productResponse.getStatus() + "size :  " + productResponse.getData().size());
-                if (productResponse.getStatus() == 200)
+                if (productResponse.getStatus().equals("200"))
                 {
                     if (productResponse.getData().size() != 0)
                     {
-                        productsList = (ArrayList<ProductData>) productResponse.getData();
+                        productsList = (ArrayList<ProductsData>) productResponse.getData();
                         RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
                         productsRecyclerView.setLayoutManager(manager);
                         productsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        productsAdapter = new ProductsAdapter(getApplicationContext(), productsList);
+                        productsAdapter = new ProductsAdapter(getApplicationContext());
+                        productsAdapter.updateDataList(productsList);
+                        productsAdapter.setOldListData(productsList);
                         productsRecyclerView.setAdapter(productsAdapter);
                         productsProgressBar.setVisibility(View.GONE);
                         productsRecyclerView.setVisibility(View.VISIBLE);

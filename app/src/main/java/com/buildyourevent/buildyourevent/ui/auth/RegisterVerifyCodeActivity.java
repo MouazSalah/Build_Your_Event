@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.buildyourevent.buildyourevent.R;
 import com.buildyourevent.buildyourevent.model.auth.code.SendCodeResponse;
 import com.buildyourevent.buildyourevent.model.auth.code.VerifyCodeResponse;
+import com.buildyourevent.buildyourevent.model.auth.login.UserData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.ui.home.HomeActivity;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
@@ -79,11 +80,23 @@ public class RegisterVerifyCodeActivity extends AppCompatActivity
             @Override
             public void onChanged(VerifyCodeResponse verifyCodeResponse)
             {
-                if (verifyCodeResponse.getStatus() == 201)
+                if (verifyCodeResponse.getStatus() == 200)
                 {
+                    UserData userData = new UserData();
+                    userData.setName(verifyCodeResponse.getData().getName());
+                    userData.setEmail(verifyCodeResponse.getData().getName());
+                    userData.setCountryName(verifyCodeResponse.getData().getCountryName());
+                    userData.setCountryId(verifyCodeResponse.getData().getCountryId());
+                    userData.setCityName(verifyCodeResponse.getData().getCityName());
+                    userData.setCityId(verifyCodeResponse.getData().getCityId());
+                    userData.setId(verifyCodeResponse.getData().getId());
+                    userData.setMobile(verifyCodeResponse.getData().getMobile());
+                    userData.setToken(verifyCodeResponse.getData().getToken());
+
+                    prefMethods.SaveUserData(userData);
+
                     verifyCodeProgressBar.setVisibility(View.GONE);
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.putExtra(Codes.RECOVERY_EMAIL, recoveryEmail);
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     customType(RegisterVerifyCodeActivity.this,"left-to-right");
                     finish();
@@ -100,11 +113,15 @@ public class RegisterVerifyCodeActivity extends AppCompatActivity
     @OnClick(R.id.btn_resendCode)
     void resendTextView(View v)
     {
+        verifyCodeProgressBar.setVisibility(View.VISIBLE);
+
         viewModel.sendCode(recoveryEmail).observe(this, new Observer<SendCodeResponse>()
         {
             @Override
             public void onChanged(SendCodeResponse sendCodeResponse)
             {
+                verifyCodeProgressBar.setVisibility(View.GONE);
+
                 if (sendCodeResponse.getStatus() == 200)
                 {
                     Toast.makeText(RegisterVerifyCodeActivity.this, "Code Sent", Toast.LENGTH_SHORT).show();

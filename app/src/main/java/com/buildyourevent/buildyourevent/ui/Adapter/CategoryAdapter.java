@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.R;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryData;
 import com.buildyourevent.buildyourevent.ui.order.SubDataFragment;
 import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;

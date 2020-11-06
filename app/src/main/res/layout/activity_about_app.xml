@@ -37,6 +37,7 @@
         <ImageView
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
+            android:id="@+id/about_image"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_24sdp"
             android:src="@drawable/app_logo"

@@ -104,7 +104,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });*/
 
-
         RxLocation rxLocation1 = new RxLocation(this);
 
         LocationRequest locationRequest = LocationRequest.create()
@@ -119,7 +118,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     address.getLongitude();
                     /* do something */
                 });
-
     }
 
     @Override

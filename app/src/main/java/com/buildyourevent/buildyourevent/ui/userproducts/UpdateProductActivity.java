@@ -210,16 +210,11 @@ public class UpdateProductActivity extends AppCompatActivity implements OnMapRea
             }
         });
 
-        viewModel.getAllCategories().observe(this, new Observer<CategoryResponse>()
-        {
-            @Override
-            public void onChanged(CategoryResponse categoryResponse)
+        viewModel.getAllCategories().observe(this, (Observer<CategoryResponse>) categoryResponse -> {
+            categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
+            if (categoriesList.size() != 0)
             {
-                categoriesList = (ArrayList<CategoryData>) categoryResponse.getData();
-                if (categoriesList.size() != 0)
-                {
-                    buildCategoriesSpinner();
-                }
+                buildCategoriesSpinner();
             }
         });
 

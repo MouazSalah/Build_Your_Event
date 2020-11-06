@@ -27,7 +27,7 @@ import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
 import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
-import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
+import com.buildyourevent.buildyourevent.model.data.product.ProductsResponse;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
@@ -50,13 +50,11 @@ public class UserViewModel extends ViewModel
     private UserRepository userRepository;
     private MutableLiveData<Object> viewModelLiveData = new MutableLiveData<>();
 
-
     public UserViewModel()
     {
         userRepository = new UserRepository();
         authRepository = new AuthRepository();
     }
-
 
     public LiveData<LoginResponse> loginCurrentUser(LoginRequest loginRequest)
     {
@@ -123,14 +121,14 @@ public class UserViewModel extends ViewModel
     }
 
 
-    public LiveData<ProductResponse> getAllProducts(String subCategoryId)
+    public LiveData<ProductsResponse> getSelectedProducts(String subCategoryId)
     {
-        return userRepository.getProductsMutableLiveData(subCategoryId);
+        return userRepository.getSelectedProducts(subCategoryId);
     }
 
-    public LiveData<ProductResponse> getProducts()
+    public LiveData<ProductsResponse> getAllProducts()
     {
-        return userRepository.getAllProductsMutableLiveData();
+        return userRepository.getAllProducts();
     }
 
     public LiveData<ProductDetailsResponse> getProductDetails(int productId)

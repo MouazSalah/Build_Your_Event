@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 {
                     if (cartResponse.getStatus() == 200)
                     {
-                        int size = cartResponse.getData().size();
+                        int size = cartResponse.getAboutData().size();
                         prefMethods.saveCartsCount(size);
                         cartsCounTextView.setText("" + size);
                     } else {

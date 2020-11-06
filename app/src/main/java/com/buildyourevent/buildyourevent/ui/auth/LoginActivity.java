@@ -119,11 +119,19 @@ public class LoginActivity extends AppCompatActivity
                     prefMethods.SaveUserData(loginResponse.getUserData());
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
-                    customType(LoginActivity.this,"bottom-to-up");
+                    //customType(LoginActivity.this,"bottom-to-up");
+                }
+                else if (loginResponse.getStatus() == 401)
+                {
+                    Toast.makeText(LoginActivity.this, "This account not found, please register", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivity(intent);
                 }
                 else
                 {
                     Toast.makeText(LoginActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
                 }
 
                 loginProgressBar.setVisibility(View.GONE);
@@ -144,7 +152,7 @@ public class LoginActivity extends AppCompatActivity
     {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
-        customType(LoginActivity.this,"bottom-to-up");
+        //customType(LoginActivity.this,"bottom-to-up");
     }
 
     @OnClick(R.id.login_skip_login)
@@ -152,7 +160,7 @@ public class LoginActivity extends AppCompatActivity
     {
         Intent intent = new Intent(getApplicationContext(), ChooseCountryActivity.class);
         startActivity(intent);
-        customType(LoginActivity.this,"bottom-to-up");
+       // customType(LoginActivity.this,"bottom-to-up");
     }
 
     @OnClick(R.id.login_forget_password)
@@ -160,11 +168,11 @@ public class LoginActivity extends AppCompatActivity
     {
         Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
         startActivity(intent);
-        customType(LoginActivity.this,"bottom-to-up");
+      //  customType(LoginActivity.this,"bottom-to-up");
     }
 
     public void loginWithFacebook(View view)
     {
-        Toast.makeText(this, "login with facebook", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "login with facebook", Toast.LENGTH_SHORT).show();
     }
 }

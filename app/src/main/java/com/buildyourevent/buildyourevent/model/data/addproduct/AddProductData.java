@@ -172,7 +172,7 @@ public class AddProductData {
 	@Override
  	public String toString(){
 		return 
-			"Data{" + 
+			"AboutData{" +
 			"image = '" + image + '\'' + 
 			",new_available_qty = '" + newAvailableQty + '\'' + 
 			",owner_id = '" + ownerId + '\'' + 

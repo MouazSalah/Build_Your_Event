@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -155,6 +156,8 @@ public class RegisterActivity extends AppCompatActivity
         RequestBody user_countryId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(countryId));
         RequestBody user_cityId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(cityId));
 
+
+
         viewModel.registerUser(pic, user_name, user_email, user_password,
                 user_mobile, user_countryId , user_cityId).observe(this, new Observer<RegisterResponse>()
         {
@@ -217,6 +220,7 @@ public class RegisterActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
             {
                 countryId = countriesList.get(pos).getId();
+                Log.i(Codes.APP_TAGS, "country Id : " + countryId);
                 getCities(countriesList.get(pos).getId());
             }
 
@@ -252,6 +256,7 @@ public class RegisterActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
             {
                 cityId = citiesList.get(pos).getId();
+                Log.i(Codes.APP_TAGS, "city Id : " + cityId);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
@@ -303,9 +308,13 @@ public class RegisterActivity extends AppCompatActivity
         {
             Uri mImageUri = data.getData();
             imageFile = new File(mImageUri.getLastPathSegment());
-            try {
+            try
+            {
                 bitmapPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageUri);
-            } catch (IOException e) {
+                Intent intent = new Intent(getApplicationContext(), CropActivity.class);
+                startActivityForResult(intent, Codes.ADDRESS_REQ_CODE);
+            } catch (IOException e)
+            {
                 e.printStackTrace();
             }
             userImage.setImageBitmap(bitmapPhoto);
@@ -314,13 +323,21 @@ public class RegisterActivity extends AppCompatActivity
             {
                 is = getContentResolver().openInputStream(data.getData());
                 uploadImage(getBytes(is));
-            } catch (FileNotFoundException e)
+            }
+            catch (FileNotFoundException e)
             {
                 e.printStackTrace();
             }
-            catch (IOException e) {
+            catch (IOException e)
+            {
                 e.printStackTrace();
             }
+        }
+        if (requestCode == Codes.ADDRESS_REQ_CODE)
+        {
+          //  Toast.makeText(this, "cropped done ", Toast.LENGTH_SHORT).show();
+            userImage.setImageBitmap(Codes.CROP_PHOTO);
+            bitmapPhoto = Codes.CROP_PHOTO;
         }
     }
 

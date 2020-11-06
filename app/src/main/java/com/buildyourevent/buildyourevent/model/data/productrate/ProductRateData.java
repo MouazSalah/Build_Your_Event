@@ -73,7 +73,7 @@ public class ProductRateData {
 	@Override
  	public String toString(){
 		return 
-			"Data{" + 
+			"AboutData{" +
 			"updated_at = '" + updatedAt + '\'' + 
 			",user_id = '" + userId + '\'' + 
 			",rate = '" + rate + '\'' + 

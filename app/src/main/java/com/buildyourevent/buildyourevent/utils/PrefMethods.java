@@ -124,8 +124,6 @@ public class PrefMethods
         return pref.getInt(Codes.PRODUCT_ID, 1);
     }
 
-
-
     public static void setSmall(boolean isSmall)
     {
         editor.putBoolean(Codes.PREF_SMALL, isSmall);

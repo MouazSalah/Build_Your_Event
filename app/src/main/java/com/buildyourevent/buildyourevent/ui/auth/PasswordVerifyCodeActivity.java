@@ -31,9 +31,6 @@ public class PasswordVerifyCodeActivity extends AppCompatActivity
     @BindView(R.id.verifycode_text) TextView tvCodeText;
     @BindView(R.id.verifycode_progressBar)
     ProgressBar verifyCodeProgressBar;
-    @BindView(R.id.verifycode_text1) TextView tvCode;
-
-
     String recoveryEmail;
     String verifyCodeIntent;
     UserViewModel viewModel;
@@ -58,7 +55,7 @@ public class PasswordVerifyCodeActivity extends AppCompatActivity
         recoveryEmail = getIntent().getStringExtra(Codes.RECOVERY_EMAIL);
         verifyCodeIntent = getIntent().getStringExtra(Codes.VERIFY_CODE_INTENT);
 
-        tvCode.append(recoveryEmail);
+        tvCodeText.append(recoveryEmail);
     }
 
     @OnClick(R.id.verifycode_confirm)
@@ -77,13 +74,13 @@ public class PasswordVerifyCodeActivity extends AppCompatActivity
             @Override
             public void onChanged(VerifyCodeResponse verifyCodeResponse)
             {
-                if (verifyCodeResponse.getStatus() == 201)
+                if (verifyCodeResponse.getStatus() == 200)
                 {
                     verifyCodeProgressBar.setVisibility(View.GONE);
                     Intent intent = new Intent(getApplicationContext(), NewPasswordActivity.class);
                     intent.putExtra(Codes.RECOVERY_EMAIL, recoveryEmail);
                     startActivity(intent);
-                    customType(PasswordVerifyCodeActivity.this,"left-to-right");
+                   // customType(PasswordVerifyCodeActivity.this,"left-to-right");
                     finish();
                 }
                 else
@@ -98,11 +95,15 @@ public class PasswordVerifyCodeActivity extends AppCompatActivity
     @OnClick(R.id.resendcode_textview)
     void resendTextView(View v)
     {
+        verifyCodeProgressBar.setVisibility(View.VISIBLE);
+
         viewModel.sendCode(recoveryEmail).observe(this, new Observer<SendCodeResponse>()
         {
             @Override
             public void onChanged(SendCodeResponse sendCodeResponse)
             {
+                verifyCodeProgressBar.setVisibility(View.GONE);
+
                 if (sendCodeResponse.getStatus() == 200)
                 {
                     Toast.makeText(PasswordVerifyCodeActivity.this, "Code Sent", Toast.LENGTH_SHORT).show();

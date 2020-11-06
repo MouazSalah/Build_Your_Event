@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
-
+        <activity android:name=".ui.auth.CropActivity"/>
         <activity android:name=".ui.order.SubCategoryActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -71,19 +71,18 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.userproducts.PaymentActivity"
+            android:theme="@style/AppTheme" >
+
+        </activity>
+        <activity
+            android:name=".ui.order.ProductInfoActivity"
             android:theme="@style/AppTheme" />
-
-        <activity android:name=".ui.order.ProductInfoActivity"
-            android:theme="@style/AppTheme"/>
-
         <activity
             android:name=".ui.home.HomeActivity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".ui.location.AddressActivity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".ui.auth.PasswordVerifyCodeActivity"
             android:parentActivityName=".ui.auth.ForgetPasswordActivity"
@@ -101,11 +100,18 @@
         <activity
             android:name=".ui.auth.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+
         </activity>
     </application>
 

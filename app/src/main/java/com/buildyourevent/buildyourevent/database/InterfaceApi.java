@@ -4,15 +4,17 @@ import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswo
 import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswordResponse;
 import com.buildyourevent.buildyourevent.model.auth.code.VerifyCodeResponse;
 import com.buildyourevent.buildyourevent.model.auth.register.RegisterResponse;
+import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addproduct.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerResponse;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryRequest;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
+import com.buildyourevent.buildyourevent.model.data.product.ProductsResponse;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
-import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
-import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.auth.cities.CityResponse;
 import com.buildyourevent.buildyourevent.model.auth.code.SendCodeResponse;
 import com.buildyourevent.buildyourevent.model.auth.countries.CountryResponse;
@@ -22,7 +24,6 @@ import com.buildyourevent.buildyourevent.model.auth.logout.LogoutRequest;
 import com.buildyourevent.buildyourevent.model.auth.logout.LogoutResponse;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
-import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
@@ -65,7 +66,7 @@ public interface InterfaceApi
     Call<CountryResponse> getAllCountries();
 
     @FormUrlEncoded
-    @POST("cities")
+    @GET("cities")
     Call<CityResponse> getAllCities(@Field("country_id") int country_id);
 
     @POST("logout")
@@ -77,17 +78,22 @@ public interface InterfaceApi
     @GET("categories")
     Call<CategoryResponse> getAllCategories();
 
+/*
+   @POST("categories")
+   Call<CategoryResponse> getAllCategories(@Body CategoryRequest categoryRequest);
+*/
+
     @FormUrlEncoded
     @POST("sub-category")
     Call<SubCategoryResponse> getAllSubCategories(@Field("category_id") int categoryId);
 
     @FormUrlEncoded
     @POST("products")
-    Call<ProductResponse> getAllProducts(@Field("sub_cat_id") String subCategoryId);
+    Call<ProductsResponse> getAllProducts(@Field("cat_id") String categoryId);
 
+    @FormUrlEncoded
     @POST("products")
-    Call<ProductResponse> getProducts();
-
+    Call<ProductsResponse> getProducts(@Field("sub_cat_id") String subCategoryId);
 
     @FormUrlEncoded
     @POST("product_details")

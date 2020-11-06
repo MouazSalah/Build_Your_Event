@@ -36,7 +36,7 @@ public class SharedPrefMethods
 
     public String getUserLanguage()
     {
-        return pref.getString(Codes.SHARED_PREF_LANGUAGE, null);
+        return pref.getString(Codes.SHARED_PREF_LANGUAGE, "ar");
     }
 
     public void deleteUserLanguage()

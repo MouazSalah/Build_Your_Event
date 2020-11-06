@@ -22,19 +22,18 @@ public class VerifyCodeData
 	@SerializedName("city_name")
 	private String cityName;
 
-
 	@SerializedName("country_name")
 	private String countryName;
-
 
 	@SerializedName("country_id")
 	private int countryId;
 
+	@SerializedName("city_id")
+	private int cityId;
+
 	@SerializedName("token")
 	private String token;
 
-	@SerializedName("city_id")
-	private int cityId;
 
 	public void setImage(String image){
 		this.image = image;
@@ -119,7 +118,7 @@ public class VerifyCodeData
 	@Override
  	public String toString(){
 		return 
-			"Data{" + 
+			"AboutData{" +
 			"image = '" + image + '\'' + 
 			",city_name = '" + cityName + '\'' + 
 			",name = '" + name + '\'' + 

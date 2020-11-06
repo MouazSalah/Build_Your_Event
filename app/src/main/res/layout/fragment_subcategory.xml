@@ -125,24 +125,36 @@
                         android:layout_height="wrap_content"
                         android:minHeight="50dp"
                         android:minWidth="50dp"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true" />
+                        android:layout_centerInParent="true"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:id="@+id/empty_products"
                         android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
                         android:gravity="center">
 
+                        <ImageView
+                            android:id="@+id/image_icon"
+                            android:layout_width="108dp"
+                            android:layout_height="108dp"
+                            tools:background="#000000"
+                            android:visibility="gone"
+                            android:src="@drawable/cart_icon"
+                            tools:ignore="ContentDescription" />
+
                         <TextView
+                            android:id="@+id/text_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_marginLeft="56dp"
+                            android:layout_marginRight="56dp"
+                            android:layout_marginTop="10dp"
                             android:gravity="center"
-                            android:textColor="#37BFB6"
-                            android:textStyle="bold"
-                            android:textSize="25sp"
+                            android:lineSpacingExtra="5.5dp"
                             android:text="@string/no_products" />
 
                     </LinearLayout>
@@ -155,11 +167,7 @@
                         android:nestedScrollingEnabled="false" />
 
                 </RelativeLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
-
     </ScrollView>
 </layout>

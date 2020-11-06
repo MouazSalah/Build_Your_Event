@@ -1,43 +1,51 @@
 package com.buildyourevent.buildyourevent.ui.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.buildyourevent.buildyourevent.R;
-import com.buildyourevent.buildyourevent.model.data.product.ProductData;
+import com.buildyourevent.buildyourevent.model.data.product.ProductsData;
 import com.buildyourevent.buildyourevent.ui.order.ProductDataFragment;
-import com.buildyourevent.buildyourevent.ui.order.ProductInfoActivity;
-import com.buildyourevent.buildyourevent.ui.order.SubDataFragment;
 import com.buildyourevent.buildyourevent.utils.MovementManager;
 import com.buildyourevent.buildyourevent.utils.SharedPrefMethods;
 import com.bumptech.glide.Glide;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyViewHolder>
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyViewHolder> implements Filterable
 {
     public Context mContext;
-    public List<ProductData> productsList;
+    public List<ProductsData> productsList = new ArrayList<>();
     SharedPrefMethods prefMethods;
+    private List<ProductsData> filteredList;
+    private List<ProductsData> oldListData;
 
+    public void setOldListData(List<ProductsData> oldListData) {
+        if (this.oldListData == null) {
+            this.oldListData = new ArrayList<>();
+        }
+        this.oldListData = oldListData;
+    }
 
-    public ProductsAdapter(Context mContext, List<ProductData> productsList)
+    public ProductsAdapter(Context mContext)
     {
         this.mContext = mContext;
-        this.productsList = productsList;
         prefMethods = new SharedPrefMethods(mContext);
     }
 
+    @NotNull
     @Override
     public ProductsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -50,7 +58,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
     public void onBindViewHolder(final ProductsAdapter.MyViewHolder holder, final int position)
     {
         holder.setAnimation();
-        ProductData product = productsList.get(position);
+        ProductsData product = productsList.get(position);
         holder.tvName.setText(product.getName());
         holder.tvPrice.setText("" + product.getPrice());
         Glide.with(mContext).load(product.getImage()).into(holder.imgThumbnail);
@@ -69,7 +77,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
                 mContext.startActivity(intent);*/
 
                 prefMethods.saveProductId(product.getProductId());
-                MovementManager.replaceFragment(mContext, new ProductDataFragment(), R.id.nav_host_fragment,"ProductDataFragment");
+                MovementManager.replaceFragment(mContext, new ProductDataFragment(), R.id.nav_host_fragment,"ProductsDataFragment");
 
               //  Intent intent = new Intent(mContext.getApplicationContext(), ProductInfoActivity.class);
               //  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -116,4 +124,42 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
         }
     }
 
+
+    @Override
+    public Filter getFilter() {
+        return new MyNamesFilter();
+    }
+
+    private class MyNamesFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String charString = constraint.toString();
+            filteredList = new ArrayList<>();
+            if (!charString.isEmpty()) {
+                for (ProductsData row : oldListData) {
+                    // set your conditions here.
+                    if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                        filteredList.add(row);
+                    }
+                }
+            } else {
+                filteredList = new ArrayList<>();
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredList = (List<ProductsData>) results.values;
+            updateDataList(filteredList);
+        }
+    }
+
+    public void updateDataList(List<ProductsData> list) {
+        this.productsList = list;
+        notifyDataSetChanged();
+    }
 }

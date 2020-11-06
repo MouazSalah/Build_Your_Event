@@ -70,17 +70,16 @@ public class PaymentActivity extends AppCompatActivity
     OrderRequest orderRequest;
     UserViewModel userViewModel;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
-        SharedPrefMethods prefMethods = new SharedPrefMethods(this);
+   /*     SharedPrefMethods prefMethods = new SharedPrefMethods(this);
         Locale locale = new Locale(prefMethods.getUserLanguage());
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
+*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         ButterKnife.bind(this);

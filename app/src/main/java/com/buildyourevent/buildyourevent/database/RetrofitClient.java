@@ -14,11 +14,8 @@ public class RetrofitClient
 {
     public static Retrofit getApiClient(String baseUrl)
     {
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .build();
+
+        OkHttpClient okHttpClient = UnsafeHttp.getUnsafeOkHttpClient();
 
         Gson gson = new GsonBuilder()
                 .setLenient()

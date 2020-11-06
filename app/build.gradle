@@ -200,4 +200,8 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava3:rxjava:2.x.x'
 
+    // Crop and rotate image
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.3.1'
+
+
 }

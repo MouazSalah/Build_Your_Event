@@ -4,20 +4,21 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addproduct.AddProductResponse;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerData;
 import com.buildyourevent.buildyourevent.model.data.banner.BannerResponse;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryRequest;
+import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
+import com.buildyourevent.buildyourevent.model.data.product.ProductsResponse;
 import com.buildyourevent.buildyourevent.model.data.productdetails.ProductDetailsResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateRequest;
-import com.buildyourevent.buildyourevent.model.data.aboutus.AboutUsResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartResponse;
 import com.buildyourevent.buildyourevent.model.data.addtocarts.AddToCartsRequest;
 import com.buildyourevent.buildyourevent.model.data.carts.CartResponse;
-import com.buildyourevent.buildyourevent.model.data.category.CategoryResponse;
 import com.buildyourevent.buildyourevent.model.constants.Codes;
 import com.buildyourevent.buildyourevent.model.data.order.OrderRequest;
 import com.buildyourevent.buildyourevent.model.data.order.OrderResponse;
-import com.buildyourevent.buildyourevent.model.data.product.ProductResponse;
 import com.buildyourevent.buildyourevent.model.data.productrate.ProductRateResponse;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartRequest;
 import com.buildyourevent.buildyourevent.model.data.removefromcart.RemoveCartResponse;
@@ -35,6 +36,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 import static android.content.ContentValues.TAG;
 
@@ -49,9 +51,7 @@ public class UserRepository
     private MutableLiveData<List<BannerData>> bannersMutableLiveData = new MutableLiveData<>();
     private ArrayList<BannerData> bannersList = new ArrayList<>();
 
-
-    private MutableLiveData<ProductResponse> allProductsLiveData = new MutableLiveData<>();
-
+    private MutableLiveData<ProductsResponse> allProductsLiveData = new MutableLiveData<>();
 
     private MutableLiveData<CartResponse> cartsMutableLiveData = new MutableLiveData<>();
 
@@ -114,13 +114,14 @@ public class UserRepository
 
     public MutableLiveData<CategoryResponse> getCategoryMutableLiveData()
     {
+
         Call<CategoryResponse> responseCall = interfaceApi.getAllCategories();
         responseCall.enqueue(new Callback<CategoryResponse>()
         {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response)
             {
-
+                Timber.tag("ana").e(response.raw().toString());
                 if (response.isSuccessful())
                 {
                     categoryLiveData.setValue(response.body());
@@ -167,13 +168,13 @@ public class UserRepository
         return subCategoryLiveData;
     }
 
-    public MutableLiveData<ProductResponse> getProductsMutableLiveData(String subCategoryId)
+    public MutableLiveData<ProductsResponse> getSelectedProducts(String subCategoryId)
     {
-        Call<ProductResponse> responseCall = interfaceApi.getAllProducts(subCategoryId);
-        responseCall.enqueue(new Callback<ProductResponse>()
+        Call<ProductsResponse> responseCall = interfaceApi.getProducts(subCategoryId);
+        responseCall.enqueue(new Callback<ProductsResponse>()
         {
             @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response)
+            public void onResponse(Call<ProductsResponse> call, Response<ProductsResponse> response)
             {
                 if (response.isSuccessful())
                 {
@@ -186,7 +187,7 @@ public class UserRepository
                 }
             }
             @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t)
+            public void onFailure(Call<ProductsResponse> call, Throwable t)
             {
                 Log.d(Codes.APP_TAGS, "products failed" + t.getMessage());
             }
@@ -195,19 +196,19 @@ public class UserRepository
         return allProductsLiveData;
     }
 
-    public MutableLiveData<ProductResponse> getAllProductsMutableLiveData()
+    public MutableLiveData<ProductsResponse> getAllProducts()
     {
-        Call<ProductResponse> responseCall = interfaceApi.getProducts();
-        responseCall.enqueue(new Callback<ProductResponse>()
+        Call<ProductsResponse> responseCall = interfaceApi.getAllProducts(Codes.CATEGORY_ID);
+        responseCall.enqueue(new Callback<ProductsResponse>()
         {
             @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response)
+            public void onResponse(Call<ProductsResponse> call, Response<ProductsResponse> response)
             {
-                ProductResponse productResponse = response.body();
+                ProductsResponse productResponse = response.body();
                 allProductsLiveData.setValue(productResponse);
             }
             @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t)
+            public void onFailure(Call<ProductsResponse> call, Throwable t)
             {
                 Log.d(Codes.APP_TAGS, "products failed" + t.getMessage());
             }
