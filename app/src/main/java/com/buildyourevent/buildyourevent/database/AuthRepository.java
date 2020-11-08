@@ -4,8 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.buildyourevent.buildyourevent.database.InterfaceApi;
-import com.buildyourevent.buildyourevent.database.RetrofitClient;
 import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswordRequest;
 import com.buildyourevent.buildyourevent.model.auth.change_password.ChangePasswordResponse;
 import com.buildyourevent.buildyourevent.model.auth.cities.CityData;
@@ -30,6 +28,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class AuthRepository
 {
@@ -80,7 +79,7 @@ public class AuthRepository
                 }
                 else
                 {
-                    Log.d(Codes.APP_TAGS, "something happened, try again");
+                    Timber.d("something happened, try again");
                 }
             }
             @Override

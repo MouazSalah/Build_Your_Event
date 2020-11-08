@@ -6,8 +6,8 @@ public abstract class Codes
 {
     public static final String APP_TAGS = "ALL_APP_TAGS";
 
-   // public static final String AUTH_BASE_URL = "http://www.vretech.com/api/";
-    public static final String AUTH_BASE_URL = "https://zozstores.com/api/";
+    public static final String AUTH_BASE_URL = "http://www.vretech.com/api/";
+   // public static final String AUTH_BASE_URL = "https://zozstores.com/api/";
 
     public static final String CATEGORY_ID =  "category_id";
     public static final Integer ADDRESS_REQ_CODE = 11;
