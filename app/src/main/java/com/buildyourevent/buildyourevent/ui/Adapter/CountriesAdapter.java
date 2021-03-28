@@ -52,8 +52,7 @@ public class CountriesAdapter extends ArrayAdapter<CountryData>
             flater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowview = flater.inflate(android.R.layout.simple_spinner_dropdown_item, null, false);
 
-            holder.txtTitle = (TextView) rowview.findViewById(
-                    android.R.id.text1);
+            holder.txtTitle = (TextView) rowview.findViewById(android.R.id.text1);
             rowview.setTag(holder);
         } else {
             holder = (viewHolder) rowview.getTag();

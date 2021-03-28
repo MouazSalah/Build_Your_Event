@@ -95,6 +95,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            tools:listitem="@layout/raw_products"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:nestedScrollingEnabled="false"
             />
 
